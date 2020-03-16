@@ -4,10 +4,9 @@ const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
 let dummySignUp = {
-    name: 'Hannah',
-    email: 'hannah@gmail.com',
-    password: '123123',
-    token: 'endaoiea21bnijo15391301i530j.ekfoai9lajfoea0.f0039j_#9ut39ja'
+    name: 'Ace',
+    email: 'ace@gmail.com',
+    password: '123123'
 }
 
 describe('POST /signup', () => {
@@ -18,9 +17,11 @@ describe('POST /signup', () => {
                 .post('/signup')
                 .send(dummySignUp)
                 .end((err, res) => {
+                    console.log('= = = = = >', res.body);
+                    
                     expect(err).toBe(null)
-                    expect(res.body).toHaveProperty('token', dummySignUp.token)
-                    expect(res.body).toHaveProperty('name', dummySignUp.name)
+                    expect(res.body).toHaveProperty('token', expect.any(String))
+                    expect(res.body).toHaveProperty('currentUser', expect.any(String))
                     expect(res.status).toBe(201);
                     done()
                 })

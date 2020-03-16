@@ -7,6 +7,10 @@ module.exports = {
         user.password = bcrypt.hashSync(user.password,salt)
     },
     getToken: (payload) => {
-        let token = jwt.sign(payload,process.env.secret)
+        let token = jwt.sign(payload,process.env.SECRET)
+        return token
+    },
+    comparePassword: (password,passwordDb) => {
+        return bcrypt.compareSync(password,passwordDb)
     }
 }

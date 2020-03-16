@@ -1,8 +1,11 @@
 'use strict'
 
+const { Product } = require('../models')
+
 class ProductController {
 
     static findAll(req, res, next) {
+        // Find product with authentication customer or admin
 
     }
 

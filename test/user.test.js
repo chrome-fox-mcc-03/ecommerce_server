@@ -4,13 +4,22 @@ const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
 let dummySignUp = {
-    name: 'Ace',
-    email: 'ace@gmail.com',
+    name: 'Dewa',
+    email: 'dewa@gmail.com',
     password: '123123'
 }
 
 describe('POST /signup', () => {
-    describe('success process', () => {
+    afterEach((done) => {
+        queryInterface.bulkDelete('Users', {})
+            .then(_ => {
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+    })
+    describe('Success process', () => {
         test('Should send an object (token, name) with status code 201', (done) => {
             // = = = = hit server = = = = 
             request(app)
@@ -25,6 +34,103 @@ describe('POST /signup', () => {
                     expect(res.status).toBe(201);
                     done()
                 })
+        })
+    })
+    describe('Error process', () => {
+        // describe('User existed', () => {
+        //     test('Should send an object (message) with status code 400', (done) => {
+        //         let alreadySignUp = {
+        //             name: 'Hannah',
+        //             email: 'hannah@gmail.com',
+        //             password: 123123
+        //         }
+        //         request(app)
+        //             .post('/signup')
+        //             .send(alreadySignUp)
+        //             .end((err, res) => {
+        //                 expect(res.status).toBe(400)
+        //                 expect(res.body).toHaveProperty('message', 'Your email has already registered')
+        //                 expect(err).toBe(null)
+        //                 done()
+        //             })
+        //     })
+        // })
+        describe('Empty Email', () => {
+            test('Should send an object (message) with status code 400', (done) => {
+                let withoutEmail = { ...dummySignUp }
+                delete withoutEmail.email
+                request(app)
+                .post('/signup')
+                .send(withoutEmail)
+                .end((err, res) => {
+                    // console.log('+++++++++', res.body);
+                    expect(res.body).toHaveProperty('message', expect.any(Array))
+                    expect(res.body.message).toContain('User.email cannot be null');
+                    expect(res.status).toBe(400)
+                    expect(err).toBe(null)
+                    done()
+                })
+            })
+        })
+        describe('Invalid Email Format', () => {
+            test('Should send an object (message) with status code 400', (done) => {
+                let invalidEmailFormat ={
+                    name: 'Hannah',
+                    email: 'notanemail',
+                    password: '123123'
+                }
+                request(app)
+                .post('/signup')
+                .send(invalidEmailFormat)
+                .end((err, res) => {
+                    // console.log('+++++++++', res.body);
+                    expect(res.body).toHaveProperty('message', expect.any(Array))
+                    expect(res.body.message).toContain('Invalid email format');
+                    expect(res.status).toBe(400)
+                    expect(err).toBe(null)
+                    done()
+                })
+            })
+        })
+        describe('Minimum Length of Password', () => {
+            test('Should send an object (message) with status code 400', (done) => {
+                let pwLessThan6 ={
+                    name: 'Albus',
+                    email: 'albus@gmail.com',
+                    password: '1231'
+                }
+                request(app)
+                .post('/signup')
+                .send(pwLessThan6)
+                .end((err, res) => {
+                    // console.log('+++++++++', res.body);
+                    expect(res.body).toHaveProperty('message', expect.any(Array))
+                    expect(res.body.message).toContain('Password should at least have 6 characters');
+                    expect(res.status).toBe(400)
+                    expect(err).toBe(null)
+                    done()
+                })
+            })
+        })
+        describe('Empty Name', () => {
+            test('Should send an object (message) with status code 400', (done) => {
+                let emptyName ={
+                    name: '',
+                    email: 'albus@gmail.com',
+                    password: '123123'
+                }
+                request(app)
+                .post('/signup')
+                .send(emptyName)
+                .end((err, res) => {
+                    console.log('+++++++++', res.body);
+                    expect(res.body).toHaveProperty('message', expect.any(Array))
+                    expect(res.body.message).toContain('Name cannot be empty');
+                    expect(res.status).toBe(400)
+                    expect(err).toBe(null)
+                    done()
+                })
+            })
         })
     })
 })

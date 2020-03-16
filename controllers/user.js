@@ -3,6 +3,8 @@ const { generateToken } = require('../helpers/jwt');
 
 class UserController {
     static signUp(req, res, next) {
+        console.log(req.body, '/////////////');
+        
         User.create({
             name: req.body.name,
             email: req.body.email,

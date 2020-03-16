@@ -1,5 +1,5 @@
 function errorHandler(err, req, res, next){
-    console.log(err, 'err name here');
+    // console.log(err, 'err name here');
     
     let status = 500
     let message = { message : `internal server error` }
@@ -30,7 +30,13 @@ function errorHandler(err, req, res, next){
             res.status(status).json(message)
             break;
         case 'UserNotFound':
-            res.status(err.status).json(err.message)
+            errors.push(err.message)
+            message = {
+                message : 'email / password is incorrect',
+                errors
+            }
+            status = 401
+            res.status(status).json(message)
             break;
         default:
             console.log(status, 'default here');

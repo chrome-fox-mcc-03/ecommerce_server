@@ -65,13 +65,9 @@ Register into website
 
   * **Code:** 201 <br />
     **Content:** 
-    `{ token: <token> , message: "Welcome back John Doe" }`
+    `{ token: <token> }`
  
 * **Error Response:**
-  * **Code** 400 BAD REQUEST <br />
-    **Content** `{ error: Email / Password invalid! }`
-
-    OR
 
   * **Code** 400 BAD REQUEST <br />
     **Content** `{ error: Please input with valid email! }`
@@ -85,6 +81,11 @@ Register into website
 
   * **Code** 400 BAD REQUEST <br />
     **Content** `{ error: Please input your name! }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: Password at least 5 characters }`
 
     OR
 

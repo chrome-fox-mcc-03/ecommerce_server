@@ -1,5 +1,5 @@
 module.exports = function (err, req, res, next) {
-    console.log(err.name);
+    console.log('| e | r | r | o | r |', err.name);
     // console.log(err.errors);
     
     if (err.name === 'SequelizeUniqueConstraintError') {
@@ -8,6 +8,6 @@ module.exports = function (err, req, res, next) {
         let message = err.errors.map(error => error.message)
         res.status(400).json({ message })
     } else {
-        res.status(err.status || 500).json(er.message || 'Internal server error')
+        res.status(err.status || 500).json(err.message || 'Internal server error')
     }
 }

@@ -11,7 +11,6 @@ class UserController {
         })
             .then(newUser => {
                 console.log('hashed?', newUser.password);
-                
                 const payload = { id: newUser.id, name: newUser.name, email: newUser.email };
                 const token = generateToken(payload);
                 res.status(201).json({ token, currentUser: newUser.name });
@@ -22,8 +21,6 @@ class UserController {
     }
 
     static signIn(req, res, next) {
-        console.log('++++++++++++++ masuk');
-        
         User.findOne({
             where: {
                 email: req.body.email
@@ -41,8 +38,6 @@ class UserController {
                         
                         const payload = { id: user.id, name: user.name, email: user.email };
                         const token = generateToken(payload);
-                        console.log(token);
-                        
                         res.status(201).json({ token, currentUser: user.name });
                     } else {
                         next({
@@ -51,8 +46,6 @@ class UserController {
                         })
                     }
                 } else {
-                    console.log('masuk ke else');
-                    
                     next({
                         status: 400,
                         message: 'Invalid email/password'
@@ -60,8 +53,6 @@ class UserController {
                 }
             })
             .catch(err => {
-                console.log('masuk ke catch');
-
                 next(err)
             })
     }

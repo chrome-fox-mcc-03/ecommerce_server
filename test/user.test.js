@@ -145,7 +145,7 @@ describe('User Routes', () => {
                     .post('/signin')
                     .send(dummySignIn)
                     .end((err, res) => {
-                        console.log(res.body);
+                        // console.log(res.body);
     
                         expect(res.body).toHaveProperty('token', expect.any(String))
                         expect(res.body).toHaveProperty('currentUser', expect.any(String))
@@ -153,6 +153,26 @@ describe('User Routes', () => {
                         expect(err).toBe(null)
                         done()
                     })
+            })
+        })
+        describe('Error Process', () => {
+            describe('Wrong combination', () => {
+                test('Should send a message with status code 400', (done) => {
+                    let withoutEmail = {
+                        email: 'signup@gmail.com',
+                        password: '1231234'
+                    }
+                    request(app)
+                        .post('/signin')
+                        .send(withoutEmail)
+                        .end((err, res) => {
+                            console.log('++b+o+d+y++++', res.body);
+                            expect(res.body).toBe('Invalid email/password');
+                            expect(res.status).toBe(400);
+                            expect(err).toBe(null);
+                            done()
+                        })
+                })
             })
         })
     })

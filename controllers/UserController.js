@@ -18,6 +18,7 @@ class UserController {
             let data = {
                 id: result.id,
                 email: result.email,
+                access_token: getToken(appPayload(result)),
             }
             res.status(201).json(data);
         })

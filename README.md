@@ -27,9 +27,7 @@ Login into website
 
   * **Code:** 200 <br />
     **Content:** 
-    ```
-    { token: < token > }
-    ```
+    `{ token: < token > }`
  
 * **Error Response:**
   * **Code** 400 BAD REQUEST <br />
@@ -72,6 +70,16 @@ Register into website
 * **Error Response:**
   * **Code** 400 BAD REQUEST <br />
     **Content** `{ error: Email / Password invalid! }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: Please input with valid email! }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: Email has been registered, please choose another email }`
 
     OR
 

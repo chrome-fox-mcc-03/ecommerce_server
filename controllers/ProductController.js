@@ -102,7 +102,7 @@ class ProductController {
                     throw err
                 }
             })
-            .then((updated)=>{
+            .then((deleted)=>{
                 res.status(200).json({
                     data : 'deleted'
                 })

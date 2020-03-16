@@ -3,7 +3,6 @@ function errorHandler(err, req, res, next) {
   let errName = {
     message: 'Internal Server Error'
   }
-  
   if(err.name === 'SequelizeValidationError') {
     status = 400;
     let arrMessage = []
@@ -13,6 +12,13 @@ function errorHandler(err, req, res, next) {
     errName = {
       message: 'Bad Request',
       errors: arrMessage
+    }
+  }
+  else if(err.name === 'Invalid email or password') {
+    status = 400;
+    errName = {
+      message: 'Bad Request',
+      errors: [err.name]
     }
   }
   res.status(status).json(errName)

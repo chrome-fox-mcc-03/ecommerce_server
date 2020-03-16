@@ -24,12 +24,10 @@ describe('User routes', () => {
           .send(data)
           .end((err, res) => {
             expect(err).toBe(null)
-            // console.log(res.body.user);
+            // console.log(res.body);
             // expect ==> hasilnya, 
             // toHaveProperty ==> data yang di inputnya, jika tidak tau hasil nya maka 'expect.any(tipe data)'
-            expect(res.body.user).toHaveProperty('email', data.email)
-            expect(res.body.user).toHaveProperty('id', expect.any(Number))
-            expect(res.body.user).toHaveProperty('password', expect.any(String))
+            expect(res.body).toHaveProperty('token', expect.any(String))
             expect(res.status).toBe(201)
             done()
           })
@@ -71,6 +69,67 @@ describe('User routes', () => {
           expect(res.status).toBe(400)
           done()
         })
+    })
+  })
+
+  describe('POST /login', () => {
+    describe('success process', () => {
+      test('should be send an object with status code 200', (done) => {
+        request(app)
+          .post('/login')
+          .send(data)
+          .end((err, res) => {
+            // console.log(res.body);
+            // console.log(err);
+            expect(res.body).toHaveProperty('token', expect.any(String))
+            expect(res.status).toBe(200)
+            done()
+          })
+      })
+    })
+
+    describe('error process', () => {
+      test('should send an error satus 400 of wrong email input', (done) => {
+        const wrongEmail = {
+          email: 'test1@mail.com',
+          password: '123456'
+        }
+        request(app)
+          .post('/login')
+          .send(wrongEmail)
+          .end((err, res) => {
+            // console.log(err)
+            // console.log(res.body, 'errrroor nih');
+            // console.log(res.status);
+            expect(err).toBe(null)
+            expect(res.body).toHaveProperty('message', 'Bad Request')
+            expect(res.body).toHaveProperty('errors', expect.any(Array))
+            expect(res.body.errors).toContain('Invalid email or password')
+            expect(res.status).toBe(400)
+            done()
+          })
+      })
+
+      test('should send an error 400 of wrong password input', (done) => {
+        const wrongPass = { 
+          email: 'test@mail.com',
+          password: '132323423'
+        }
+        request(app)
+          .post('/login')
+          .send(wrongPass)
+          .end((err, res) => {
+            console.log(err)
+            console.log(res.body, 'errrroor nih');
+            console.log(res.status);
+            expect(err).toBe(null)
+            expect(res.body).toHaveProperty('message', 'Bad Request')
+            expect(res.body).toHaveProperty('errors', expect.any(Array))
+            expect(res.body.errors).toContain('Invalid email or password')
+            expect(res.status).toBe(400)
+            done()
+          })
+      })
     })
   })
 

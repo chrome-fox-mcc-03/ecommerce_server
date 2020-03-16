@@ -10,8 +10,12 @@ class Controller {
             password
         })
             .then(user => {
+                const payload = {
+                    email: user.email,
+                    id: user.id
+                }
                 console.log(user)
-                res.status(201).json(user)
+                res.status(201).json(payload)
             })
             .catch(err => {
                 next(err)

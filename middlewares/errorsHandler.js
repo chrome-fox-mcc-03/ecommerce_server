@@ -1,14 +1,25 @@
 module.exports = function (err, req, res, next) {
     let status;
     let message;
+    let errors = []
+    console.log(err.name, 'nameeee');
 
     switch (err.name) {
         case 'SequelizeValidationError':
-            const errors = []
+            errors = []
             err.errors.forEach(error => {
                 errors.push(error.message)
             })
             status = 400
+            message = {
+                message: 'Bad Request',
+                errors
+            }
+            break;
+        case 'loginValidation':
+            status = 400
+            errors = []
+            errors.push(err.msg.message)
             message = {
                 message: 'Bad Request',
                 errors

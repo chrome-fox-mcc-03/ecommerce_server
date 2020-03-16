@@ -12,6 +12,11 @@ let data = {
     password: '123456'
 }
 
+let wrongData = {
+    email: 'hilmi',
+    password: '123'
+}
+
 describe('User routes', () => {
     afterAll((done) => {
         queryInterface.bulkDelete('Users', {})
@@ -37,7 +42,7 @@ describe('User routes', () => {
                     })
             })
         })
-        describe('Error Process', () => {
+        describe('Register Error Process', () => {
             test('should send an error with status code 400 because Email is null', (done) => {
                 const withoutEmail = {
                     ...data
@@ -68,6 +73,22 @@ describe('User routes', () => {
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('token', expect.any(String))
                         expect(res.status).toBe(201)
+                        done()
+                    })
+            })
+        })
+        describe('Login Error Process', () => {
+            test('Should send an error with status code 400 because Email / Password is wrong', (done) => {
+                request(app)
+                    .post('/users/login')
+                    .send(wrongData)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('Email/Password is wrong')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
                         done()
                     })
             })

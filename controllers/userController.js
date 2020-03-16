@@ -27,7 +27,6 @@ class controller {
             })
             .catch(err => {
                 next(err)
-                // res.status(400).json(err.errors)
             })
     }
 
@@ -50,12 +49,12 @@ class controller {
                         email: result.email
                     }
                     let token = tokenGenerate(payload)
-                    console.log(token);
                     res.status(201).json({
                         'token': token
                     })
                 } else {
                     next({
+                        name: 'loginValidation',
                         status: 400,
                         msg: {
                             message: 'Email/Password is wrong'
@@ -64,8 +63,13 @@ class controller {
                 }
             })
             .catch(err => {
-                console.log(err);
-                next(err)
+                next({
+                    name: 'loginValidation',
+                    status: 400,
+                    msg: {
+                        message: 'Email/Password is wrong'
+                    }
+                })
             })
     }
 

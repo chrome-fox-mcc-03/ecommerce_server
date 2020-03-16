@@ -12,8 +12,16 @@ class userController {
         res.status(201).json({user})
       })
       .catch((err) => {
-        res.status(500).json(err)
+        next(err)
       })
+  }
+
+  static Login(req, res, next) {
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
   }
 
 }

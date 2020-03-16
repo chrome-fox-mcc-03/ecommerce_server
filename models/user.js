@@ -21,10 +21,16 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           args: true,
           msg: 'Invalid Email Format'
+        },
+        notNull: {
+          args: true,
+          msg: 'Email Is Required'
         }
       }
     },
-    password: DataTypes.STRING
+    password: {
+      type: DataTypes.STRING
+    }
   }, {
     hooks: {
       beforeCreate: (User, options) => {

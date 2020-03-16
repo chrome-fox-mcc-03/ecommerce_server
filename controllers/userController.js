@@ -19,6 +19,7 @@ class controller {
             })
             .catch(err => {
                 next(err)
+                // res.status(400).json(err.errors)
             })
     }
 

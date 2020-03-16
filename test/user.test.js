@@ -11,17 +11,33 @@ let dummyData = {
 }
 
 describe('User routes' , () => {
+    //delete all tested data everytime you run the test file
+    afterEach((done) => {
+        queryInterface.bulkDelete('Users', {})
+        .then(_ => {
+            done()
+        }).catch((err) => {
+            done(err)
+        });
+    })
     //test register route
-    describe(' [POST] => ( /register ) ', () => {
+    describe('POST /register', () => {
         test('sending object (email, id) with status code 201 ', (done) => {
+            
             request(app)
             .post('/register')
             .send(dummyData)
             .end((err, res) => {
+                // console.log(res);
                 expect(err).toBe(null)
-                expect(res.body).toHaveProperty('email', 'hasan@mail.com')
+                expect(res.status).toBe(201)
+                expect(res.body).toHaveProperty('email', dummyData.email)
+                expect(res.body).toHaveProperty('id', expect.any(Number))
+                //done() must be included to break the process
                 done()
             })
         })
     })
+
+    
 })

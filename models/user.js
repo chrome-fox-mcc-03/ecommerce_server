@@ -5,9 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class User extends Model {
-    static associate(models) {
-
-    }
+    static associate(models) {}
   }
   User.init({
     email: {

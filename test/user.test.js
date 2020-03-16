@@ -9,6 +9,11 @@ let data = {
     isAdmin:false
 }
 
+let dataAdmin = {
+    email:'admin@mail.com',
+    password:'admin',
+}
+
 describe('User routes', () => {
     afterAll((done) => {
         queryInterface.bulkDelete('Users',{})
@@ -101,4 +106,22 @@ describe('User routes', () => {
             })
         })
     })
+    
+    describe('POST /loginAdmin', () => {
+        describe('success process',() => {
+            test('should send an object (email,id,token) with status 200',(done) => {
+                request(app)
+                .post('/loginAdmin')
+                .send(dataAdmin)
+                .end((err,res) => {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('email',expect.any(String))
+                    expect(res.body).toHaveProperty('id',expect.any(Number))
+                    expect(res.body).toHaveProperty('token',expect.any(String))
+                    expect(res.status).toBe(200)
+                    done()
+                })
+            })
+        })
+    })  
 })

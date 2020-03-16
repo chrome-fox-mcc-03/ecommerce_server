@@ -57,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user,option) => {
         encrypt(user)
+        User.isAdmin=false
       }
     }
   });

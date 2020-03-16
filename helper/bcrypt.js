@@ -7,6 +7,11 @@ function hashPassword(password){
     return bcrypt.hashSync(password, salt)
 }
 
+function verifyPassword(passwordFromUser, passwordFromDB){
+    return bcrypt.compareSync(passwordFromUser, passwordFromDB)
+}
+
 module.exports = {
-    hashPassword
+    hashPassword,
+    verifyPassword
 }

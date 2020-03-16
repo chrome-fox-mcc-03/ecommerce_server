@@ -1,8 +1,9 @@
 'use strict';
-const { hashPass } = require('../helper/bcrypt')
+const { hashPassword } = require('../helper/bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  class User extends sequelize.Sequelize.Model{}
+  User.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -57,19 +58,16 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
-        isIn: {
-          args: [['Admin', 'Staff']],
-          msgh: 'Role is not valid.'
-        }
-      }
+      defaultValue: 'No store.'
     },
-    store_id: DataTypes.INTEGER,
-      allowNull: false
-    }, {
+    store_id: {
+      type: DataTypes.INTEGER,
+      defaultValue: -1
+    },
+  }, {
       hooks: {
         beforeCreate: (user, options) => {
-          user.password = hashPass(user.password)
+          user.password = hashPassword(user.password)
         }
       },
       sequelize,

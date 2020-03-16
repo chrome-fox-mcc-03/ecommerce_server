@@ -1,5 +1,5 @@
 module.exports = function (err, req, res, next) {
-    console.log('| e | r | r | o | r |', err.name);
+    console.log('| e | r | r | o | r |', err);
     // console.log(err.errors);
     
     if (err.name === 'SequelizeUniqueConstraintError') {

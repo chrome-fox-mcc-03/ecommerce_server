@@ -1,5 +1,7 @@
 const app = require('./../app')
 const request = require('supertest')
+const { sequelize } = require('./../models')
+const { queryInterface } = sequelize
 
 let data = {
     email: 'naufalyunan45@gmail.com',
@@ -7,6 +9,13 @@ let data = {
 }
 
 describe('User routes', ()=> {
+    afterEach(done => {
+        queryInterface.bulkDelete('Users', {})
+            .then(_ => {
+                done()
+            })
+            .catch(err => done(err))
+    })
     describe('POST /register', () => {
         describe('success', () => {
             test('send object (email,id) with 201 status', done => {

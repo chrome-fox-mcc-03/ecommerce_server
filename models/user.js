@@ -14,10 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         notNull: {
           args: true,
-          msg: `Email cannot be empty`
+          msg: `Email cannot be null`
         },
         isEmail: {
           args: true,
@@ -35,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           args: true,
-          msg: `Password cannot be empty`
+          msg: `Password cannot be null`
         }
       }
     },
@@ -49,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notNull: {
           args: true,
-          msg: `Role cannot be empty`
+          msg: `Role cannot be null`
         }
       }
     }

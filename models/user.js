@@ -1,5 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
+  class User extends sequelize.Sequelize.Model {}
+  
   User.init({
     name: {
       type: DataTypes.STRING,

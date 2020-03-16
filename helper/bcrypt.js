@@ -6,7 +6,11 @@ const hashPass = (inputPass) => {
     return hash
 }
 
+const comparePass = (inputPass, hashPass) => {
+    return bcrypt.compareSync(inputPass, hashPass); 
+}
 
 module.exports = {
-    hashPass
+    hashPass,
+    comparePass
 }

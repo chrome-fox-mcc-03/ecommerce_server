@@ -12,6 +12,14 @@ const errorHandler = (err, req, res, next) => {
             }
             res.status(400).json(error)
             break;
+        case 'SequelizeUniqueConstraintError':
+            message = err.errors[0].message
+            error = {
+                message: message,
+                errors: [message]
+            }
+            res.status(400).json(error)
+            break;
         case 'Invalid email/password':
             message = err.name
             error = {

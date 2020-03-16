@@ -21,12 +21,11 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: 'email must be filled'
         }
-        // ,
-        // unique: {
-        //   args: true,
-        //   msg: 'email already in use'
-        // }
-      }
+      },
+        unique: {
+          args: true,
+          msg: 'email already in use'
+        }
     },
     password: {
       type: DataTypes.STRING,

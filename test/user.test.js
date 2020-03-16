@@ -11,13 +11,13 @@ let data = {
 }
 
 describe('User routes', ()=> {
-    // afterEach(done => {
-    //     queryInterface.bulkDelete('Users', {})
-    //         .then(_ => {
-    //             done()
-    //         })
-    //         .catch(err => done(err))
-    // })
+    beforeAll(done => {
+        queryInterface.bulkDelete('Users', {})
+            .then(_ => {
+                done()
+            })
+            .catch(err => done(err))
+    })
     describe('POST /register', () => {
         describe('success', () => {
             test('send object (email,id) with 201 status', done => {
@@ -25,6 +25,7 @@ describe('User routes', ()=> {
                     .post('/register')
                     .send(data)
                     .end((err, res) => {
+                        console.log(res.body)
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('email', data.email)
                         expect(res.body).toHaveProperty('id', expect.any(Number))
@@ -68,21 +69,21 @@ describe('User routes', ()=> {
                         done()
                     })
             })
-            // test('send error with status 400 because email is not unique', (done) => {
-            //     const emailAlreadyUsed = { ...data }
-            //     request(app)
-            //         .post('/register')
-            //         .send(emailAlreadyUsed)
-            //         .end((err,res) => {
-            //             expect(err).toBe(null)
-            //             expect(res.body).toHaveProperty('message', 'Invalid validator function: unique')
-            //             expect(res.body).toHaveProperty('errors', expect.any(Array))
-            //             expect(res.body.errors).toContain('Invalid validator function: unique')
-            //             expect(res.body.errors.length).toBeGreaterThan(0)
-            //             expect(res.status).toBe(400)
-            //             done()
-            //         })
-            // })
+            test('send error with status 400 because email is not unique', (done) => {
+                const emailAlreadyUsed = { ...data }
+                request(app)
+                    .post('/register')
+                    .send(emailAlreadyUsed)
+                    .end((err,res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'email already in use')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('email already in use')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            })
             test('send error with status 400 because password is not filled', done => {
                 const withoutPass = { ...data }
                 withoutPass.password = ''
@@ -151,10 +152,16 @@ describe('User routes', ()=> {
     describe('POST /login', () => {
         describe('success', () => {
             test('send object (token) with 200 status', done => {
+                const login = {
+                    email: data.email,
+                    password: data.password
+                }
                 request(app)
                     .post('/login')
-                    .send(data)
+                    .send(login)
                     .end((err,res) => {
+                        console.log(login)
+                        console.log(res.body)
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('token', expect.any(String))
                         expect(res.status).toBe(200)

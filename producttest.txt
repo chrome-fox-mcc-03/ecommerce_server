@@ -1,0 +1,47 @@
+const request = require("supertest")
+const app = require("../app")
+const {sequelize} = require("../models")
+const {queryInterface} = sequelize
+
+let data = {
+    name: "Vitacimin",
+    image_url: "haiii",
+    price: 2000,
+    stock: 5000
+}
+
+describe("PRODUCT ROUTES", () => {
+    afterEach((done) => {
+        queryInterface.bulkDelete("Products", {})
+            .then(_ => {
+                done()
+            })
+            .catch(err => {
+                done(err)
+            })
+    })
+
+    describe("POST /create", () => {
+        describe("CREATE SUCCESS", () => {
+            test("SHOULD SEND AN OBJECT (NAME, IMAGE_URL, PRICE, STOCK) WITH STATUS CODE 201", (done) => {
+                request(app)
+                    .post("/create")
+                    .send(data)
+                    .end((req, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('id', expect.any(Number))
+                        expect(res.body).toHaveProperty("name", data.name)
+                        expect(res.body).toHaveProperty("image_url", data.image_url)
+                        expect(res.body).toHaveProperty("price", data.price)
+                        expect(res.body).toHaveProperty("stock", data.stock)
+                        expect(res.status).toBe(201)
+                        done()
+                    })
+            })
+        })
+    })
+
+    describe("ERROR CREATE PROCESS", () => {
+        test("SHOULD SEND ERROR 400")
+    })
+})

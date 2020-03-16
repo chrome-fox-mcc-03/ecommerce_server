@@ -15,7 +15,15 @@ const wrongPass = 'helo'
 const wrongEmail = ''
 
 describe('User routes' , () => {
-    
+//delete all tested data everytime you run the test file
+    afterAll((done) => {
+        queryInterface.bulkDelete('Users', {})
+        .then(_ => {
+            done()
+        }).catch((err) => {
+            done(err)
+        });
+    })    
     //test register route
     describe('success POST /register', () => {
         test('sending object (email, id) with status code 201 ', (done) => {
@@ -75,6 +83,23 @@ describe('User routes' , () => {
             })
         })
 
+        test('sending error with status 401 due to duplicate email value ', (done) => {
+            //replacing data.password with the wrong one
+            const duplicateEmailFormat = { ...dummyData, email : 'hasangundul@mail.com' }
+
+            request(app)
+            .post('/register')
+            .send(duplicateEmailFormat)
+            .end((err, res) => {
+                expect(err).toBe(null)
+                expect(res.status).toBe(401)
+                // expect(res.body).toHaveProperty('message', 'email / password is incorrect')
+                // expect(res.body).toHaveProperty('errors', expect.any(Array))
+                // expect(res.body.errors).toContain('Email address is already in used!')
+                // expect(res.body.errors.length).toBeGreaterThan(0)
+                done()
+            })
+        })
 
     })
 
@@ -102,8 +127,8 @@ describe('User routes' , () => {
             .post('/login')
             .send(wrongEmailFormat)
             .end((err, res) => {
-                expect(res.status).toBe(500)
-                expect(res.body).toHaveProperty('message', 'internal server error')
+                expect(res.status).toBe(401)
+                expect(res.body).toHaveProperty('message', 'email / password is incorrect')
                 done()
             })
         })
@@ -111,13 +136,5 @@ describe('User routes' , () => {
 
 
 
-    //delete all tested data everytime you run the test file
-    // afterEach((done) => {
-    //     queryInterface.bulkDelete('Users', {})
-    //     .then(_ => {
-    //         done()
-    //     }).catch((err) => {
-    //         done(err)
-    //     });
-    // })
+    
 })

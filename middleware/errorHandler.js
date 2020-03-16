@@ -1,4 +1,6 @@
 function errorHandler(err, req, res, next){
+    console.log(err, 'err name here');
+    
     let status = 500
     let message = { message : `internal server error` }
     const errors = []
@@ -15,7 +17,7 @@ function errorHandler(err, req, res, next){
             status = 400
             res.status(status).json(message)
             break;
-        case 'SequelizeUniqueConstraintError':
+        case 'UniqueConstraintError':
             // const errors = []
             err.errors.forEach(element => {
                 errors.push(element.message)
@@ -27,7 +29,12 @@ function errorHandler(err, req, res, next){
             status = 401
             res.status(status).json(message)
             break;
+        case 'UserNotFound':
+            res.status(err.status).json(err.message)
+            break;
         default:
+            console.log(status, 'default here');
+            
             res.status(status).json(message)
             break;
     }

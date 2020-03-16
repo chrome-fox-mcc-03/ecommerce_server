@@ -9,7 +9,7 @@ let product = {
 }
 
 let updateProduct = {
-    id:4,
+    id:7,
     name:'soap',
     image_url:'https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/12/19/81976385.jpg',
     price:10000,
@@ -34,6 +34,20 @@ describe('Product routes', () => {
                 })
             })
         })
+        describe('error process', () => {
+            test('should send an error with status 400 cause price negative or null or 0',(done) => {
+                let errorPrice = {...product,price:-5}
+                request(app)
+                .post('/product')
+                .send(errorPrice)
+                .end((err,res) => {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('message',expect.any(Array))
+                    expect(res.status).toBe(400)
+                    done()
+                })
+            })
+        })
     })
 
 
@@ -44,7 +58,7 @@ describe('Product routes', () => {
                 .get('/product')
                 .end((err,res) => {
                     expect(err).toBe(null)
-                    expect(res.body).toHaveProperty('result',expect.any(Array))
+                    expect(res.body).toHaveProperty('message',expect.any(Array))
                     expect(res.status).toBe(200)
                     done()
                 })
@@ -64,6 +78,21 @@ describe('Product routes', () => {
                     expect(res.body).toHaveProperty('image_url',expect.any(String))
                     expect(res.body).toHaveProperty('price',expect.any(Number))
                     expect(res.body).toHaveProperty('stock',expect.any(Number))
+                    expect(res.status).toBe(200)
+                    done()
+                })
+            })
+        })
+        describe('error process', () => {
+            test('should send an error with status 400 cause name null or empty',(done) => {
+                let errorName = {...product,name:''}
+                request(app)
+                .put(`/product/${updateProduct.id}`)
+                .send(errorName)
+                .end((err,res) => {
+                    console.log(res.body)
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('message',expect.any(Array))
                     done()
                 })
             })
@@ -78,6 +107,7 @@ describe('Product routes', () => {
                 .end((err,res) => {
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty('message',expect.any(String))
+                    expect(res.status).toBe(200)
                     done()
                 })
             })

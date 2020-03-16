@@ -31,7 +31,7 @@ Login into website
  
 * **Error Response:**
   * **Code** 400 BAD REQUEST <br />
-    **Content** `{ error: Email / Password invalid!}`
+    **Content** `{ error: Email / Password invalid! }`
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ error : "Internal server error" }`

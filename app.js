@@ -2,7 +2,8 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const { User } = require('./models/index.js')
-const {  } = require('./helpers/bcrypt')
+const { comparePassword } = require('./helpers/bcrypt')
+const { generateToken } = require('./helpers/jwt')
 
 
 app.use(express.urlencoded({ extended: false }))
@@ -27,9 +28,36 @@ app.post("/register", (req, res, next) => {
         })
     
     })
-app.use((req, res, next))
+app.post('/login', (req, res, next) => {
     let { email, password } = req.body
-    User
+    User.findOne({
+        where: { email }
+    })
+        .then(response => {
+            if(comparePassword(password, response.password)) {
+                let payload = {
+                    id: response.id,
+                    email: response.email,
+                    fullname: response.fullname,
+                    isAdmin: response.isAdmin
+                }
+                // const token = generateToken(payload)
+                const token = "testtoken123456789abcdefghijklmnopqrstuvwxyz"
+                res.status(200).json({ token })
+
+            }
+            else {
+                let message = "Email / Password invalid!"
+                res.status(400).json({ message })
+            }
+        })
+        .catch(err => {
+            next({
+                status: 400,
+                message: "Email / Password invalid!"
+            })
+        })
+})
 
 app.use((err, req, res, next) => {
     if(err.name === "SequelizeValidationError" || err.name === "SequelizeUniqueConstraintError") {

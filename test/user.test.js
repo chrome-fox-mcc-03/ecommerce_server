@@ -6,7 +6,7 @@ const { queryInterface } = sequelize;
 let data = {
     email: "ace@mail.com",
     password: "qweqwe",
-    fullname: "Andreas Anggara"
+    // fullname: "Andreas Anggara"
 }
 
 describe("User Routes", () => {
@@ -78,15 +78,45 @@ describe("User Routes", () => {
     //         })
     //     })
     // })
+    // describe("POST /login", () => {
+    //     describe("Success", () => {
+    //         test("Send object (email, password) with status code (200) replied with token", (done) => {
+    //             request(app)
+    //                 .post('/login')
+    //                 .send(data)
+    //                 .end((err, res) => {
+    //                     expect(res.status).toBe(200)
+    //                     expect(res.body.token).toBe("testtoken123456789abcdefghijklmnopqrstuvwxyz")
+    //                     done()
+    //                 })
+    //         })
+    //     })
+    // })
+    // describe("POST /login", () => {
+    //     describe("Error", () => {
+    //         test("Send object (email, password) with status code (400) replied Email / Password invalid!", (done) => {
+    //             data.email = "ace2@mail.com"
+    //             request(app)
+    //                 .post('/login')
+    //                 .send(data)
+    //                 .end((err, res) => {
+    //                     expect(res.status).toBe(400)
+    //                     expect(res.body.message).toBe("Email / Password invalid!")
+    //                     done()
+    //                 })
+    //         })
+    //     })
+    // })
     describe("POST /login", () => {
-        describe("Success", () => {
-            test("Send object (email, password) with status code (200) replied with token", (done) => {
+        describe("Error", () => {
+            test("Send object (email, password) with status code (400) replied with replied Email / Password invalid!", (done) => {
+                data.password = "123"
                 request(app)
                     .post('/login')
                     .send(data)
                     .end((err, res) => {
-                        expect(res.status).toBe(200)
-                        expect(res.body.errors[0]).toBe("Password at least 5 characters")
+                        expect(res.status).toBe(400)
+                        expect(res.body.message).toBe("Email / Password invalid!")
                         done()
                     })
             })

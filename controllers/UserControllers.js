@@ -9,7 +9,6 @@ class UserController {
             password
         })
         .then((userCreated) => {
-            // console.log(userCreated);
             
             res.status(201).json({
                 "email" : userCreated.email,
@@ -22,8 +21,7 @@ class UserController {
 
     static login(req, res, next){
         const { email } = req.body
-        // console.log(email, 'from controller');
-        
+
         User.findOne({
             where: {
                 email
@@ -49,24 +47,27 @@ class UserController {
                         access_token
                     })
                 } else {
-                    const error = {
+                    const err = {
                         status : 401,
+                        name : 'ErrorPassword',
                         message : 'email / password is incorrect'
                     }
 
-                    throw error
+                    throw err
                 }
 
             } else {
-                const error = {
+                const err = {
                     status : 401,
-                    message : 'user not found'
+                    name : 'UserNotFound',
+                    message : 'email / password is incorrect'
                 }
 
-                throw error
+                throw err
             }
             
         }).catch((err) => {
+            
             next(err)
         });
     }

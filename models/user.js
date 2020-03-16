@@ -21,7 +21,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty : {
           args : true,
           msg : `email is required`
-        }
+        },
+      },
+      
+      unique : {
+        args : true,
+        msg : 'Email address is already in use!'
       }
     },
     password: {

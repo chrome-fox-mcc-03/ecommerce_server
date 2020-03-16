@@ -8,6 +8,8 @@ let data = {
     password: "123456",
 }
 
+let acccess_token = '';
+
 describe('user route', () => {
     afterAll((done) => {
         queryInterface.bulkDelete("Users", {})
@@ -177,9 +179,12 @@ describe('user route', () => {
                         expect(err).toBeNull();
                         expect(res.status).toBe(200);
                         expect(res.body).toHaveProperty('access_token', expect.any(String));
+                        acccess_token = res.body.acccess_token;
                         done();
                     })
             })
         })
     });
 });
+
+describe('product route', () => {});

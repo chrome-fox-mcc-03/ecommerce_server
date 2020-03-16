@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const { compareHash } = require('../helpers/bcrypt');
 const { getToken } = require('../helpers/jwt');
-const getPayload = require('../helpers/getPayload');
+const appPayload = require('../helpers/appPayload');
 const appError = require('../helpers/appError');
 
 class UserController {
@@ -41,7 +41,7 @@ class UserController {
         .then(result => {
             if (result) {
                 if (compareHash(body.password, result.password)) {
-                    let access_token = getToken(getPayload(result));
+                    let access_token = getToken(appPayload(result));
                     res.status(200).json({
                         access_token
                     })

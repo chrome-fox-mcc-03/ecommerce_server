@@ -7,11 +7,11 @@ router.use (authentication) ;
 
 router.get('/', ProductController.findAll) ;
 
-// router.use (authorization) ;
+router.use (authorization) ;
 
-// router.post('/', ProductController.create) ;
-// router.put('/', ProductController.update) ;
-// router.delete('/', ProductController.destroy) ;
+router.post('/', ProductController.create) ;
+router.put('/:id', ProductController.update) ;
+router.delete('/:id', ProductController.destroy) ;
 
 
 

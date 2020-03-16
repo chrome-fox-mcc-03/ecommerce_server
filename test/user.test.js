@@ -1,4 +1,5 @@
 const request = require('supertest')
+const {User} = require("../models")
 const app = require('../app')
 const {
     sequelize
@@ -14,26 +15,27 @@ let data = {
     role: "admin"
 }
 
+afterAll((done) => {
+    queryInterface.bulkDelete("Users", {})
+        .then(_ => {
+            done()
+        })
+        .catch(err => {
+            done(err)
+        })
+    })
+
 describe('--- USER ROUTES ---', () => {
 
     // IF WE/RE ABOUT TO IMPOSE UNIQUE EMAIL, THEN WE MAY ONLY DELETE AFTER
     // EVERY TEST IS DONE
-    /* afterEach((done) => {
-        queryInterface.bulkDelete('Users', {})
-          .then(_ => {
-            done()
-          }).catch(err => done(err))
-    }) */
+    // afterEach((done) => {
+    //     queryInterface.bulkDelete('Users', {})
+    //       .then(_ => {
+    //         done()
+    //       }).catch(err => done(err))
+    // })
 
-    afterAll((done) => {
-        queryInterface.bulkDelete("Users", {})
-            .then(_ => {
-                done()
-            })
-            .catch(err => {
-                done(err)
-            })
-    })
 
     // USER REGISTER
     describe('POST /register', () => {
@@ -45,9 +47,9 @@ describe('--- USER ROUTES ---', () => {
                     .post('/register')
                     .send(data)
                     .end((err, res) => {
-                        expect(err).toBe(null)
                         // console.log(res);
                         // console.log(res.body);
+                        expect(err).toBe(null)
                         expect(res.body).toHaveProperty("data", expect.any(Object))
                         expect(res.body.data).toHaveProperty('id', expect.any(Number))
                         expect(res.body.data).toHaveProperty('id', expect.any(Number))
@@ -114,26 +116,26 @@ describe('--- USER ROUTES ---', () => {
             })
 
 
-            // EMAIL DUPLICATE
-            test('SHOULD SEND ERROR 400 BECAUSE OF DUPLICATE EMAIL', (done) => {
-                request(app)
-                    .post('/register')
-                    .send(data)
-                    .end((err, res) => {
-                        console.log("ERROR RESPONSE");
-                        // console.log(res);
-                        console.log("RES BODY");
-                        console.log(res.body);
-                        console.log("RES STATUS");
-                        console.log(res.status);
-                        expect(err).toBe(null)
-                        expect(res.status).toBe(400)
-                        expect(res.body).toHaveProperty('message', expect.any(String))
-                        expect(res.body.errors.length).toBeGreaterThan(0)
-                        expect(res.body).toHaveProperty('errors', expect.any(Array))
-                        done()
-                    })
-            })
+            // // EMAIL DUPLICATE
+            // test('SHOULD SEND ERROR 400 BECAUSE OF DUPLICATE EMAIL', (done) => {
+            //     request(app)
+            //         .post('/register')
+            //         .send(data)
+            //         .end((err, res) => {
+            //             console.log("ERROR RESPONSE");
+            //             // console.log(res);
+            //             console.log("RES BODY");
+            //             console.log(res.body);
+            //             console.log("RES STATUS");
+            //             console.log(res.status);
+            //             expect(err).toBe(null)
+            //             expect(res.status).toBe(400)
+            //             expect(res.body).toHaveProperty('message', expect.any(String))
+            //             expect(res.body.errors.length).toBeGreaterThan(0)
+            //             expect(res.body).toHaveProperty('errors', expect.any(Array))
+            //             done()
+            //         })
+            // })
             
         })
 
@@ -199,8 +201,30 @@ describe('--- USER ROUTES ---', () => {
     })
 
 
+    // beforeEach((done) => {
+    //     User.create(data)
+    //         .then(_ => {
+    //             done()
+    //         })
+    //         .catch(err => {
+    //             done(err)
+    //         })
+    // })
 
+    // USER LOGIN
+    describe("USER /login", () => {
 
+        // LOGIN SUCCESS
+        describe("LOGIN SUCCESS", () => {
+            request(app)
+                .post("/login")
+                .send(data)
+                .end((req, res) => {
+                    done()
+                })
+
+        })
+    })
 
 
 })

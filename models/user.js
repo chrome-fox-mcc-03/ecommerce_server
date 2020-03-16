@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: 'email must be filled'
         }
+        // ,
+        // unique: {
+        //   args: true,
+        //   msg: 'email already in use'
+        // }
       }
     },
     password: {
@@ -33,6 +38,34 @@ module.exports = (sequelize, DataTypes) => {
         len: {
           args: [5],
           msg: 'password is at least 5 character'
+        }
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'name must be filled'
+        },
+        notNull: {
+          args: true,
+          msg: 'name must be filled'
+        }
+      }
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'role must be filled'
+        },
+        notNull: {
+          args:true,
+          msg: 'role must be filled'
         }
       }
     }

@@ -20,6 +20,21 @@ const errorHandler = (err, req, res, next) => {
             }
             res.status(400).json(error)
             break;
+        case 'JsonWebTokenError':
+            message = 'You are not authenticated'
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(404).json(error)
+            break;
+        case 'user not found': 
+            message = err.name
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(400).json(error)
         default:
             message = 'Database Error'
             error = {

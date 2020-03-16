@@ -4,15 +4,19 @@ const { makeToken } = require('./../helper/jwt')
 
 class Controller {
     static register(req, res, next){
-        const { email, password } = req.body
+        const { email, password, name, role } = req.body
         User.create({
             email,
-            password
+            password,
+            name,
+            role
         })
             .then(user => {
                 const payload = {
                     email: user.email,
-                    id: user.id
+                    id: user.id,
+                    name: user.name,
+                    role: user.role
                 }
                 console.log(user)
                 res.status(201).json(payload)
@@ -41,7 +45,9 @@ class Controller {
                     if (compare) {
                         const payload = {
                             id: result.id,
-                            email: result.email
+                            email: result.email,
+                            name: result.email,
+                            role: result.role
                         }
                         const token = makeToken(payload)
                         req.headers.token = token

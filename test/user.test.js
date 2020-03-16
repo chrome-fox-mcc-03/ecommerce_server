@@ -5,7 +5,9 @@ const { queryInterface } = sequelize
 
 let data = {
     email: 'naufalyunan45@gmail.com',
-    password: '12345'
+    password: '12345',
+    name: 'naufal',
+    role: 'admin'
 }
 
 describe('User routes', ()=> {
@@ -26,6 +28,8 @@ describe('User routes', ()=> {
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('email', data.email)
                         expect(res.body).toHaveProperty('id', expect.any(Number))
+                        expect(res.body).toHaveProperty('name', expect.any(String))
+                        expect(res.body).toHaveProperty('role', expect.any(String))
                         expect(res.status).toBe(201)
                         done()
                     })
@@ -64,6 +68,21 @@ describe('User routes', ()=> {
                         done()
                     })
             })
+            // test('send error with status 400 because email is not unique', (done) => {
+            //     const emailAlreadyUsed = { ...data }
+            //     request(app)
+            //         .post('/register')
+            //         .send(emailAlreadyUsed)
+            //         .end((err,res) => {
+            //             expect(err).toBe(null)
+            //             expect(res.body).toHaveProperty('message', 'Invalid validator function: unique')
+            //             expect(res.body).toHaveProperty('errors', expect.any(Array))
+            //             expect(res.body.errors).toContain('Invalid validator function: unique')
+            //             expect(res.body.errors.length).toBeGreaterThan(0)
+            //             expect(res.status).toBe(400)
+            //             done()
+            //         })
+            // })
             test('send error with status 400 because password is not filled', done => {
                 const withoutPass = { ...data }
                 withoutPass.password = ''
@@ -95,6 +114,38 @@ describe('User routes', ()=> {
                         done()
                     })
             })
+            test('send error with status 400 because role is not filled', done => {
+                const noRole = { ...data }
+                delete noRole.role
+                request(app)
+                    .post('/register')
+                    .send(noRole)
+                    .end((err,res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'role must be filled')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('role must be filled')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            })
+            test('send error with status 400 because name is not filled', done => {
+                const noName = { ...data }
+                delete noName.name
+                request(app)
+                    .post('/register')
+                    .send(noName)
+                    .end((err,res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'name must be filled')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('name must be filled')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            })
         })
     })
     describe('POST /login', () => {
@@ -107,6 +158,8 @@ describe('User routes', ()=> {
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('token', expect.any(String))
                         expect(res.status).toBe(200)
+                        process.env.EXAMPLE_TOKEN = res.body.token
+                        console.log(process.env.EXAMPLE_TOKEN)
                         done()
                     })
             })
@@ -144,4 +197,21 @@ describe('User routes', ()=> {
             })
         })
     })
+    // describe('GET /users', () => {
+    //     describe('success', () => {
+    //         test('get all users', done => {
+    //             const token = process.env.EXAMPLE_TOKEN
+    //             console.log(process.env.EXAMPLE_TOKEN)
+    //             request(app)
+    //                 .get('/users')
+    //                 .send(token)
+    //                 .end((err, res) => {
+    //                     expect(err).toBe(null)
+    //                     console.log(res.body)
+    //                     expect(res.body.length).toBeGreaterThan(0)
+    //                     done()
+    //                 })
+    //         })
+    //     })
+    // })
 })

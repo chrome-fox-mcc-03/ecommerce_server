@@ -5,7 +5,11 @@ function makeToken(payload) {
     return token    
 }
 
+function verify(token) {
+    return jwt.verify(token, process.env.SECRET);
+}
 
 module.exports = {
-    makeToken
+    makeToken,
+    verify
 }

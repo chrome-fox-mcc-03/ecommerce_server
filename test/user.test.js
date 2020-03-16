@@ -5,8 +5,7 @@ const { queryInterface } = sequelize ;
 
 let data = {
     email : 'admin@mail.com',
-    password : 'password',
-    role : 'admin'
+    password : 'password'
 } ;
 
 describe('/users', () => {
@@ -64,10 +63,6 @@ describe('/users', () => {
                         done()  
                     })
             })
-
-            //    : Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.Timeout - Async callback was not invoked within the 5000ms timeout specified by jest.setTimeout.Error:
-
-
             test('error will have status code 400, because email is invalid', (done)=> {
                 const invalidEmail = { ...data}
                 invalidEmail.email = 'noemail'
@@ -132,38 +127,62 @@ describe('/users', () => {
                         done()  
                     })
             })
-            test('error will have status code 400, because role is empty string', (done)=> {
-                const emptyRole = { ...data}
-                emptyRole.role = ''
+        })
+    })
+
+    describe('POST /users/login', () => {
+        describe('success case', () => {
+            test('respond will be an object (access_token) with status code (200)', (done) => {
                 request(app)
-                    .post('/users/register')
-                    .send(emptyRole)
-                    .end((err,res)=>{
-                        expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('message', 'Bad Request')
-                        expect(res.body).toHaveProperty('errors', expect.any(Array))
-                        expect(res.body.errors).toContain('Role cannot be empty')
-                        expect(res.body.errors.length).toBeGreaterThan(0)
-                        expect(res.status).toBe(400)
-                        done()  
-                    })
+                .post('/users/login')
+                .send({
+                    email : 'admin@mail.com',
+                    password : 'password',
+                })
+                .end((err,res)=>{
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('access_token', expect.anything())
+                    expect(res.status).toBe(200)
+                    done()
+                })
             })
-            test('error will have status code 400, because missing role value', (done)=> {
-                const withoutRole = { ...data}
-                delete withoutRole.role
+        })
+        describe('error case', ()=> {
+            test('error will have status code 400, because wrong password)', (done) => {
                 request(app)
-                    .post('/users/register')
-                    .send(withoutRole)
-                    .end((err,res)=>{
-                        expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('message', 'Bad Request')
-                        expect(res.body).toHaveProperty('errors', expect.any(Array))
-                        expect(res.body.errors).toContain('Role cannot be empty')
-                        expect(res.body.errors.length).toBeGreaterThan(0)
-                        expect(res.status).toBe(400)
-                        done()  
-                    })
+                .post('/users/login')
+                .send({
+                    email : 'admin@mail.com',
+                    password : 'password1',
+                })
+                .end((err,res)=>{
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('message', 'Bad Request')
+                    expect(res.body).toHaveProperty('errors', expect.any(Array))
+                    expect(res.body.errors).toContain('Wrong email/password')
+                    expect(res.body.errors.length).toBeGreaterThan(0)
+                    expect(res.status).toBe(400)
+                    done()  
+                })
             })
+            test('error will have status code 400, because wrong email)', (done) => {
+                request(app)
+                .post('/users/login')
+                .send({
+                    email : 'admi@mail.com',
+                    password : 'password',
+                })
+                .end((err,res)=>{
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('message', 'Bad Request')
+                    expect(res.body).toHaveProperty('errors', expect.any(Array))
+                    expect(res.body.errors).toContain('Wrong email/password')
+                    expect(res.body.errors.length).toBeGreaterThan(0)
+                    expect(res.status).toBe(400)
+                    done()  
+                })
+            })
+
         })
     })
 })

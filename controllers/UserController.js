@@ -1,12 +1,19 @@
 const { User } = require ('../models/index') ;
 const { getToken } = require('../helpers/jwt') ;
 const { checkPassword } = require('../helpers/bcrypt') ;
+
 class UserController {
     static register (req,res,next) {
+
         let newUser = {
             email : req.body.email,
             password : req.body.password,
-            role : req.body.role
+        }
+
+        if (!req.body.role) {
+            newUser.role = 'customer'
+        } else {
+            newUser.role = req.body.role
         }
 
         User.create(newUser)
@@ -52,7 +59,7 @@ class UserController {
         
                         let token = getToken(payload) ;
         
-                        res.status(201).json({
+                        res.status(200).json({
                             access_token : token
                         })
                     } else {

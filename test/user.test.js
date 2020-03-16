@@ -13,7 +13,7 @@ let data = {
 }
 
 describe('User routes', () => {
-    afterEach((done) => {
+    afterAll((done) => {
         queryInterface.bulkDelete('Users', {})
             .then(() => {
                 done()
@@ -53,6 +53,21 @@ describe('User routes', () => {
                         expect(res.body.errors).toContain('Email Is Required')
                         expect(res.body.errors.length).toBeGreaterThan(0)
                         expect(res.status).toBe(400)
+                        done()
+                    })
+            })
+        })
+    })
+    describe('POST /login', () => {
+        describe('Success Process', () => {
+            test('Should send an object (token) with status code 201', (done) => {
+                request(app)
+                    .post('/users/login')
+                    .send(data)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('token', expect.any(String))
+                        expect(res.status).toBe(201)
                         done()
                     })
             })

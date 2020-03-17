@@ -1,5 +1,4 @@
 const env = process.env.NODE_ENV || 'development'
-console.log(env)
 switch (env) {
   case "development" :
     require('dotenv').config({
@@ -10,7 +9,6 @@ switch (env) {
     require('dotenv').config({
       path : process.cwd() + '/.env.test'
     })
-    console.log(process.env.DB_DIALECT)
     break;
     
   }

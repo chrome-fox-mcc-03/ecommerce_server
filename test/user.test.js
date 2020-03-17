@@ -11,15 +11,15 @@ let data = {
 }
 
 describe('Routes User', function() {
-    afterEach((done) => {
-        queryInterface.bulkDelete('Users', {})
-            .then(function() {
-                done()
-            })
-            .catch(function(err) {
-                done(err)
-            })
-    });
+    // afterEach((done) => {
+    //     queryInterface.bulkDelete('Users', {})
+    //         .then(function() {
+    //             done()
+    //         })
+    //         .catch(function(err) {
+    //             done(err)
+    //         })
+    // });
 
 
     describe("Testing Register", function() {
@@ -53,5 +53,40 @@ describe('Routes User', function() {
                 })
 
         });
+    });
+
+    describe('Testing Login', () => {
+        test('Should object', (done) => {
+            let loginEmail = {...data}
+            // console.log(loginEmail)
+            request(app)
+                .post('/user/login')
+                .send(loginEmail)
+                .end(function(err, res) {
+                    // console.log(res)
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty("Access_Token", expect.any(String))
+                    expect(res.body).toHaveProperty('Email', expect.any(String))
+                    done()
+                })
+        });
+        
+    });
+    
+    describe('Error Login', () => {
+        test('Should Error Code 400 missing email value', (done) => {
+            let loginwithoutemail = {...data}
+            delete loginwithoutemail.Email
+            request(app)
+                .post('/user/login')
+                .send(loginwithoutemail)
+                .end(function(err, res) {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty("message", expect.any(String))
+                    expect(res.status).toBe(400)
+                    done()
+                })
+        });
+        
     });
 })

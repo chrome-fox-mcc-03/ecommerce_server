@@ -1,4 +1,5 @@
 'use strict';
+const encrypt = require('../helper/encrypt')
 module.exports = (sequelize, DataTypes) => {
 
   class User extends sequelize.Sequelize.Model {}
@@ -6,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       Email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: {
+          args: true,
+          msg: "Email Already Used!!"
+        },
         validate: {
           
           isEmail: {
@@ -25,8 +30,16 @@ module.exports = (sequelize, DataTypes) => {
       } ,
       Password: {
         type: DataTypes.STRING
-      } 
-    }, { sequelize, modelName: 'User' });
+      },
+      Role: DataTypes.STRING 
+    }, { 
+      hooks:{
+        beforeCreate(user, options) { 
+          user.Password = encrypt(user.Password)
+
+        }
+      },
+      sequelize, modelName: 'User' });
   User.associate = function(models) {
     // associations can be defined here
   };

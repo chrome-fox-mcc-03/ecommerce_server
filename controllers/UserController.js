@@ -72,6 +72,7 @@ class UserController {
                     console.log("ACCESS TOKEN IS");
                     console.log(accessToken);
                     req.headers.token = accessToken
+                    localStorage.setItem("token", accessToken)
                     res.status(200).json({token:accessToken})
     
                 } else {

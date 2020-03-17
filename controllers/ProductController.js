@@ -30,9 +30,9 @@ class ProductController {
     static getAll(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: SEE ALL PRODUCTS ---');
         Product.findAll()
-            .then(products => {
+            .then(response => {
                 console.log("VIEWING LIST OF PRODUCTS");
-                res.status(200).json(products)
+                res.status(200).json({data: response})
             })
             .catch(err => {
                 console.log("ERROR VIEWING LIST OF PRODUCTS");

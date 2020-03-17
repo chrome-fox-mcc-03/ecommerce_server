@@ -1,103 +1,149 @@
-       // EMAIL ERRORS
-//         describe('REGISTER ERROR TYPE 1: EMAIL',()=>{
+    /* // ADD PRODUCT FAILS: NO NAME
+        describe('ADD PRODUCT FAILS', () => {
 
-//             // EMAIL IS EMPTY/MISSING
-//             // test('SHOULD SEND ERROR 400 BECAUSE OF MISSING EMAIL',(done)=>{
-//             //     const withoutEmail = { ...data }
-//             //     delete withoutEmail.email
-//             //     request(app)
-//             //         .post('/register')
-//             //         .send(withoutEmail)
-//             //         .end((err,res)=>{
-//             //             expect(err).toBe(null)
-//             //             expect(res.body).toHaveProperty('message', 'BAD')
-//             //             expect(res.body).toHaveProperty('errors', expect.any(Array))
-//             //             expect(res.body.errors.length).toBeGreaterThan(0)
-//             //             expect(res.body.errors).toContain('EMAIL REQUIRED')
-//             //             expect(res.status).toBe(400)  
-//             //             done()
-//             //         })
-//             // })
+            test('SHOULD SEND AN ERROR 400 BECAUSE OF EMPTY NAME', (done) => {
+                let noName = {
+                    ...testData
+                }
+                delete noName.name
+                // console.log("SANITY CHECK");
+                // console.log(noName);
+                request(app)
+                    .post('/products')
+                    .send({
+                        data: noName,
+                        headers: {
+                            token: testToken
+                        }
+                    })
+                    .end((err, res) => {
+                        // console.log(res);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log(res.status);
+                        expect(res.status).toBe(400)
+                        expect(res.body).toHaveProperty("message", expect.any(String))
+                        expect(res.body).toHaveProperty("errors", expect.any(Array))
+                        done()
+                    })
 
-//             // EMAIL INVALID
-//             // test('SHOULD SEND ERROR 400 BECAUSE OF INVALID EMAIL',(done)=>{
-//             //     const invalidEmail = { ...data, email: "sysadmin"}
-//             //     request(app)
-//             //         .post('/register')
-//             //         .send(invalidEmail)
-//             //         .end((err,res)=>{
-//             //             expect(err).toBe(null)
-//             //             expect(res.body).toHaveProperty('message', 'Bad Request')
-//             //             expect(res.body).toHaveProperty('errors', expect.any(Array))
-//             //             expect(res.body.errors.length).toBeGreaterThan(0)
-//             //             expect(res.body.errors).toContain('INVALID EMAIL FORMAT')
-//             //             expect(res.status).toBe(400)  
-//             //             done()
-//             //         })
-//             // })
+            })
 
 
-// /*             // EMAIL DUPLICATE
-//             test('SHOULD SEND ERROR 400 BECAUSE OF DUPLICATE EMAIL',(done)=>{
-//                 request(app)
-//                     .post('/register')
-//                     .send(data)
-//                     .end((err,res)=>{
-                        
-//                         expect(err).toBe(null)
-//                         expect(res.status).toBe(400) 
-//                         expect(res.body).toHaveProperty('message', 'Bad Request')
-//                         // expect(res.status).toBe(500) 
-//                         // expect(res.body).toHaveProperty('message', 'internal server error')
-//                         expect(res.body).toHaveProperty('errors', expect.any(Array))
-//                         expect(res.body.errors.length).toBeGreaterThan(0)
-//                         expect(res.body.errors).toContain("EMAIL MUST BE UNIQUE")
-                        
-//                         done()
-//                     })
-//             }) */
+            // NEGATIVE STOCK & PRICE
+            test('SHOULD SEND AN ERROR 400 BECAUSE PRICE IS NEGATIVE', (done) => {
+                let negPrice = {
+                    ...testData,
+                    price: -2000
+                }
+                // console.log("SANITY CHECK");
+                // console.log(noName);
+                request(app)
+                    .post('/products')
+                    .send({
+                        data: negPrice,
+                        headers: {
+                            token: testToken
+                        }
+                    })
+                    .end((err, res) => {
+                        // console.log(res);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log(res.status);
+                        expect(res.status).toBe(400)
+                        expect(res.body).toHaveProperty("message", expect.any(String))
+                        expect(res.body).toHaveProperty("errors", expect.any(Array))
+                        done()
+                    })
 
-//         })
+            })
+
+            test('SHOULD SEND AN ERROR 400 BECAUSE STOCK IS NEGATIVE', (done) => {
+                let negStock = {
+                    ...testData,
+                    stock: -2000
+                }
+                // console.log("SANITY CHECK");
+                // console.log(noName);
+                request(app)
+                    .post('/products')
+                    .send({
+                        data: negStock,
+                        headers: {
+                            token: testToken
+                        }
+                    })
+                    .end((err, res) => {
+                        // console.log(res);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log(res.status);
+                        expect(res.status).toBe(400)
+                        expect(res.body).toHaveProperty("message", expect.any(String))
+                        expect(res.body).toHaveProperty("errors", expect.any(Array))
+                        done()
+                    })
+
+            })
 
 
-        // PASSWORD ERRORS
-        // describe('REGISTER ERROR TYPE 2: PASSWORD',()=>{
-            
-        //     // PASSWORD EMPTY
-        //     test('SHOULD SEND ERROR 400 BECAUSE OF EMPTY PASSWORD',(done)=>{
-        //         const withoutPassword = { ...data }
-        //         delete withoutPassword.password
-        //         console.log("SANITY CHECK");
-        //         console.log(withoutPassword);
-        //         request(app)
-        //             .post('/register')
-        //             .send(withoutPassword)
-        //             .end((err,res)=>{
-        //                 expect(err).toBe(null)
-        //                 expect(res.body).toHaveProperty('message', 'Bad Request')
-        //                 expect(res.body).toHaveProperty('errors', expect.any(Array))
-        //                 expect(res.body.errors.length).toBeGreaterThan(0)
-        //                 expect(res.body.errors).toContain('PASSWORD REQUIRED')
-        //                 expect(res.status).toBe(400)  
-        //                 done()
-        //             })
-        //     })
+            //NON-NUMERICAL FORMAT
+            test('SHOULD SEND AN ERROR 400 BECAUSE PRICE IS NON-NUMERIC', (done) => {
+                let nanPrice = {
+                    ...testData,
+                    price: 'i2000'
+                }
+                // console.log("SANITY CHECK");
+                // console.log(noName);
+                request(app)
+                    .post('/products')
+                    .send({
+                        data: nanPrice,
+                        headers: {
+                            token: testToken
+                        }
+                    })
+                    .end((err, res) => {
+                        // console.log(res);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log(res.status);
+                        expect(res.status).toBe(400)
+                        expect(res.body).toHaveProperty("message", expect.any(String))
+                        expect(res.body).toHaveProperty("errors", expect.any(Array))
+                        done()
+                    })
+
+            })
+
+            test('SHOULD SEND AN ERROR 400 BECAUSE STOCK IS NON-NUMERIC', (done) => {
+                let nanStock = {
+                    ...testData,
+                    stock: 'i200'
+                }
+                // console.log("SANITY CHECK");
+                // console.log(noName);
+                request(app)
+                    .post('/products')
+                    .send({
+                        data: nanStock,
+                        headers: {
+                            token: testToken
+                        }
+                    })
+                    .end((err, res) => {
+                        // console.log(res);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log(res.status);
+                        expect(res.status).toBe(400)
+                        expect(res.body).toHaveProperty("message", expect.any(String))
+                        expect(res.body).toHaveProperty("errors", expect.any(Array))
+                        done()
+                    })
+
+            })
 
 
-        //     // PASSWORD LESS THAN 6 CHARS
-        //     test('SHOULD SEND ERROR 400 BECAUSE OF PASSWORDS < 6 OR > 16 CHARACTERS',(done)=>{
-        //         const falsePassFormat = { ...data, password: 'hallo' }
-        //         request(app)
-        //             .post('/register')
-        //             .send(falsePassFormat)
-        //             .end((err,res)=>{
-        //                 expect(err).toBe(null)
-        //                 expect(res.body).toHaveProperty('message', 'Bad Request')
-        //                 expect(res.body).toHaveProperty('errors', expect.any(Array))
-        //                 expect(res.body.errors.length).toBeGreaterThan(0)
-        //                 expect(res.body.errors).toContain('PASSWORD MUST BETWEEN 6-16 CHARACTERS')
-        //                 expect(res.status).toBe(400)  
-        //                 done()
-        //             })
-        //     })
-        // })
+        }) */

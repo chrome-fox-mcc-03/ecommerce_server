@@ -6,7 +6,8 @@ let payload
 function authentication(req, res, next) {
     console.log(">>> AUTHENTICATION <<<");
     try {
-        token = req.headers.token
+        // token = req.headers.token
+        token = localStorage.getItem("token")
         console.log("token is");
         console.log(token);
         payload = verifyToken(token)

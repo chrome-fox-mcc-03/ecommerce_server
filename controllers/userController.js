@@ -1,6 +1,6 @@
 const {
     User
-} = require('../models/index')
+} = require('../models')
 
 const {
     checkPassword

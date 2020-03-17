@@ -1,6 +1,6 @@
 const {
     Product
-} = require('../models/index')
+} = require('../models')
 
 class controller {
     static add(req, res, next) {

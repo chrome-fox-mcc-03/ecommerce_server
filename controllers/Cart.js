@@ -130,7 +130,6 @@ class CartController {
 
     static cartHistory(req, res, next) {
         const UserId = req.loginId;
-
     }
 
 }

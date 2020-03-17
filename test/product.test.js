@@ -208,7 +208,7 @@ describe('Product Router', () => {
                         .expect(200)
                         .end((err, res) => {
                             expect(err).toBe(null)
-                            expect(res.body).toHaveProperty('msg', 'ok')
+                            expect(res.body).toHaveProperty('msg', 'Product edited.')
                             done()
                         })
                     })

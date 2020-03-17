@@ -27,7 +27,8 @@ class Controller {
             stock: req.body.stock,
             category: req.body.category,
             description: req.body.description,
-            img_url: req.body.img_url
+            img_url: req.body.img_url,
+            highlighted: req.body.highlighted
         }
 
         Product.update(data,{
@@ -36,7 +37,7 @@ class Controller {
             }
         })
         .then(result => {
-            res.status(200).json({msg: 'ok'})
+            res.status(200).json({msg: 'Product edited.'})
         })
         .catch(next)
     }

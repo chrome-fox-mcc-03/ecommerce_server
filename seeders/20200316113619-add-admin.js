@@ -8,7 +8,9 @@ module.exports = {
         email: "admin@admin.com",
         password: hashPassword('qweqwe'),
         fullname: "Andreas Anggara",
-        isAdmin: true
+        isAdmin: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }], {});
   },
 

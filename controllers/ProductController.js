@@ -2,7 +2,7 @@ const { Product } = require('../models')
 
 class ProductController {
     static addProduct(req, res, next){
-        const { name, image_url, price, stock }
+        const { name, image_url, price, stock } = req.body
         Product.create({
             name,
             image_url,
@@ -19,7 +19,11 @@ class ProductController {
                 err
             })
         })
-    }   
+    }
+    
+    static fetchProduct(req, res, next){
+        
+    }
 }
 
 

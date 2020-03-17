@@ -7,12 +7,22 @@ const { queryInterface } = sequelize
 //dummy data to check whether the test working or not
 let dummyData = {
     email : 'hasangundul@mail.com',
-    password : 'hasan12345'
+    password : 'hasan12345',
+    role : 'admin'
 }
 
 //dummy wrong password
 const wrongPass = 'helo'
 const wrongEmail = ''
+
+
+//dummy Product
+let dummyProduct = {
+    name : 'Usb card',
+    image_url : null,
+    price : 12000,
+    stock : 10
+}
 
 describe('User routes' , () => {
 //delete all tested data everytime you run the test file
@@ -148,8 +158,17 @@ describe('User routes' , () => {
     })
 
 
-    describe('Success POST /product', () > {
-        
+    describe('Success POST /product', () => {
+        test('[create product] sending status code 201', (done) => {
+            request(app)
+            .post('/product')
+            .send(dummyProduct)
+            .end((err, res) => {
+                expect(err).toBe(null)
+                expect(res.status).toBe(201)
+                done()
+            })
+        })
     })
 
 

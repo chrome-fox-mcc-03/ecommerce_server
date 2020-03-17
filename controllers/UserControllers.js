@@ -3,18 +3,22 @@ const { comparePassword } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwtoken')
 class UserController {
     static register(req, res, next) {
-        const { email, password } = req.body
+        const { email, password, role } = req.body
+        
+        
         User.create({
             email,
-            password
+            password,
+            role
         })
         .then((userCreated) => {
-            
             res.status(201).json({
                 "email" : userCreated.email,
-                "id" : userCreated.id
+                "id" : userCreated.id,
+                "role" : userCreated.role
             })
         }).catch((err) => {
+            console.log(err, 'created');
             next(err)
         });
     }

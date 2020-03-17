@@ -168,6 +168,24 @@ describe('User Routes', () => {
               done()
             })
         })
+
+        // Is In
+        test('Is In [true, user] Role', done => {
+          request(app)
+            .post('/register')
+            .send({
+              email: 'coba@coba.com',
+              password: '1234567',
+              role: 'adminx'
+            })
+            .end((err, res) => {
+              expect(err).toBeNull();
+              expect(res.status).toBe(400);
+              expect(res.body).toHaveProperty('message', expect.any(Array));
+              expect(res.body.message).toEqual(expect.arrayContaining(['Only Accept true or false']))
+              done();
+            })
+        })
       })
     })
   })

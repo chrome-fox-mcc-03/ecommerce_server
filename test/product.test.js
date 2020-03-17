@@ -328,7 +328,7 @@ describe('Product Routes', () => {
       test('Wrong authentication to read product', done => {
         request(app)
           .get('/products')
-          .set('access_token', 'wrong token')
+          .set('access_token', null)
           .end((err, res) => {
             expect(err).toBeNull()
             expect(res.body).toHaveProperty('message', 'You Must Login / Register First')

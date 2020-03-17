@@ -9,7 +9,7 @@ class LoginController {
     })
       .then(user => {
         if (user) {
-          const correctPassword = Helper.verify(password, user.password)
+          const correctPassword = Helper.comparePassword(password, user.password)
           if (correctPassword) {
             const payload = { id: user.id }
             const access_token = Helper.generateToken(payload)

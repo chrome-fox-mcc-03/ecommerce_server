@@ -14,7 +14,6 @@ module.exports = function (req, res, next) {
                     where: {
                         email: req.decoded.email,
                         id: req.decoded.id,
-                        role: true
                     }
                 })
                 .then(response => {

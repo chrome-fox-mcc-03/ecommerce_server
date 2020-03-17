@@ -51,7 +51,6 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     User.belongsToMany(models.Product, { through: models.ProductUser })
     User.hasMany(models.ProductUser)
-    User.hasMany(models.Product)
   };
   return User;
 };

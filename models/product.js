@@ -53,17 +53,13 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Stock cannot be empty'
         }
       }
-    },
-    UserId: {
-      type: DataTypes.INTEGER
-    } 
+    }
   }, {
     sequelize
   })
   Product.associate = function(models) {
     Product.belongsToMany(models.User, { through: models.ProductUser })
     Product.hasMany(models.ProductUser)
-    Product.belongsTo(models.User)
   };
   return Product;
 };

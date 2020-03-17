@@ -14,7 +14,6 @@ class ProductController {
             image_url: req.body.image_url,
             price: req.body.price,
             stock: req.body.stock,
-            UserId: req.decoded.id
         })
             .then(response => {
                 res.status(201).json({data: response})
@@ -59,7 +58,7 @@ class ProductController {
         })
             .then(_ => {
                 let msg = 'Product Deleted'
-                res.status(200).json(msg)
+                res.status(200).json({ message: msg })
             })
             .catch(next)
     }

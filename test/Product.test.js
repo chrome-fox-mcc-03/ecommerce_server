@@ -27,6 +27,10 @@ let user = {
     password: 'user123'
 }
 
+let token;
+let product_id;
+let token_user;
+
 describe('Product Route', () => {
     beforeAll((done) => {
         queryInterface.bulkInsert('Users', [{
@@ -67,8 +71,6 @@ describe('Product Route', () => {
             })
             .catch(err => done(err))
     })
-    let token;
-    let product_id;
     describe('Get all product', () => {
         describe('success response', () => {
             test('should return array of all Product', ((done) => {
@@ -133,6 +135,17 @@ describe('Product Route', () => {
                 request(app)
                     .post('/products')
                     .send(product)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.body.message).toBe('Please Login First!')
+                        expect(res.status).toBe(401)
+                        done()
+                    })
+            }))
+            test('return error message because dont have autentification', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
                     .end((err, res) => {
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('message', expect.any(String))
@@ -235,7 +248,7 @@ describe('Product Route', () => {
     })
     describe('PUT /product/:id', () => {
         describe('success response', () => {
-            test('return row number of updated product', ((done) => {
+            test('return row number of updated product and updated product', ((done) => {
                 request(app)
                     .post('/products')
                     .set('token', token)
@@ -262,6 +275,178 @@ describe('Product Route', () => {
                                 expect(res.status).toBe(200)
                                 done()
                             })
+                    })
+            }))
+        })
+        describe('error response', () => {
+            test('return error message because dont have autentification', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.body.message).toBe('Please Login First!')
+                        expect(res.status).toBe(401)
+                        done()
+                    })
+            }))
+            test('return error message because dont have authorization', ((done) => {
+                request(app)
+                    .post('/admin/login')
+                    .send(user)
+                    .end((err, res) => {
+                        token_user = res.body.token
+                        request(app)
+                            .put(`/products/${product_id}`)
+                            .set('token', token_user)
+                            .send({
+                                name: 'Updated',
+                                price: 1000,
+                                stock: 5
+                            })
+                            .end((err, res) => {
+                                expect(err).toBe(null)
+                                expect(res.body).toHaveProperty('message', expect.any(String))
+                                expect(res.body.message).toBe('You dont have authorization')
+                                expect(res.status).toBe(401)
+                                done()
+                            })
+                    })
+            }))
+            test('should return error because name of product null', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
+                    .set('token', token)
+                    .send({
+                        name: '',
+                        price: 1000,
+                        stock: 5
+                    })
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('name cannot be empty')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            }))
+            test('should return error because price of product null', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
+                    .set('token', token)
+                    .send({
+                        name: 'Updated',
+                        price: null,
+                        stock: 5
+                    })
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('Price cannot be empty')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            }))
+            test('should return error because price of product has negative value', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
+                    .set('token', token)
+                    .send({
+                        name: 'Updated',
+                        price: -10000,
+                        stock: 5
+                    })
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('Price cannot negative value')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            }))
+            test('should return error because stock of product null', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
+                    .set('token', token)
+                    .send({
+                        name: 'Updated',
+                        price: 10000,
+                        stock: null
+                    })
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('Stock cannot be empty')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            }))
+            test('should return error because stock of product has negative value', ((done) => {
+                request(app)
+                    .put(`/products/${product_id}`)
+                    .set('token', token)
+                    .send({
+                        name: 'Updated',
+                        price: 10000,
+                        stock: -5
+                    })
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('Stock at least 1')
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.status).toBe(400)
+                        done()
+                    })
+            }))
+        })
+    })
+    describe('DELETE /products/:id', () => {
+        describe('error response', () => {
+            test('return error message because dont have autentification', ((done) => {
+                request(app)
+                    .delete(`/products/${product_id}`)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.body.message).toBe('Please Login First!')
+                        expect(res.status).toBe(401)
+                        done()
+                    })
+            }))
+            test('return error message because dont have authorization', ((done) => {
+                request(app)
+                    .delete(`/products/${product_id}`)
+                    .set('token', token_user)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.body.message).toBe('You dont have authorization')
+                        expect(res.status).toBe(401)
+                        done()
+                    })
+            }))
+        })
+        describe('success response', () => {
+            test('return message that delete success', ((done) => {
+                request(app)
+                    .delete(`/products/${product_id}`)
+                    .set('token', token)
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.body.message).toBe('Product Deleted')
+                        expect(res.status).toBe(200)
+                        done()
                     })
             }))
         })

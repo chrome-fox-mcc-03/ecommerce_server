@@ -19,6 +19,29 @@ class ProductController {
         })
         .catch(next);
     }
+    static create(req, res, next) {
+        const user = appPayload(getPayload(req.headers.access_token));
+        let newItem = {
+            name: req.body.name,
+            price: req.body.price,
+            stock: req.body.stock,
+            UserId: user.id,
+            image_url: req.body.image_url,
+        }
+        Product.create(newItem)
+            .then(result => {
+                let createdItem = {
+                    id: result.id,
+                    name: result.name,
+                    price: result.price,
+                    stock: result.stock,
+                    image_url: result.image_url,
+                    UserId: result.UserId,
+                }
+                res.status(201).json(createdItem);
+            })
+            .catch(next);
+    }
 };
 
 module.exports = ProductController;

@@ -37,16 +37,12 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: "product price is required",
         },
-        isNumeric: {
-          args: true,
-          msg: "invalid price value",
-        },
         isInt: {
           args: true,
           msg: "invalid price format",
         },
         min: {
-          args: 0,
+          args: -1,
           msg: "price must be positive value or zero",
         }
       }
@@ -63,17 +59,13 @@ module.exports = (sequelize, DataTypes) => {
           args: true,
           msg: "product stock is required",
         },
-        isNumeric: {
-          args: true,
-          msg: "stock amount must be number",
-        },
         isInt: {
           args: true,
           msg: "stock amount must be integer",
         },
         min: {
-          args: 0,
-          msg: "invalid stock amout",
+          args: -1,
+          msg: "invalid stock amount",
         },
       }
     },
@@ -83,7 +75,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: "Product"
+    modelName: "Product",
+    hooks: {
+      beforeValidate: (product, options) => {
+        if (!product.image_url) {
+          product.image_url = 'https://via.placeholder.com/150';
+        }
+      },
+    },
   });
   Product.associate = function(models) {
     // associations can be defined here

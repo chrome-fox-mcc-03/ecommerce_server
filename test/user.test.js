@@ -12,12 +12,12 @@ let acccess_token = '';
 
 afterAll((done) => {
     queryInterface.bulkDelete("Users", {})
-    .then(_ => {
-        done();
-    })
-    .catch(err => {
-        done(err);
-    })
+        .then(_ => {
+            done();
+        })
+        .catch(err => {
+            done(err);
+        })
 });
 
 describe('user route', () => {
@@ -48,8 +48,8 @@ describe('user route', () => {
                         expect(err).toBeNull();
                         expect(res.body).toHaveProperty('message', 'bad request');
                         expect(res.body).toHaveProperty('errors', expect.any(Array));
+                        expect(res.body.errors.length).toBe(1);
                         expect(res.body.errors).toContain('email is required');
-                        expect(res.body.errors.length).toBeGreaterThan(0);
                         expect(res.status).toBe(400);
                         done();
                     });
@@ -64,7 +64,7 @@ describe('user route', () => {
                         expect(err).toBeNull();
                         expect(res.body).toHaveProperty('message', 'bad request');
                         expect(res.body).toHaveProperty('errors', expect.any(Array));
-                        expect(res.body.errors.length).toBeGreaterThan(0);
+                        expect(res.body.errors.length).toBe(1);
                         expect(res.body.errors).toContain('password is required');
                         expect(res.status).toBe(400);
                         done();
@@ -80,7 +80,7 @@ describe('user route', () => {
                         expect(err).toBeNull();
                         expect(res.body).toHaveProperty('message', 'bad request');
                         expect(res.body).toHaveProperty('errors', expect.any(Array));
-                        expect(res.body.errors.length).toBeGreaterThan(0);
+                        expect(res.body.errors.length).toBe(1);
                         expect(res.body.errors).toContain('wrong email format');
                         expect(res.status).toBe(400);
                         done();
@@ -96,7 +96,7 @@ describe('user route', () => {
                         expect(err).toBeNull();
                         expect(res.body).toHaveProperty('message', 'bad request');
                         expect(res.body).toHaveProperty('errors', expect.any(Array));
-                        expect(res.body.errors.length).toBeGreaterThan(0);
+                        expect(res.body.errors.length).toBe(1);
                         expect(res.body.errors).toContain('minimum password length is 6 characters');
                         expect(res.status).toBe(400);
                         done();
@@ -107,11 +107,12 @@ describe('user route', () => {
                     .post('/register')
                     .send(data)
                     .end((err, res) => {
+                        console.log(res.body);
                         expect(err).toBeNull();
                         expect(res.status).toBe(400);expect(res.body).toHaveProperty('message', 'bad request');
                         expect(res.body).toHaveProperty('errors', expect.any(Array));
-                        expect(res.body.errors.length).toBeGreaterThan(0);
-                        expect(res.body.errors).toContain('email already registered');
+                        expect(res.body.errors.length).toBe(1);
+                        expect(res.body.errors).toContain('email must be unique');
                         done();
                     })
             })

@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       isStockGreaterThanZero(){
         if (this.stock < 0){
-          throw new Error("Price must be greater than or equal to 0");
+          throw new Error("Stock must be greater than or equal to 0");
         }
       }
 

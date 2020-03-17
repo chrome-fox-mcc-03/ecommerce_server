@@ -38,7 +38,7 @@ describe ('/admin', () => {
         describe('success case', () => {
             test('respond will be an object (access_token) with status code (200)', (done) => {
                 request(app)
-                .post('/users/login')
+                .post('/admin/login')
                 .send(loginInfo)
                 .end((err,res)=>{
                     expect(err).toBe(null)

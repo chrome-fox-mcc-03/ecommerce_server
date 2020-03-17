@@ -27,9 +27,21 @@ class controller {
                 res.status(200).json(data)
             })
             .catch(err => {
-                console.log(err, 'ini errorrrrrrr');
-
                 next(err)
+            })
+    }
+
+    static get(req, res, next) {
+        Product.findAll()
+            .then(result => {
+                console.log(result[0], 'ini result geeeet');
+
+                res.status(200).json(result)
+            })
+            .catch(err => {
+                console.log(err, 'ini erorrr geeeeet');
+                next(err)
+
             })
     }
 

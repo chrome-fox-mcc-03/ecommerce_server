@@ -65,5 +65,24 @@ describe('Product route', () => {
                 })
             })
         })
+    describe('GET /products', () => {
+        describe('Success Process', () => {
+            test('Should send an array of object [{id, name, image_url, price, stock}] with status code 200', (done) => {
+                request(app)
+                    .get('/products')
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.status).toBe(200)
+                        expect(res.body.length).toBeGreaterThan(0)
+                        expect(res.body[0]).toHaveProperty('id', expect.any(Number))
+                        expect(res.body[0]).toHaveProperty('name', data.name)
+                        expect(res.body[0]).toHaveProperty('image_url', data.image_url)
+                        expect(res.body[0]).toHaveProperty('price', data.price)
+                        expect(res.body[0]).toHaveProperty('stock', data.stock)
+                        done()
+                    })
+            })
+        })
+    })
 
 })

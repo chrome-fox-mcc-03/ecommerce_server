@@ -13,6 +13,27 @@ class ProductController {
             })
     }
 
+    static findById (req,res,next) {
+        Product.findByPk(req.params.id)
+            .then((product)=>{
+                if (product) {
+                    res.status(200).json({
+                        data: product
+                    })
+                } else {
+                    let err = {
+                        name : 'custom',
+                        status : 400,
+                        message : 'Product not found'
+                    }
+                    throw err
+                }
+            })
+            .catch((err)=>{
+                next(err)
+            })
+    }
+
     static create ( req, res, next) {
         let newProduct = {
             name : req.body.name, 

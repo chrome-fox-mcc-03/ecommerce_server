@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
-        isNull: {
+      validate: {
+        notNull: {
           msg: 'Please insert the name of the product'
         },
-        isEmpty: {
+        notEmpty: {
           msg: 'Please insert the name of the product'
         },
       }
@@ -20,31 +20,31 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validation: {
-        isNull: {
+      validate: {
+        notNull: {
           msg: 'Please insert the price of the product'
         },
-        isEmpty: {
+        notEmpty: {
           msg: 'Please insert the price of the product'
         },
         min: {
-          args: 0,
-          msg: 'Price is not valid.'
+          args: [0],
+          msg: 'Price not not valid.'
         }
       }
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validation: {
-        isNull: {
+      validate: {
+        notNull: {
           msg: 'Please insert the stock of the product'
         },
-        isEmpty: {
+        notEmpty: {
           msg: 'Please insert the stock of the product'
         },
         min: {
-          args: 0,
+          args: [0],
           msg: 'Stock is not valid.'
         }
       }
@@ -59,11 +59,11 @@ module.exports = (sequelize, DataTypes) => {
     store_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validation: {
-        isNull: {
+      validate: {
+        notNull: {
           msg: 'Product must belong to a store'
         },
-        isEmpty: {
+        notEmpty: {
           msg: 'Product must belong to a store'
         }
       }

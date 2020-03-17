@@ -18,7 +18,7 @@ module.exports = {
                 })
             }
             else{
-                if(!result.role === 'Admin'){
+                if(result.role !== 'Admin'){
                     throw({
                         status: 401,
                         msg: 'You cannot edit or add product to this store. Please contanct the owner.'

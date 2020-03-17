@@ -4,9 +4,14 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../models/index')
 
 module.exports = (req, res, next) => {
+    if(!req.headers.token){
+        throw({
+            status: 401,
+            msg: 'You are not authenticated.'
+        })
+    }
     try {
-        const token = req.headers.token
-        const decoded = jwt.verify(token, process.env.SECRET_KEY)
+        const decoded = jwt.verify(req.headers.token, process.env.SECRET_KEY)
         User.findOne({
             where: {
                 id:  decoded.id

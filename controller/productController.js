@@ -13,10 +13,9 @@ class Controller {
             description: req.body.description,
             img_url: req.body.img_url
         }
-
         Product.create(data)
         .then(result => {
-            res.status(201).json({data:result})
+            res.status(201).json(result)
         })
         .catch(next)
     }
@@ -27,7 +26,6 @@ class Controller {
             price: req.body.price,
             stock: req.body.stock,
             category: req.body.category,
-            store_id: req.params.storeId,
             description: req.body.description,
             img_url: req.body.img_url
         }
@@ -38,7 +36,7 @@ class Controller {
             }
         })
         .then(result => {
-            res.status(200)
+            res.status(200).json({msg: 'ok'})
         })
         .catch(next)
     }

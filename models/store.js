@@ -5,12 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
-        isNull: {
-          msg: 'Please insert the name of the product'
+      validate: {
+        notNull: {
+          msg: 'Please insert the name of the store'
         },
-        isEmpty: {
-          msg: 'Please insert the name of the product'
+        notEmpty: {
+          msg: 'Please insert the name of the store'
         },
       }
     },

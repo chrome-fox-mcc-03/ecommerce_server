@@ -7,8 +7,7 @@ module.exports = function(err, req, res, next){
                 res.status(500).json({msg: 'Something wrong with the database'})
                 break
             case "SequelizeValidationError":
-                res.status(400).json({msg: err.errors[0].messsage})
-                break
+                res.status(400).json({msg: err.errors[0].message})
             case "SequelizeDatabaseError": 
                 res.status(500).json({msg: 'Something wrong with the database'})
                 break

@@ -7,15 +7,15 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
-        isNull: {
+      validate: {
+        notNull: {
           msg: 'Please insert your name'
         },
-        isEmpty: {
+        notEmpty: {
           msg: 'Please insert your name'
         },
         is: {
-          args: /^[a-zA-Z]+$/i,
+          args: /^[a-zA-Z ]+$/i,
           msg: 'Name is not valid'
         }
       }
@@ -23,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
-        isNull: {
-          msg: 'Please insert your name'
+      validate: {
+        notNull: {
+          msg: 'Please insert your email'
         },
-        isEmpty: {
-          msg: 'Please insert your name'
+        notEmpty: {
+          msg: 'Please insert your email'
         },
         isEmail: {
           msg: 'Email is not valid.'
@@ -38,11 +38,11 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
-        isNull: {
+      validate: {
+        notNull: {
           msg: 'Please insert your password'
         },
-        isEmpty: {
+        notEmpty: {
           msg: 'Please insert your password'
         },
         len: {
@@ -57,12 +57,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'No store.'
+      allowNull: false
     },
     store_id: {
-      type: DataTypes.INTEGER,
-      defaultValue: -1
+      type: DataTypes.INTEGER
     },
   }, {
       hooks: {

@@ -2,8 +2,27 @@ const request = require('supertest');
 const app = require('../app');
 const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
+const { generateToken } = require('../helpers/jwt');
+const { User } = require('../models');
+
+let token = '';
 
 describe('Product Routes', () => {
+    beforeAll((done) => {
+        User.create({
+            name: 'User',
+            email: 'user@gmail.com',
+            password: '123123',
+            is_admin: true
+        })
+            .then(newUser => {
+                token = generateToken({ id: newUser.id, email: newUser.email })
+                done()
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    })
     afterAll((done) => {
         queryInterface.bulkDelete('Products', {})
             .then(_ => {
@@ -13,7 +32,9 @@ describe('Product Routes', () => {
                 done(err)
             })
     })
-    describe('POST /products', () => {
+
+    describe.only('POST /products', () => {
+
         describe('Success Process', () => {
             test('Should return an object (name, image_url, price, stock) with status code 201', (done) => {
                 let newProduct = {
@@ -24,8 +45,11 @@ describe('Product Routes', () => {
                 }
                 request(app)
                     .post('/products')
+                    .set('token', token)
                     .send(newProduct)
                     .end((err, res) => {
+                        console.log('token ====> ',token);
+                        
                         expect(res.body).toHaveProperty('name', expect.any(String))
                         expect(res.body).toHaveProperty('image_url', expect.any(String))
                         expect(res.body).toHaveProperty('price', expect.any(Number))
@@ -66,8 +90,10 @@ describe('Product Routes', () => {
             test('Should return an array of object (name, image_url, price, stock) with status code 200', (done) => {
                 request(app)
                     .get('/products')
+                    .set('token', 'eqrjqpwpq229eiq091jopq.fsafa+09fdj')
                     .end((err, res) => {
-                        console.log('//////////', res.body);
+                        console.log('//------>>>', res.body);
+                        console.log('++__++__++ ', res.headers);
                         expect.any(Array)
                         expect(res.status).toBe(200)
                         expect(err).toBe(null)
@@ -77,7 +103,6 @@ describe('Product Routes', () => {
         })
     })
     describe('UPDATE /products', () => {
-        //belum routing
         describe('Success Process', () => {
             test('Should return an object (name, image_url, price, stock) with status code 200', (done) => {
                 let update = {
@@ -87,7 +112,7 @@ describe('Product Routes', () => {
                     stock: 100
                 }
                 request(app)
-                    .udpate('/products/2')
+                    .put('/products/12')
                     .send(update)
                     .end((err, res) => {
                         console.log('//////////', res.body);

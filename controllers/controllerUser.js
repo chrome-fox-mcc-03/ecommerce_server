@@ -7,7 +7,7 @@ class ControllerUser {
                 res.status(200).json(response)
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 
@@ -25,7 +25,7 @@ class ControllerUser {
                 }
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 
@@ -44,17 +44,25 @@ class ControllerUser {
             returning: true
         })
             .then(response => {
-                const user = response[1][0]
-                const payload = {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name,
-                    role: user.role
+                console.log(response)
+                if (response[1].length === 0) {
+                    const error = {
+                        name: 'user not found'
+                    }
+                    throw error
+                } else {
+                    const user = response[1][0]
+                    const payload = {
+                        id: user.id,
+                        email: user.email,
+                        name: user.name,
+                        role: user.role
+                    }
+                    res.status(200).json(payload)
                 }
-                res.status(200).json(payload)
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 
@@ -81,7 +89,7 @@ class ControllerUser {
                 res.status(203).json(user)
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 }

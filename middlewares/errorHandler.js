@@ -28,6 +28,14 @@ const errorHandler = (err, req, res, next) => {
             }
             res.status(400).json(error)
             break;
+        case 'product not found':
+            message = err.name
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(400).json(error)
+            break;
         case 'JsonWebTokenError':
             message = 'You are not authenticated'
             error = {

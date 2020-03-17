@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        isUrl: {
+          args: true,
+          msg: 'image url must be in url format'
+        },
         notEmpty: {
           args: true,
           msg: 'image url must be filled'
@@ -47,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'price must be number'
         },
         min: {
-          args: 0,
+          args: [0],
           msg: 'minimum price value is zero'
         }
       }
@@ -69,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'stock must be number'
         },
         min: {
-          args: 0,
+          args: [0],
           msg: 'minimum stock value is zero'
         }
       }

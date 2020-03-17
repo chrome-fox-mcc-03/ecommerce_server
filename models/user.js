@@ -42,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     hooks: {
-      beforeCreate: (user, options) => {
-        user.password = hashPassword(user.password)
+      beforeCreate: (User, options) => {
+        User.password = hashPassword(User.password)
       }
     },
     sequelize
@@ -51,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     User.belongsToMany(models.Product, { through: models.ProductUser })
     User.hasMany(models.ProductUser)
+    User.hasMany(models.Product)
   };
   return User;
 };

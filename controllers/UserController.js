@@ -1,24 +1,37 @@
-const { User } = require('../models')
-const { comparePassword } = require('../helpers/bcrypt')
-const { getToken } = require('../helpers/jwt')
+const {
+    User
+} = require('../models')
+const {
+    comparePassword
+} = require('../helpers/bcrypt')
+const {
+    getToken
+} = require('../helpers/jwt')
 
 class UserController {
     static login(req, res, next) {
-        let { email, password } = req.body
+        let {
+            email,
+            password
+        } = req.body
         User.findOne({
-            where: {
-                email
-            }
-        })
+                where: {
+                    email
+                }
+            })
             .then(response => {
-                if(response) {
-                    if(comparePassword(password, response.password)) {
+                if (response) {
+                    if (comparePassword(password, response.password)) {
                         let payload = {
                             id: response.id,
-                            email: response.email
+                            email: response.email,
+                            role: response.role
                         }
                         let token = getToken(payload)
-                        res.status(200).json({ token })
+                        res.status(200).json({
+                            token,
+                            role: payload.role
+                        })
                     } else {
                         next({
                             status: 401,
@@ -35,18 +48,27 @@ class UserController {
             .catch(next)
     }
     static register(req, res, next) {
-        let { email, password } = req.body
-        User.create({
+        let {
             email,
-            password
-        })
+            password,
+            role
+        } = req.body
+        User.create({
+                email,
+                password,
+                role
+            })
             .then(response => {
                 let payload = {
                     id: response.id,
-                    email: response.email
+                    email: email,
+                    role: response.role
                 }
                 let token = getToken(payload)
-                res.status(201).json({ token })
+                res.status(201).json({
+                    token,
+                    role: payload.role
+                })
             })
             .catch(next)
     }

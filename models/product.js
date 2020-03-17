@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           args: true,
           msg: 'Name cannot empty'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'name cannot be empty'
         }
       }
     },
@@ -19,10 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         min: {
-          args: 0,
+          args: [0],
           msg: 'Price cannot negative value'
         },
         notNull: {
+          args: true,
+          msg: 'Price cannot be empty'
+        },
+        notEmpty: {
           args: true,
           msg: 'Price cannot be empty'
         }
@@ -39,15 +47,23 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           args: true,
           msg: 'Stock cannot be empty'
+        },
+        notEmpty: {
+          args: true,
+          msg: 'Stock cannot be empty'
         }
       }
-    }
+    },
+    UserId: {
+      type: DataTypes.INTEGER
+    } 
   }, {
     sequelize
   })
   Product.associate = function(models) {
     Product.belongsToMany(models.User, { through: models.ProductUser })
     Product.hasMany(models.ProductUser)
+    Product.belongsTo(models.User)
   };
   return Product;
 };

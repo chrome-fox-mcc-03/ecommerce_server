@@ -5,7 +5,7 @@ const { queryInterface } = sequelize
 
 let data = {
     email: 'abdul@mail.com',
-    password: 'qweqweqwe'
+    password: 'qweqweqwe',
 }
 
 describe('User Routes', () => {
@@ -16,11 +16,11 @@ describe('User Routes', () => {
           })
           .catch(err => done(err))
     })
-    describe('POST /register', () => {
+    describe('POST /users/register', () => {
         describe('Success process', () => {
             test('Should return an object with token', (done) => {
                 request(app)
-                    .post('/register')
+                    .post('/users/register')
                     .send(data)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -33,7 +33,7 @@ describe('User Routes', () => {
         describe('Error process', () => {
             test('should send an error with status 400 because registered Email', (done) => {
                 request(app)
-                    .post('/register')
+                    .post('/users/register')
                     .send(data)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -48,7 +48,7 @@ describe('User Routes', () => {
             test('should send an error with status 400 because Invalid Email Format', (done) => {
                 let withoutEmail = { ...data, email: 'abdul'}
                 request(app)
-                    .post('/register')
+                    .post('/users/register')
                     .send(withoutEmail)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -64,7 +64,7 @@ describe('User Routes', () => {
                 let withoutEmail = { ...data }
                 delete withoutEmail.email
                 request(app)
-                    .post('/register')
+                    .post('/users/register')
                     .send(withoutEmail)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -80,7 +80,7 @@ describe('User Routes', () => {
                 let withoutPassword = { ...data }
                 delete withoutPassword.password
                 request(app)
-                    .post('/register')
+                    .post('/users/register')
                     .send(withoutPassword)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -95,7 +95,7 @@ describe('User Routes', () => {
             test('should send an error with status 400 because password less than 6', (done) => {
                 let tooWeakPassword = { ...data, password: 'qweq' }
                 request(app)
-                    .post('/register')
+                    .post('/users/register')
                     .send(tooWeakPassword)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -109,11 +109,11 @@ describe('User Routes', () => {
             })
         })
     })
-    describe('POST /login', () => {
+    describe('POST /users/login', () => {
         describe('success response', () => {
             test('should return object with key token', (done) => {
                 request(app)
-                    .post('/login')
+                    .post('/users/login')
                     .send(data)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -127,7 +127,7 @@ describe('User Routes', () => {
             test('should return error with status 401 because wrong Email', (done) => {
                 let wrongEmail = { ...data, email: 'abdu@gmail.com' }
                 request(app)
-                    .post('/login')
+                    .post('/users/login')
                     .send(wrongEmail)
                     .end((err, res) => {
                         expect(err).toBe(null)
@@ -139,7 +139,7 @@ describe('User Routes', () => {
             test('should return error with status 401 because wrong Password', (done) => {
                 let wrongPassword = { ...data, password: 'qweqwe' }
                 request(app)
-                    .post('/login')
+                    .post('/users/login')
                     .send(wrongPassword)
                     .end((err, res) => {
                         expect(err).toBe(null)

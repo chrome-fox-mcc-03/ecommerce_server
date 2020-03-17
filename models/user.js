@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
           msg : `password is required`
         }
       }
+    },
+    role : {
+      type : DataTypes.STRING,
+      allowNull : false,
     }
   },{
     hooks : {

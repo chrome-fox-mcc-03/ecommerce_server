@@ -1,27 +1,62 @@
 const { User } = require('./../models')
+const { comparePass } = require('./../helper/bcrypt')
+const { makeToken } = require('./../helper/jwt')
 
 class ControllerUser {
-    static getAllUser(req, res, next){
-        User.findAll()
-            .then(response => {
-                res.status(200).json(response)
+    static register(req, res, next){
+        const { email, password, name, role } = req.body
+        User.create({
+            email,
+            password,
+            name,
+            role
+        })
+            .then(user => {
+                const payload = {
+                    email: user.email,
+                    id: user.id,
+                    name: user.name,
+                    role: user.role
+                }
+                res.status(201).json(payload)
             })
             .catch(err => {
                 next(err)
             })
-    }
 
-    static getById(req,res,next){
-        const id = req.params.id
-        User.findByPk(id)
-            .then(response => {
-                if (!response) {
+    }
+    
+    static login(req, res, next){
+        const { email, password } = req.body
+        User.findOne({
+            where: {
+                email
+            }
+        })
+            .then(result => {
+                if (!result) {
                     const error = {
-                        name: 'user not found'
+                        name: "Invalid email/password"
                     }
                     throw error
                 } else {
-                    res.status(200).json(response)
+                    const compare = comparePass(password, result.password)
+                    if (compare) {
+                        const payload = {
+                            id: result.id,
+                            email: result.email,
+                            name: result.email,
+                            role: result.role
+                        }
+                        const token = makeToken(payload)
+                        req.headers.token = token
+                        res.status(200).json({ token })
+                    } else {
+                        const error = {
+                            name: "Invalid email/password"
+                        }
+                        throw error
+                    }
                 }
             })
             .catch(err => {
@@ -62,6 +97,7 @@ class ControllerUser {
                 }
             })
             .catch(err => {
+                console.log('called in catch')
                 next(err)
             })
     }

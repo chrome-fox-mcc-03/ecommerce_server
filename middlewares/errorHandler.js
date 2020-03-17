@@ -45,6 +45,7 @@ const errorHandler = (err, req, res, next) => {
             res.status(404).json(error)
             break;
         case 'user not found': 
+            console.log('from user not found')
             message = err.name
             error = {
                 message,

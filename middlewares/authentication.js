@@ -24,6 +24,9 @@ function authentication(req,res,next) {
                         next() 
                     }
                 })
+                .catch(err => {
+                    next(err)
+                })
         } 
     }catch(err){
         next(err)

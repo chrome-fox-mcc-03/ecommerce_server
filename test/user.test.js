@@ -120,7 +120,7 @@ describe('User routes' , () => {
     })
 
     describe('Error POST /login', () => {
-        test('[wrong email] sending error with status 401 due to missing email value ', (done) => {
+        test('[wrong email] sending error with status 401 due to incorrect email value ', (done) => {
             const wrongEmailFormat = { ...dummyData, email : wrongEmail }
             
             request(app)
@@ -132,7 +132,21 @@ describe('User routes' , () => {
                 done()
             })
         })
+
+        test('[wrong passsword] sending error with status 401 due to incorrect password value', (done) => {
+            const incorrectPass = { ...dummyData, password : wrongPass }
+
+            request(app)
+            .post('/login')
+            .send(incorrectPass)
+            .end((err, res) => {
+                expect(res.status).toBe(401)
+                expect(res.body).toHaveProperty('message', 'email / password is incorrect')
+                done()
+            })
+        })
     })
+
 
 
 

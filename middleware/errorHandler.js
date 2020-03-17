@@ -38,8 +38,16 @@ function errorHandler(err, req, res, next){
             status = 401
             res.status(status).json(message)
             break;
+        case 'ErrorPassword':
+            errors.push(err.message)
+            message = {
+                message : 'email / password is incorrect',
+                errors
+            }
+            status = 401
+            res.status(status).json(message)
         default:
-            console.log(status, 'default here');
+            console.log(err, 'default here');
             
             res.status(status).json(message)
             break;

@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: "min. password length 6 character"
         }
       }
+    },
+    Admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     hooks: {

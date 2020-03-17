@@ -21,6 +21,14 @@ function errorHandler(err, req, res, next) {
       errors: [err.name]
     }
   }
+  else if(err.name === 'Admin only!') {
+    status = 400;
+    errName = {
+      message: 'Bad Request',
+      errors: [err.name]
+    }
+  }
+  'Admin only!'
   res.status(status).json(errName)
 }
 

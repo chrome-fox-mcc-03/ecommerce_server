@@ -26,6 +26,11 @@ class controller {
                 }
                 res.status(200).json(data)
             })
+            .catch(err => {
+                console.log(err, 'ini errorrrrrrr');
+
+                next(err)
+            })
     }
 
 }

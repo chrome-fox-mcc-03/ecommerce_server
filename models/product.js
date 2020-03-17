@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: {
                     args: true,
-                    msg: 'Image Url Is Required'
+                    msg: 'Image Url Cannot be empty'
                 },
                 notNull: {
                     args: true,
@@ -42,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             validate: {
                 min: {
-                    args: 100,
-                    msg: 'price cannot be less than 100'
+                    args: 1,
+                    msg: 'price cannot be less than 0'
                 }
             }
         },

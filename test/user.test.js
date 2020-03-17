@@ -77,8 +77,8 @@ describe('--- USER ROUTES ---', () => {
                     .end((err, res) => {
                         console.log("ERROR RESPONSE");
                         // console.log(res);
-                        console.log("RES BODY");
-                        console.log(res.body);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
                         console.log("RES STATUS");
                         console.log(res.status);
                         expect(err).toBe(null)
@@ -102,10 +102,10 @@ describe('--- USER ROUTES ---', () => {
                     .end((err, res) => {
                         console.log("ERROR RESPONSE");
                         // console.log(res);
-                        console.log("RES BODY");
-                        console.log(res.body);
-                        console.log("RES STATUS");
-                        console.log(res.status);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log("RES STATUS");
+                        // console.log(res.status);
                         expect(err).toBe(null)
                         expect(res.status).toBe(400)
                         expect(res.body).toHaveProperty('message', expect.any(String))
@@ -116,26 +116,26 @@ describe('--- USER ROUTES ---', () => {
             })
 
 
-            // // EMAIL DUPLICATE
-            // test('SHOULD SEND ERROR 400 BECAUSE OF DUPLICATE EMAIL', (done) => {
-            //     request(app)
-            //         .post('/register')
-            //         .send(data)
-            //         .end((err, res) => {
-            //             console.log("ERROR RESPONSE");
-            //             // console.log(res);
-            //             console.log("RES BODY");
-            //             console.log(res.body);
-            //             console.log("RES STATUS");
-            //             console.log(res.status);
-            //             expect(err).toBe(null)
-            //             expect(res.status).toBe(400)
-            //             expect(res.body).toHaveProperty('message', expect.any(String))
-            //             expect(res.body.errors.length).toBeGreaterThan(0)
-            //             expect(res.body).toHaveProperty('errors', expect.any(Array))
-            //             done()
-            //         })
-            // })
+            // EMAIL DUPLICATE
+            test('SHOULD SEND ERROR 400 BECAUSE OF DUPLICATE EMAIL', (done) => {
+                request(app)
+                    .post('/register')
+                    .send(data)
+                    .end((err, res) => {
+                        console.log("ERROR RESPONSE");
+                        // console.log(res);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log("RES STATUS");
+                        // console.log(res.status);
+                        expect(err).toBe(null)
+                        expect(res.status).toBe(400)
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.body.errors.length).toBeGreaterThan(0)
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        done()
+                    })
+            })
             
         })
 
@@ -155,10 +155,10 @@ describe('--- USER ROUTES ---', () => {
                     .end((err, res) => {
                         console.log("ERROR RESPONSE");
                         // console.log(res);
-                        console.log("RES BODY");
-                        console.log(res.body);
-                        console.log("RES STATUS");
-                        console.log(res.status);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log("RES STATUS");
+                        // console.log(res.status);
                         expect(err).toBe(null)
                         expect(res.status).toBe(400)
                         expect(res.body).toHaveProperty('message', expect.any(String))
@@ -181,10 +181,10 @@ describe('--- USER ROUTES ---', () => {
                     .end((err, res) => {
                         console.log("ERROR RESPONSE");
                         // console.log(res);
-                        console.log("RES BODY");
-                        console.log(res.body);
-                        console.log("RES STATUS");
-                        console.log(res.status);
+                        // console.log("RES BODY");
+                        // console.log(res.body);
+                        // console.log("RES STATUS");
+                        // console.log(res.status);
                         expect(err).toBe(null)
                         expect(res.status).toBe(400)
                         expect(res.body).toHaveProperty('message', expect.any(String))
@@ -216,14 +216,67 @@ describe('--- USER ROUTES ---', () => {
 
         // LOGIN SUCCESS
         describe("LOGIN SUCCESS", () => {
-            request(app)
+            test('SHOULD SEND AN OBJECT(ID, EMAIL, ROLE) WITH STATUS CODE 201', (done) => {
+                request(app)
                 .post("/login")
                 .send(data)
                 .end((req, res) => {
+                    // console.log(res);
+                    console.log("TEST: RES BODY IS:");
+                    console.log(res.body);
+                    expect(res.status).toBe(200)
+                    expect(res.body).toHaveProperty("token", expect.any(String))
                     done()
                 })
-
+            })
         })
+
+
+        
+        // LOGIN FAIL: WRONG PASSWORD
+        describe("LOGIN FAIL TYPE 1: WRONG PASSWORD", () => {
+            test('SHOULD SEND ERROR 400 BECAUSE OF WRONG PASSWORD', (done) => {
+                let wrongEmail = {...data, password:"precioso"}
+                request(app)
+                .post("/login")
+                .send(wrongEmail)
+                .end((err, res) => {
+                    // console.log(res);
+                    // console.log("TEST: RES BODY IS:");
+                    // console.log(res.body);
+                    // console.log("RES STATUS IS");
+                    // console.log(res.status);
+                    expect(err).toBe(null)
+                    expect(res.status).toBe(400)
+                    expect(res.body).toHaveProperty("error", expect.any(String))
+                    done()
+                })
+            })
+        })
+
+
+        // LOGIN FAIL: WRONG EMAIL
+        describe("LOGIN FAIL TYPE 2: WRONG EMAIL", () => {
+            test('SHOULD SEND ERROR 400 BECAUSE OF WRONG EMAIL', (done) => {
+                let wrongEmail = {...data, email: "sysadmina@mail.com"}
+                request(app)
+                .post("/login")
+                .send(wrongEmail)
+                .end((err, res) => {
+                    // console.log(res);
+                    console.log("TEST: RES BODY IS:");
+                    console.log(res.body);
+                    console.log("RES STATUS IS");
+                    console.log(res.status);
+                    expect(err).toBe(null)
+                    // expect(res.status).toBe(400)
+                    // expect(res.body).toHaveProperty("error", expect.any(String))
+                    done()
+                })
+            })
+        })
+
+
     })
 
 

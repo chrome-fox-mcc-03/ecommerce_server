@@ -34,9 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     stock: {
       type: DataTypes.INTEGER,
       validate: {
-        isInteger: {
+        isNumeric: {
           args: true,
-          msg: "STOCK MUST BE INTEGERS"
+          msg: "STOCK MUST BE NUMERIC"
         },
         min: {
           args: [0],

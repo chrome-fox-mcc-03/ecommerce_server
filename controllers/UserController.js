@@ -53,18 +53,19 @@ class UserController {
         })
         .then(response => {
             console.log("USER FOUND");
-            console.log("RESPONSE IS");
-            console.log(response);
+            // console.log("RESPONSE IS");
+            // console.log(response);
             
             if(response) {
                 console.log("WHAT'S RESPONSE 2?");
-                console.log(response);
+                // console.log(response);
                 flagMatchingPassword = checkPassword(req.body.password, response[0].password)
                 if(flagMatchingPassword) {
                     console.log("PASSWORD MATCHES");
                     payloadParams = {
                         email: req.body.email,
-                        password: req.body.password
+                        password: req.body.password,
+                        role: response[0].role
                     }
     
                     accessToken = createToken(payloadParams)

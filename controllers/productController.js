@@ -42,7 +42,7 @@ class controller {
     }
 
     static update(req, res, next) {
-        let productId = req. params.id
+        let productId = req.params.id
         let {
             name,
             image_url,

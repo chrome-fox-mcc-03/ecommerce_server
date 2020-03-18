@@ -12,26 +12,5 @@ module.exports = {
 				message: 'You are unauthorized'
 			})
 		}
-	},
-	productAuthorization (req, res, next) {
-		let { id } = req.decoded;
-
-		Product.findOne({
-			where: { UserId: id}
-		})
-			.then(result => {
-				if (result) {
-					next();
-				} else {
-					console.log(`prodsalah`);
-					next({
-						name: 'Unauthorized',
-						message: 'You are unauthorized'
-					})
-				}
-			})
-			.catch(err => {
-				next(err);
-			})
 	}
 }

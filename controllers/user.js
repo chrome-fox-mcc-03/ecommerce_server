@@ -25,7 +25,8 @@ class UserController {
 				let token = sign(payload);
 
 				res.status(201).json({
-					token
+					token,
+					name
 				})
 			})
 			.catch(next)
@@ -41,7 +42,7 @@ class UserController {
 			.then(result => {
 				if (result) {
 					if (decode(password, result.password)) {
-						let { id } = result;
+						let { id, name } = result;
 
 						let payload = {
 							id, 
@@ -52,17 +53,16 @@ class UserController {
 						let token = sign(payload);
 
 						res.status(200).json({
-							token
+							token,
+							name
 						})
 					} else {
-						console.log(`error pass`);
 						next({
 							name: 'Invalid User',
 							errors: ['Email/Password combination not match']
 						})
 					}
 				} else {
-					console.log(`error email`);
 					next({
 						name: 'Invalid User',
 						errors: ['Email/Password combination not match']
@@ -94,7 +94,8 @@ class UserController {
 				let token = sign(payload);
 
 				res.status(201).json({
-					token
+					token,
+					name
 				})
 			})
 			.catch(next)
@@ -110,7 +111,7 @@ class UserController {
 			.then(result => {
 				if (result) {
 					if (decode(password, result.password)) {
-						let { id } = result;
+						let { id, name } = result;
 
 						let payload = {
 							id, 
@@ -121,17 +122,16 @@ class UserController {
 						let token = sign(payload);
 
 						res.status(200).json({
-							token
+							token,
+							name
 						})
 					} else {
-						console.log(`error pass`);
 						next({
 							name: 'Invalid User',
 							errors: ['Email/Password combination not match']
 						})
 					}
 				} else {
-					console.log(`error email`);
 					next({
 						name: 'Invalid User',
 						errors: ['Email/Password combination not match']

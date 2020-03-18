@@ -31,6 +31,7 @@ describe('User routes', () => {
 					.end((err, res) => {
 						expect(err).toBe(null);
 						expect(res.body).toHaveProperty('token', expect.any(String));
+						expect(res.body).toHaveProperty('name', expect.any(String));
 						expect(res.status).toBe(201)
 						done()
 					})
@@ -96,6 +97,7 @@ describe('User routes', () => {
 					.end((err, res) => {
 						expect(err).toBe(null);
 						expect(res.body).toHaveProperty('token', expect.any(String));
+						expect(res.body).toHaveProperty('name', expect.any(String));
 						expect(res.status).toBe(200)
 						done()
 					})
@@ -165,6 +167,7 @@ describe('User routes', () => {
 					.end((err, res) => {
 						expect(err).toBe(null);
 						expect(res.body).toHaveProperty('token', expect.any(String));
+						expect(res.body).toHaveProperty('name', expect.any(String));
 						expect(res.status).toBe(201)
 						done()
 					})
@@ -230,6 +233,7 @@ describe('User routes', () => {
 					.end((err, res) => {
 						expect(err).toBe(null);
 						expect(res.body).toHaveProperty('token', expect.any(String));
+						expect(res.body).toHaveProperty('name', expect.any(String));
 						expect(res.status).toBe(200)
 						done()
 					})

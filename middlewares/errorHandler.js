@@ -22,10 +22,17 @@ module.exports = (err, req, res, next) => {
 			errors: ['You are unauthorized']
 		})
 	} else if (err.name === 'JsonWebTokenError') {
-		res.status(400).json({
-			message: 'Bad Request',
+		res.status(401).json({
+			message: 'Unauthorized',
 			errors: ['Please login']
 		})
+	} else if (err.name === 'PageNotFound') {
+		let { model } = err;
+		res.status(404).json({
+			message: 'Page Not Found',
+			errors: [`The ${model} you are looking for is not found`]
+		})
+		
 	} else {
 		// res.status(err.status || 500).json(err || 'Internal Server Error');
 		console.log(err);

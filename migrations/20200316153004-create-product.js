@@ -14,12 +14,17 @@ module.exports = {
 			description: {
 				type: Sequelize.STRING
 			},
-			UserId: {
-				type: Sequelize.INTEGER,
-				references: {
-					model: 'Users',
-					key: 'id'
-				}
+			stock: {
+				type: Sequelize.INTEGER
+			},
+			price: {
+				type: Sequelize.INTEGER
+			},
+			imageUrl: {
+				type: Sequelize.STRING
+			},
+			isActive: {
+				type: Sequelize.BOOLEAN
 			},
 			createdAt: {
 				allowNull: false,

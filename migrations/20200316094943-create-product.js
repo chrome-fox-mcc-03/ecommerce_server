@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       image_url: {
         type: Sequelize.STRING,
         allowNull: false
@@ -25,7 +29,13 @@ module.exports = {
         allowNull: false
       },
       UserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: 'id'
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       },
       createdAt: {
         allowNull: false,

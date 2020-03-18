@@ -23,6 +23,24 @@ module.exports = (sequelize, DataTypes) => {
         msg: "Product has been registered, please input another product"
       }
     },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Please input product's description"
+        },
+        notEmpty: {
+          args: true,
+          msg: "Please input product's description"
+        },
+        len: {
+          args: [0, 200],
+          msg: "Description's max characters is 200"
+        }
+      }
+    },
     image_url: {
       type: DataTypes.STRING,
     },

@@ -1,17 +1,20 @@
 const env = process.env.NODE_ENV || 'development'
-require('dotenv').config({path: process.cwd() + '/.env'})
+
 switch(env) {
     case 'development':
         require('dotenv').config({ path: process.cwd() + '/.env' })
             break;
     case 'test':
         require('dotenv').config({ path: process.cwd() + '/.env.test' })
+        console.log(process.env);
+        console.log(process.env.DB_NAME);
             break;
 }
+
 module.exports = {
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: 'db_ecommerce_cms',
+    database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT
 }

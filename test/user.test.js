@@ -15,10 +15,13 @@ describe('User routes', () => {
     User.create({
       username: 'admin',
       email: 'admin@admin.com',
-      password: 'qwe',
+      password: 'qwertyuiop',
       role: true
     })
-      .then(() => done())
+      .then(user => {
+        console.log(user.password, 'PASSWORD admin@admin.com')
+        done()
+      })
       .catch(done)
   })
 
@@ -232,7 +235,7 @@ describe('User routes', () => {
           .post('/loginAdmin')
           .send({
             email: 'admin@admin.com',
-            password: 'qwe'
+            password: 'qwertyuiop'
           })
           .end((err, res) => {
             expect(err).toBe(null)

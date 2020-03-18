@@ -2,17 +2,33 @@ const request = require("supertest");
 const app = require("../app.js");
 const { sequelize } = require("../models");
 const { queryInterface } = sequelize;
+const fs = require("fs");
+const { hashPassword } = require("../helpers/bcrypt");
+let seedUsers = JSON.parse(fs.readFileSync("seeders/data/admins.json", "utf8"));
+seedUsers = seedUsers.map(el => {
+  el.createdAt = new Date();
+  el.updatedAt = new Date();
+  el.password = hashPassword(el.password);
+  return el;
+});
 
 let data = {
-  email: "fadhilahmetra@gmail.com",
-  password: "fadhilahm",
-  username: "fadhilahm"
+  email: "fadhilah_gis@yahoo.co.id",
+  password: "fadhilahxyz",
+  username: "fadhilahxyz"
 };
 
-describe("Admin routes", () => {
+describe("User routes", () => {
+  beforeAll(done => {
+    queryInterface
+      .bulkInsert("Users", seedUsers)
+      .then(() => done())
+      .catch(err => done(err));
+  });
+
   afterAll(done => {
     queryInterface
-      .bulkDelete("Admins", null)
+      .bulkDelete("Users", null)
       .then(() => done())
       .catch(err => done(err));
   });
@@ -28,7 +44,7 @@ describe("Admin routes", () => {
             expect(res.body).toHaveProperty("status", "Created");
             expect(res.body).toHaveProperty(
               "msg",
-              "Successfully created a new Admin"
+              "Successfully created a new User"
             );
             expect(res.body.data).toHaveProperty("id", expect.any(Number));
             expect(res.body.data).toHaveProperty("email", data.email);

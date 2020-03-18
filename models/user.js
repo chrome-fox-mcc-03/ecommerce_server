@@ -3,11 +3,11 @@ const { hashPassword } = require("../helpers/bcrypt");
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model;
 
-  class Admin extends Model {
+  class User extends Model {
     static associate(models) {}
   }
 
-  Admin.init(
+  User.init(
     {
       email: {
         type: DataTypes.STRING,
@@ -62,18 +62,26 @@ module.exports = (sequelize, DataTypes) => {
             msg: "Username cannot be empty"
           }
         }
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "customer"
       }
     },
     {
       hooks: {
-        beforeCreate: (admin, options) => {
-          admin.password = hashPassword(admin.password);
+        beforeCreate: (user, options) => {
+          user.password = hashPassword(user.password);
+          if (user.role === "" || user.role === null) {
+            user.role = "customer";
+          }
         }
       },
       sequelize,
-      modelName: "Admin"
+      modelName: "User"
     }
   );
 
-  return Admin;
+  return User;
 };

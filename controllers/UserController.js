@@ -1,11 +1,11 @@
-const { Admin } = require("../models");
+const { User } = require("../models");
 const { generateToken } = require("../helpers/jwt");
 const { checkPassword } = require("../helpers/bcrypt");
 
-class AdminController {
+class UserController {
   static register(req, res, next) {
     let { email, password, username } = req.body;
-    Admin.create({
+    User.create({
       email,
       password,
       username
@@ -13,7 +13,7 @@ class AdminController {
       .then(created => {
         res.status(201).json({
           status: "Created",
-          msg: "Successfully created a new Admin",
+          msg: "Successfully created a new User",
           data: {
             id: created.id,
             email: created.email,
@@ -26,7 +26,7 @@ class AdminController {
 
   static login(req, res, next) {
     let { email, password } = req.body;
-    Admin.findOne({
+    User.findOne({
       where: {
         email
       }
@@ -35,7 +35,6 @@ class AdminController {
         if (searched) {
           if (checkPassword(password, searched.password)) {
             let payload = {
-              id: searched.id,
               email: searched.email,
               username: searched.username
             };
@@ -58,4 +57,4 @@ class AdminController {
   }
 }
 
-module.exports = AdminController;
+module.exports = UserController;

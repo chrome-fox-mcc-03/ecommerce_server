@@ -14,7 +14,33 @@ let data = {
 let id = 1;
 let impossibleId = 6969;
 
+let userData = [
+  {
+    email: "fadhilahmetra@gmail.com",
+    password: "fadhilahm",
+    username: "fadhilahm",
+    role: "admin",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    email: "testcustomer@gmail.com",
+    password: "test",
+    username: "test",
+    role: "customer",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+];
+
 describe("Product routes", () => {
+  beforeAll(done => {
+    queryInterface
+      .bulkInsert("Users", userData)
+      .then(() => done())
+      .catch(err => done(err));
+  });
+
   afterAll(done => {
     queryInterface
       .bulkDelete("Products", null)
@@ -29,10 +55,7 @@ describe("Product routes", () => {
       test("Should return all product data along with a successful message", done => {
         request(app)
           .get("/products")
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "OK");
@@ -70,10 +93,7 @@ describe("Product routes", () => {
       test("Should return a success with status code 201 and data of our newly created product", done => {
         request(app)
           .post("/products")
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .send(data)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -105,10 +125,7 @@ describe("Product routes", () => {
         };
         request(app)
           .post("/products")
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .send(noInput)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -124,10 +141,7 @@ describe("Product routes", () => {
       test("Should return an error because there is nothing sent", done => {
         request(app)
           .post("/products")
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "Bad Request");
@@ -146,10 +160,7 @@ describe("Product routes", () => {
         wrongNumber.image_url = "";
         request(app)
           .post("/products")
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .send(wrongNumber)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -170,10 +181,7 @@ describe("Product routes", () => {
         };
         request(app)
           .post("/products")
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .send(wrongNumberFormat)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -203,6 +211,23 @@ describe("Product routes", () => {
             done();
           });
       });
+
+      test("Should return an error because role is not admin", done => {
+        request(app)
+          .post("/products")
+          .set("token", process.env.TEST_CUSTOMER_TOKEN)
+          .send(data)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(res.body).toHaveProperty("status", "Unauthorized");
+            expect(res.body).toHaveProperty(
+              "msg",
+              "Access denied, you do not have admin priviledge"
+            );
+            expect(res.status).toBe(401);
+            done();
+          });
+      });
     });
   });
 
@@ -211,10 +236,7 @@ describe("Product routes", () => {
       test("Should return a product detail along with a success message", done => {
         request(app)
           .get(`/products/${id}`)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "OK");
@@ -254,10 +276,7 @@ describe("Product routes", () => {
       test("Should return an error because there's no existing id of the product", done => {
         request(app)
           .get(`/products/66666`)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "Not Found");
@@ -282,10 +301,7 @@ describe("Product routes", () => {
       test("Should return a success with the edited data", done => {
         request(app)
           .put(`/products/${id}`)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .send(edited)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -315,10 +331,7 @@ describe("Product routes", () => {
         };
         request(app)
           .put(`/products/${id}`)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .send(wrongPara)
           .end((err, res) => {
             expect(err).toBe(null);
@@ -365,15 +378,29 @@ describe("Product routes", () => {
         request(app)
           .put(`/products/${impossibleId}`)
           .send(noId)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "Not Found");
             expect(res.body).toHaveProperty("msg", "Product not found");
             expect(res.status).toBe(404);
+            done();
+          });
+      });
+
+      test("Should return an error because role is not admin", done => {
+        request(app)
+          .put(`/products/${id}`)
+          .set("token", process.env.TEST_CUSTOMER_TOKEN)
+          .send(edited)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(res.body).toHaveProperty("status", "Unauthorized");
+            expect(res.body).toHaveProperty(
+              "msg",
+              "Access denied, you do not have admin priviledge"
+            );
+            expect(res.status).toBe(401);
             done();
           });
       });
@@ -385,10 +412,7 @@ describe("Product routes", () => {
       test("Should return the deleted product data and a success message", done => {
         request(app)
           .delete(`/products/${id}`)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "OK");
@@ -430,15 +454,28 @@ describe("Product routes", () => {
       test("Should return error because of non-existent product id", done => {
         request(app)
           .put(`/products/${impossibleId}`)
-          .set(
-            "token",
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoiZmFkaGlsYWhtZXRyYUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImZhZGhpbGFobSIsImlhdCI6MTU4NDM3NzAyOX0.IQBfQXlypNBcwTR0KLq5WTClEws8ndpJ2-JFNAlQov4"
-          )
+          .set("token", process.env.TEST_ADMIN_TOKEN)
           .end((err, res) => {
             expect(err).toBe(null);
             expect(res.body).toHaveProperty("status", "Not Found");
             expect(res.body).toHaveProperty("msg", "Product not found");
             expect(res.status).toBe(404);
+            done();
+          });
+      });
+
+      test("Should return an error because role is not admin", done => {
+        request(app)
+          .delete(`/products/${id}`)
+          .set("token", process.env.TEST_CUSTOMER_TOKEN)
+          .end((err, res) => {
+            expect(err).toBe(null);
+            expect(res.body).toHaveProperty("status", "Unauthorized");
+            expect(res.body).toHaveProperty(
+              "msg",
+              "Access denied, you do not have admin priviledge"
+            );
+            expect(res.status).toBe(401);
             done();
           });
       });

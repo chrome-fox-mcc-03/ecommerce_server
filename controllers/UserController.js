@@ -44,7 +44,7 @@ class UserController {
         console.log("--- USER-CONTROLLERS: LOGIN ---");
         console.log("REQ BODY IS");
         console.log(req.body);
-
+        console.log(req.body.email);
 
         User.findAll({
             where: {
@@ -58,11 +58,13 @@ class UserController {
             
             if(response) {
                 console.log("WHAT'S RESPONSE 2?");
-                // console.log(response);
+                console.log(response[0]);
                 flagMatchingPassword = checkPassword(req.body.password, response[0].password)
+                // console.log(`password flag: ${flag}`);
                 if(flagMatchingPassword) {
                     console.log("PASSWORD MATCHES");
                     payloadParams = {
+                        id: response[0].id,
                         email: req.body.email,
                         password: req.body.password,
                         role: response[0].role
@@ -71,8 +73,8 @@ class UserController {
                     accessToken = createToken(payloadParams)
                     console.log("ACCESS TOKEN IS");
                     console.log(accessToken);
-                    req.headers.token = accessToken
-                    localStorage.setItem("token", accessToken)
+                    // req.headers.token = accessToken --> AUTENTIKASI
+                    // localStorage.setItem("token", accessToken) --> CLIENT
                     res.status(200).json({token:accessToken})
     
                 } else {

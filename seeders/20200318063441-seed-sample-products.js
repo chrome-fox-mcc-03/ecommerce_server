@@ -11,7 +11,7 @@ let sampleProducts = [
   },
   {
     name: "Enervon-C 30 Tablets Bottle",
-    category: "tablet supplements",
+    category: "supplements",
     image_url: "image.url",
     price: 30000,
     stock: 5000,
@@ -20,7 +20,7 @@ let sampleProducts = [
   },
   {
     name: "Panadol Cold & Flu Tablet Strip",
-    category: "otc internal medicine",
+    category: "medicine",
     image_url: "image.url",
     price: 15000,
     stock: 5000,
@@ -29,7 +29,7 @@ let sampleProducts = [
   },
   {
     name: "Tolak Angin Sachet Box",
-    category: "liquid supplements",
+    category: "supplements",
     image_url: "image.url",
     price: 20000,
     stock: 5000,

@@ -6,8 +6,7 @@ let payload
 function authentication(req, res, next) {
     console.log(">>> AUTHENTICATION <<<");
     try {
-        // token = req.headers.token
-        token = localStorage.getItem("token")
+        token = req.headers.token
         console.log("token is");
         console.log(token);
         payload = verifyToken(token)
@@ -23,16 +22,16 @@ function authentication(req, res, next) {
         })
         .then(response => {
             console.log(`USER FOUND`);
-            console.log(response);
-            console.log(`RESPONSE ID:`);
-            console.log(response[0].id);
+            // console.log(response);
+            // console.log(`RESPONSE ID:`);
+            // console.log(response[0].id);
             if((response[0].id === payload.id) && (payload.role === "admin")) {
                 console.log(`AUTHENTICATION PASSED!`)
                 req.decoded = payload
                 next()
             } else {
                 console.log("AUTHENTICATION FAILED!");
-                throw new customError(400, "Unauthorized Access!")
+                throw new customError(401, "UNAUTHORIZED ACCESS")
             }
         })
     }

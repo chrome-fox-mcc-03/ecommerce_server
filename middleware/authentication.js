@@ -26,7 +26,7 @@ function authentication(req, res, next) {
             console.log(response);
             console.log(`RESPONSE ID:`);
             console.log(response[0].id);
-            if(response[0].id === payload.id) {
+            if((response[0].id === payload.id) && (payload.role === "admin")) {
                 console.log(`AUTHENTICATION PASSED!`)
                 req.decoded = payload
                 next()

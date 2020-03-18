@@ -1,10 +1,30 @@
 'use strict';
+const { hashPassword } = require("../helpers/bcrypt.js")
+const samplePassword = hashPassword("superadmin")
 
-let sampleUser = {
-  email: "system_admin@mail.com",
-  password: "iamadmin",
-  role: "admin"
-}
+let sampleUsers = [
+  {
+    email: "superadmin0@mail.com",
+    password: samplePassword,
+    role: "admin",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    email: "superadmin1@mail.com",
+    password: samplePassword,
+    role: "admin",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    email: "superadmin2@mail.com",
+    password: samplePassword,
+    role: "admin",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+]
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -18,7 +38,7 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-   return queryInterface.bulkInsert("User")
+   return queryInterface.bulkInsert("Users", sampleUsers, {})
   },
 
   down: (queryInterface, Sequelize) => {
@@ -29,5 +49,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
+   return queryInterface.bulkDelete("Users", null, {})
   }
 };

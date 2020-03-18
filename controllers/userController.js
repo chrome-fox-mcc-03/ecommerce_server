@@ -39,40 +39,32 @@ class controller {
                 where: {
                     email
                 }
-            })
-            .then(result => {
-                let hashPassword = result.password
-                let userCheck = checkPassword(password, hashPassword)
-                if (userCheck) {
+            }).then(result => {
+                let login = checkPassword(password, result.password)
+                if (login) {
                     let payload = {
                         id: result.id,
                         email: result.email
                     }
                     let token = tokenGenerate(payload)
-                    res.status(201).json({
+                    console.log(token, 'masssukkkk token');
+                    res.status(200).json({
                         'token': token
                     })
                 } else {
-                    next({
+                    let error = {
                         name: 'loginValidation',
                         status: 400,
                         msg: {
                             message: 'Email/Password is wrong'
                         }
-                    })
-                }
-            })
-            .catch(err => {
-                next({
-                    name: 'loginValidation',
-                    status: 400,
-                    msg: {
-                        message: 'Email/Password is wrong'
                     }
-                })
+                    throw error
+                }
+            }).catch(err => {
+                next(err)
             })
     }
-
 }
 
 module.exports = controller

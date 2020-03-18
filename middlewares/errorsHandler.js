@@ -15,8 +15,28 @@ module.exports = function (err, req, res, next) {
                 errors
             }
             break;
+        case 'SequelizeUniqueConstraintError':
+            errors = []
+            err.errors.forEach(error => {
+                errors.push('Email is already exists')
+            })
+            status = 400
+            message = {
+                message: 'Bad Request',
+                errors
+            }
+            break;
         case 'loginValidation':
             status = 400
+            errors = []
+            errors.push(err.msg.message)
+            message = {
+                message: 'Bad Request',
+                errors
+            }
+            break;
+        case 'authentication':
+            status = 403
             errors = []
             errors.push(err.msg.message)
             message = {

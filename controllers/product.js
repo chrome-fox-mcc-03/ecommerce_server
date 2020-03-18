@@ -69,6 +69,38 @@ class ProductController {
                 next(err)
             })
     }
+
+    static delete(req, res, next) {
+        console.log('deeeleeeete');
+        
+        let id = req.params.id;
+        let deletedProduct;
+        Product.findByPk(id)
+            .then(product => {
+                if (product) {
+                    deletedProduct = product
+                    Product.destroy({
+                        where: {
+                            id
+                        }
+                    })
+                        .then(() => {
+                            res.status(200).json(deletedProduct)
+                        })
+                        .catch(err => {
+                            next(err)
+                        })
+                } else {
+                    next({
+                        status: 404,
+                        message: 'Product not found'
+                    })
+                }
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
 }
 
 module.exports = ProductController

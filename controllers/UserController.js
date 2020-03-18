@@ -15,7 +15,7 @@ class UserController {
           if (comparePassword(password, response.password)) {
             const payload = {
               id: response.id,
-              email: response.id,
+              email: response.email,
               fulllname: response.fullname,
               isAdmin: response.isAdmin
             }

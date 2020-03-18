@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const { compareHash } = require('../helpers/bcrypt');
-const { getToken } = require('../helpers/jwt');
+const { getToken, getPayload } = require('../helpers/jwt');
 const appPayload = require('../helpers/appPayload');
 const appError = require('../helpers/appError');
 
@@ -43,7 +43,9 @@ class UserController {
                     if (compareHash(body.password, result.password)) {
                         let access_token = getToken(appPayload(result));
                         res.status(200).json({
-                            access_token
+                            access_token,
+                            id: result.id,
+                            email: result.email
                         })
                     } else {
                         next(appError(400, "wrong email/password combination"));
@@ -53,6 +55,38 @@ class UserController {
                 }
             })
             .catch(next);
+    }
+    static userPayload (req, res, next) {
+        // tej: belum testing
+        const token = req.headers.token;
+        if (!token) {
+            next(appError(404, 'cannot find user from token'))
+        } else {
+            let payload = getPayload(token);
+            if (!payload) {
+                next(appError(404, 'cannot find user from token'))
+            } else {
+                payload = appPayload(payload);
+                User.findOne({
+                    where: {
+                        email: payload.email
+                    }
+                })
+                    .then(result => {
+                        if (!result) {
+                            next(appError(404, 'cannot find user from token'))
+                        } else {
+                            // tej: perbarui token jwt?
+                            res.status(200).json({
+                                access_token: token,
+                                id: result.id,
+                                email: result.email
+                            })
+                        }
+                    })
+                    .catch(next)
+            }
+        }
     }
 };
 

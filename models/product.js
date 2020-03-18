@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "invalid price format",
         },
         min: {
-          args: -1,
+          args: '0',
           msg: "price must be positive value or zero",
         }
       }
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
           msg: "stock amount must be integer",
         },
         min: {
-          args: -1,
+          args: '0',
           msg: "invalid stock amount",
         },
       }

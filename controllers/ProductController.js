@@ -5,6 +5,7 @@ const appPayload = require('../helpers/appPayload');
 
 class ProductController {
     static fetchAll(req, res, next) {
+        // console.log('product fetch');
         const user = appPayload(getPayload(req.headers.access_token));
         Product.findAll({
             where: {
@@ -12,7 +13,7 @@ class ProductController {
             }
         })
         .then(result => {
-            console.log(result);
+            // console.log(result);
             res.status(200).json({
                 products: result,
             });

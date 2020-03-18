@@ -5,6 +5,8 @@ const appError = require('../helpers/appError');
 
 module.exports = function (req, res, next) {
     const access_token = req.headers.access_token;
+    // const access_token = req.header('access_token');
+    // console.log(req.headers);
     if (!access_token) {
         next(appError(401, "please login as valid user"));
     } else {

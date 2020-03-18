@@ -5,7 +5,6 @@ class UserController {
     static register(req, res, next) {
         const { email, password, role } = req.body
         
-        
         User.create({
             email,
             password,
@@ -25,7 +24,8 @@ class UserController {
 
     static login(req, res, next){
         const { email } = req.body
-
+        console.log(email);
+        
         User.findOne({
             where: {
                 email

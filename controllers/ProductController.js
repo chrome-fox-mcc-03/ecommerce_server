@@ -3,15 +3,21 @@ const { Product } = require('../models')
 class ProductController {
     static create(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: ADD PRODUCT ---');
+
+        // // DEVELOPMENT
         // console.log("REQ BODY IS:");
         // console.log(req.body);
-        console.log("REQ BODY DATA IS");
-        console.log(req.body.data);
+
+        // //TESTING
+        // console.log("REQ BODY DATA IS");
+        // console.log(req.body.data);
         // console.log(req.body.data.name);
         
-        Product.create(req.body.data)
+        // Product.create(req.body.data) //TESTING
+        Product.create(req.body)
             .then(response => {
                 console.log("NEW PRODUCT HAS BEEN ADDED");
+                console.log(response);
                 let newProduct = {
                     id: response.id,
                     name: response.name,
@@ -20,6 +26,8 @@ class ProductController {
                     price: response.price,
                     stock: response.stock
                 }
+                console.log("SANITY CHECK BEFORE SENDING");
+                console.log(newProduct);
                 
                 res.status(201).json({data: newProduct})
             })
@@ -42,38 +50,38 @@ class ProductController {
             })
     }
 
-    // static getById(req, res, next) {
-    //     console.log(">>> FIND TODOS BY ID <<<");
-    //     console.log(`req decoded is`);
-    //     console.log(req.decoded);
-    //     // console.log(`payload is`);
-    //     // console.log(req.payload);
-    //     console.log("REQ PARAMS");
-    //     console.log(req.params);
-    //     Product.findAll({
-    //             where: {
-    //                 id: +req.params.id
-    //             }
-    //         })
-    //         .then(response => {
-    //             console.log(`RECOVERED TODO: `);
-    //             console.log(response);
-    //             if (response) {
-    //                 res.status(200).json({
-    //                     data: response,
-    //                     message: "Entry found",
-    //                     decoded: req.decoded
-    //                 })
-    //             } else {
-    //                 console.log(`BAD MOVE! NOT FOUND!`);
-    //                 // res.status(404).json({error: "Entry Not Found"})
-    //                 throw new customError(404, "ENTRY NOT FOUND")
-    //             }
-    //         })
-    //         .catch(err => {
-    //             next(err)
-    //         })
-    // }
+    static getById(req, res, next) {
+        console.log(">>> FIND TODOS BY ID <<<");
+        console.log(`req decoded is`);
+        console.log(req.decoded);
+        // console.log(`payload is`);
+        // console.log(req.payload);
+        console.log("REQ PARAMS");
+        console.log(req.params);
+        Product.findAll({
+                where: {
+                    id: +req.params.id
+                }
+            })
+            .then(response => {
+                console.log(`RECOVERED TODO: `);
+                console.log(response[0].dataValues);
+                if (response) {
+                    res.status(200).json({
+                        data: response[0].dataValues,
+                        message: "Entry found",
+                        decoded: req.decoded
+                    })
+                } else {
+                    console.log(`BAD MOVE! NOT FOUND!`);
+                    // res.status(404).json({error: "Entry Not Found"})
+                    throw new customError(404, "ENTRY NOT FOUND")
+                }
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
 
 
     static update(req, res, next) {
@@ -86,11 +94,20 @@ class ProductController {
         console.log("--- ACHTUNG! REQ.BODY IS ---");
         console.log(req.body);
         Product.update({
-                title: req.body.data.title,
-                category: req.body.data.category,
-                image_url: req.body.data.image_url,
-                price:req.body.data.price,
-                stock: req.body.data.stock
+
+                // // TESTING
+                // title: req.body.data.title,
+                // category: req.body.data.category,
+                // image_url: req.body.data.image_url,
+                // price:req.body.data.price,
+                // stock: req.body.data.stock
+
+                //DEVELOPMENT
+                title: req.body.title,
+                category: req.body.category,
+                image_url: req.body.image_url,
+                price:req.body.price,
+                stock: req.body.stock
             }, {
                 where: {
                     id: +req.params.id

@@ -5,7 +5,7 @@ const ProductController = require("../controllers/ProductController")
 
 
 productRoute.get("/", ProductController.getAll)
-// productRoute.get("/:id", ProductController.getById)
+productRoute.get("/:id", ProductController.getById)
 
 productRoute.use(authentication)
 //ONLY ADMIN AUTHORIZED TO CREATE, PUT & DLETE

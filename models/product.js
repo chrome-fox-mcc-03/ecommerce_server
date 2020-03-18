@@ -73,10 +73,6 @@ module.exports = (sequelize, DataTypes) => {
         isNumeric: {
           args: true,
           msg: "Please input product's quantity"
-        },
-        min: {
-          args: 0,
-          msg: "Please input product's quantity"
         }
       }
     },

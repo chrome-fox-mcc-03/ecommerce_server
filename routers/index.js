@@ -12,5 +12,6 @@ router.use(authentication);
 router.get('/products', ProductController.findAll);
 router.get('/products/:id', ProductController.findOne);
 router.post('/products', ProductController.create);
+router.put('/products/:id', authorization, ProductController.update);
 
 module.exports = router

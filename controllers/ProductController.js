@@ -39,10 +39,30 @@ class ProductController {
     }
     Product.create(payload)
       .then(response => {
-        console.log(response)
+        res.status(201).json(response.dataValues)
       })
       .catch(err => {
         console.log(err)
+        next(err)
+      })
+  }
+
+  static update(req, res, next) {
+    let id = +req.body.id
+    const payload = {
+      name: req.body.name,
+      description: req.body.description,
+      stock: req.body.stock,
+      price: req.body.price,
+      image_url: req.body.image_url,
+    }
+    Product.update(payload, {
+      where: { id }
+    })
+      .then(response => {
+        res.status(200).json(payload.name)
+      })
+      .catch(err => {
         next(err)
       })
   }

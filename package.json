@@ -1,0 +1,35 @@
+{
+  "name": "ecommerce_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test jest --testTimeout=20000 --forceExit --detectOpenHandles",
+    "dev": "NODE_ENV=development nodemon bin/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramadesi1/ecommerce_server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramadesi1/ecommerce_server/issues"
+  },
+  "homepage": "https://github.com/ramadesi1/ecommerce_server#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "pg": "^7.18.2",
+    "sequelize": "^5.21.5"
+  }
+}

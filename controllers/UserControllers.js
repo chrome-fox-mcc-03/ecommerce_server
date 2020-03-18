@@ -45,7 +45,6 @@ class UserController {
                 if(checkPassValidity){
                     const access_token = signToken(payload)
                     req.headers.access_token = access_token
-                    // console.log(access_token, "<<<<<");
 
                     res.status(200).json({
                         access_token

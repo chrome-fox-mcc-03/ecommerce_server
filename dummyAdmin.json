@@ -1,27 +1,12 @@
 [
     {
-        "email": "admin1",
+        "email": "admin1@mail.com",
         "password": "admin1777",
         "role": "admin"
     },
     {
-        "email": "admin2",
+        "email": "admin2@mail.com",
         "password": "admin2777",
-        "role": "admin"
-    },
-    {
-        "email": "admin3",
-        "password": "admin3777",
-        "role": "admin"
-    },
-    {
-        "email": "admin4",
-        "password": "admin4777",
-        "role": "admin"
-    },
-    {
-        "email": "admin5",
-        "password": "admin5777",
         "role": "admin"
     }
 ]

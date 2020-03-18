@@ -1,4 +1,4 @@
-const { Product } = require('../models')
+const { Product, Type } = require('../models')
 
 module.exports = {
   createProduct(req, res, next) {
@@ -15,7 +15,11 @@ module.exports = {
       .catch(next)
   },
   findAllProduct(req, res, next) {
-    Product.findAll()
+    const { filter } = req.params
+
+    Product.findAll({
+      include: [Type]
+    })
       .then(data => {
         res.status(200).json({
           data
@@ -57,7 +61,8 @@ module.exports = {
     const { id } = req.params
 
     Product.findOne({
-      where: { id }
+      where: { TypeId: id },
+      include: [Type]
     })
       .then(data => {
         res.status(200).json({

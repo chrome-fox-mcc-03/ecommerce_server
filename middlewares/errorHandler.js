@@ -2,13 +2,14 @@ module.exports = (err, req, res, next) => {
   let status = 500
   let message = 'Internal Server Error'
 
+  console.log(err, '<<<ERRORR!>>>')
+
   if (err.status) {
     status = err.status
     message = err.message
   } else if (err.name === 'SequelizeValidationError') {
     let error = []
     err.errors.forEach(el => error.push(el.message))
-
     status = 400
     message = error[0]
   } else if (err.name === 'SequelizeUniqueConstraintError') {

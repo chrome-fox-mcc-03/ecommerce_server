@@ -55,6 +55,8 @@ class UserController {
         }).catch(next);
     }
 
+    // Google Auth
+
 }
 
 module.exports = { UserController }

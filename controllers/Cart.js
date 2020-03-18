@@ -1,7 +1,6 @@
 'use strict'
 
-const { Product, Cart, sequelize } = require('../models')
-
+const { Product, Cart, sequelize } = require('../models');
 
 class CartController {
 
@@ -84,15 +83,40 @@ class CartController {
 
             });
 
-
-
         }).then(result => {
             console.log(result)
         }).catch(next);
     }
 
     static cartUpdate(req, res, next) {
+        const UserId = req.loginId;
+        const { id } = req.params;
+        const payload = {
+            quantity: req.body.quantity,
+            cart_status: req.body.cart_status,
+            ProductId: req.body.ProductId,
+        }
+        const cartPayload = {};
 
+        Product.findByPk(payload.ProductId).then(product => {
+            if (product.stock >= payload.quantity) {
+                cartPayload.UserId = UserId;
+                cartPayload.ProductId = payload.ProductId;
+                cartPayload.quantity = payload.quantity;
+                cartPayload.cart_status = payload.cart_status;
+                cartPayload.price = product.price * payload.quantity;
+
+                return Cart.update(cartPayload, {
+                    where: {
+                        id: +id
+                    }
+                });
+            } else {
+                next({ status: 400, message: 'Not Enough Product' });
+            }
+        }).then(cart => {
+            console.log(cart)
+        }).catch(next);
     }
 
     static emptyCart(req, res, next) {
@@ -102,6 +126,7 @@ class CartController {
                 id
             }
         }).then(result => {
+            console.log(result)
 
         }).catch(next);
 

@@ -1,7 +1,3 @@
-if(process.env.NODE_ENV === 'development') {
-    require('dotenv').config()
-}
-
 const cors = require('cors');
 const express = require('express');
 const app = express();
@@ -15,6 +11,6 @@ app.use(express.json())
 app.use(router)
 app.use(errorHandler)
 
-app.listen(process.env.PORT, _=> console.log(`Hi there! You're listening to radio ${process.env.PORT}`))
+// app.listen(process.env.PORT, _=> console.log(`Hi there! You're listening to radio ${process.env.PORT}`))
 
 module.exports = app

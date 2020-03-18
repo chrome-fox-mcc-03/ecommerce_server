@@ -3,7 +3,7 @@ const app = require('../app') ;
 const { hashPassword } = require('../helpers/bcrypt') ;
 const { sequelize } = require('../models') ;
 const { queryInterface } = sequelize ;
-let token = ''
+let token = '' ;
 let idCreated ;
 
 describe('/products', ()=> {
@@ -26,21 +26,19 @@ describe('/products', ()=> {
             .catch((err)=>{
                 done(err)
             })
-    })
-    describe('get token from route users/register', () => {
-        test('set token', (done)=> {
-            request(app)
-                .post('/users/register')
-                .send({
-                    email : 'admin@admin.com',
-                    password : hashPassword('password'),
-                    role : 'admin'
-                })
-                .end((err, res)=> {
-                    token = res.body.access_token
-                    done()
-                })
-        })
+    }),
+    beforeAll((done)=>{
+        request(app)
+            .post('/users/register')
+            .send({
+                email : 'admin@admin.com',
+                password : hashPassword('password'),
+                role : 'admin'
+            })
+            .end((err, res)=> {
+                token = res.body.access_token
+                done()
+            })
     })
     describe('GET /products', ()=> {
         describe ('success case', () => {

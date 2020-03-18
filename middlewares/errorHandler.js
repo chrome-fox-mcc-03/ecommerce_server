@@ -3,17 +3,17 @@ module.exports = (err, req, res, next) => {
 		let errors = err.errors.map(el => el.message);
 
 		res.status(400).json({
-			message: 'Bad Request',
+			message: 'Invalid Input',
 			errors
 		})
 	} else if (err.name === 'SequelizeUniqueConstraintError') {
 		res.status(400).json({
-			message: 'Bad Request',
+			message: 'Invalid Input',
 			errors: ['Email already registered']
 		})
 	} else if (err.name === 'Invalid User') {
 		res.status(400).json({
-			message: 'Bad Request',
+			message: 'Invalid Input',
 			errors: ['Email/Password combination not match']
 		})
 	} else if (err.name === 'Unauthorized') {
@@ -23,13 +23,13 @@ module.exports = (err, req, res, next) => {
 		})
 	} else if (err.name === 'JsonWebTokenError') {
 		res.status(401).json({
-			message: 'Unauthorized',
-			errors: ['Please login']
+			message: 'Invalid Credential',
+			errors: ['Please login!']
 		})
 	} else if (err.name === 'PageNotFound') {
 		let { model } = err;
 		res.status(404).json({
-			message: 'Page Not Found',
+			message: `${model} Not Found`,
 			errors: [`The ${model} you are looking for is not found`]
 		})
 		

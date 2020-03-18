@@ -44,7 +44,7 @@ describe('User routes', () => {
 					.send({name: '', email: '', password: '', role: ''})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email is required');
@@ -61,7 +61,7 @@ describe('User routes', () => {
 					.send({})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email is required');
@@ -77,7 +77,7 @@ describe('User routes', () => {
 					.send(adminData)
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email already registered');
@@ -113,7 +113,7 @@ describe('User routes', () => {
 					})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email/Password combination not match');
@@ -130,7 +130,7 @@ describe('User routes', () => {
 					})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email/Password combination not match');
@@ -147,7 +147,7 @@ describe('User routes', () => {
 					})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email/Password combination not match');
@@ -180,7 +180,7 @@ describe('User routes', () => {
 					.send({name: '', email: '', password: '', role: ''})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email is required');
@@ -197,7 +197,7 @@ describe('User routes', () => {
 					.send({})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email is required');
@@ -213,7 +213,7 @@ describe('User routes', () => {
 					.send(customerData)
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email already registered');
@@ -249,7 +249,7 @@ describe('User routes', () => {
 					})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email/Password combination not match');
@@ -266,7 +266,7 @@ describe('User routes', () => {
 					})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email/Password combination not match');
@@ -283,7 +283,7 @@ describe('User routes', () => {
 					})
 					.end((err, res) => {
 						expect(err).toBe(null);
-						expect(res.body).toHaveProperty('message', 'Bad Request');
+						expect(res.body).toHaveProperty('message', 'Invalid Input');
 						expect(res.body.errors.length).toBeGreaterThan(0);
 						expect(res.body).toHaveProperty('errors', expect.any(Array));
 						expect(res.body.errors).toContain('Email/Password combination not match');

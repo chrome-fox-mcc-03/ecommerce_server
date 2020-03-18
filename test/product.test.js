@@ -131,8 +131,8 @@ describe('POST /products', () => {
 				.end((err, res) => {
 					expect(err).toBe(null);
 					expect(res.body.errors.length).toBeGreaterThan(0);
-					expect(res.body.errors).toContain('Please login');
-					expect(res.body).toHaveProperty('message', 'Unauthorized')
+					expect(res.body.errors).toContain('Please login!');
+					expect(res.body).toHaveProperty('message', 'Invalid Credential')
 					expect(res.status).toBe(401);
 					done();
 				})
@@ -174,7 +174,7 @@ describe('POST /products', () => {
 					expect(res.body.errors).toContain('Stock must be at least 0');
 					expect(res.body.errors).toContain('Price must be at least 0');
 					expect(res.body.errors).toContain('isActive is invalid');
-					expect(res.body).toHaveProperty('message', 'Bad Request')
+					expect(res.body).toHaveProperty('message', 'Invalid Input')
 					expect(res.status).toBe(400);
 					done();
 				})
@@ -192,7 +192,7 @@ describe('POST /products', () => {
 					expect(res.body.errors).toContain('Stock must be at least 0');
 					expect(res.body.errors).toContain('Price must be at least 0');
 					expect(res.body.errors).toContain('isActive is required');
-					expect(res.body).toHaveProperty('message', 'Bad Request')
+					expect(res.body).toHaveProperty('message', 'Invalid Input')
 					expect(res.status).toBe(400);
 					done();
 				})
@@ -215,7 +215,7 @@ describe('POST /products', () => {
 					expect(res.body.errors.length).toBeGreaterThan(0);
 					expect(res.body.errors).toContain('Stock must be at least 0');
 					expect(res.body.errors).toContain('Price must be at least 0');
-					expect(res.body).toHaveProperty('message', 'Bad Request')
+					expect(res.body).toHaveProperty('message', 'Invalid Input')
 					expect(res.status).toBe(400);
 					done();
 				})
@@ -317,13 +317,14 @@ describe('GET /products/:id', () => {
 				})
 		})
 	})
+	
 	describe('error case', () => {
 		test('product not exist', done => {
 			request(app)
 				.get(`/products/0`)
 				.end((err, res) => {
 					expect(err).toBe(null)
-					expect(res.body).toHaveProperty('message', 'Page Not Found')
+					expect(res.body).toHaveProperty('message', 'Product Not Found')
 					expect(res.body).toHaveProperty('errors', expect.any(Array))
 					expect(res.body.errors).toContain('The Product you are looking for is not found')
 					expect(res.status).toBe(404);
@@ -348,9 +349,9 @@ describe('PUT /products/:id', () => {
 				})
 				.end((err, res) => {
 					expect(err).toBe(null)
-					expect(res.body).toHaveProperty('message', 'Unauthorized')
+					expect(res.body).toHaveProperty('message', 'Invalid Credential')
 					expect(res.body).toHaveProperty('errors', expect.any(Array))
-					expect(res.body.errors).toContain('Please login')
+					expect(res.body.errors).toContain('Please login!')
 					expect(res.status).toBe(401)
 					done()
 				})
@@ -392,7 +393,7 @@ describe('PUT /products/:id', () => {
 				})
 				.end((err, res) => {
 					expect(err).toBe(null)
-					expect(res.body).toHaveProperty('message', 'Page Not Found')
+					expect(res.body).toHaveProperty('message', 'Product Not Found')
 					expect(res.body).toHaveProperty('errors', expect.any(Array))
 					expect(res.body.errors).toContain('The Product you are looking for is not found')
 					expect(res.status).toBe(404)
@@ -410,7 +411,7 @@ describe('PUT /products/:id', () => {
 				})
 				.end((err, res) => {
 					expect(err).toBe(null)
-					expect(res.body).toHaveProperty('message', 'Bad Request')
+					expect(res.body).toHaveProperty('message', 'Invalid Input')
 					expect(res.body).toHaveProperty('errors', expect.any(Array))
 					expect(res.body.errors).toContain('Stock must be at least 0')
 					expect(res.body.errors).toContain('Price must be at least 0')

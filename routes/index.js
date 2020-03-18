@@ -7,6 +7,7 @@ routers.post('/loginAdmin',UserController.loginAdmin)
 
 routers.post('/product',Productcontroller.addProduct)
 routers.get('/product',Productcontroller.getProduct)
+routers.get('/product/:id',Productcontroller.getProductById)
 routers.put('/product/:id',Productcontroller.updateProduct)
 routers.delete('/product/:id',Productcontroller.deleteProduct)
 module.exports = routers

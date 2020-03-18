@@ -1,5 +1,7 @@
 const request = require('supertest')
 const app = require('../app')
+// require user di sni
+// require jwt token
 
 let product = {
     name:'soap',
@@ -16,13 +18,17 @@ let updateProduct = {
     stock:15
 }
 
+let token = ''
 describe('Product routes', () => {
+    // beforeAll langsung create user admin
+    // dapat token
     describe('POST /product', () => {
         describe('success process', () => {
             test('should send an object (name,image_url,price,stock) with status 201',(done) => {
                 request(app)
                 .post('/product')
                 .send(product)
+                // set untuk header
                 .end((err,res) => {
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty('name',expect.any(String))

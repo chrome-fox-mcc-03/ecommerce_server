@@ -15,8 +15,25 @@ class ProductController {
         });
     }
 
+    static getProductById(req,res,next) {
+        const {id} = req.params
+        Product.findOne({
+            where: { id }
+        })
+        .then((result) => {
+            res.status(200).json(result)
+        })
+        .catch((err) => {
+            next(err)
+        })
+    }
+
     static getProduct(req,res,next) {
-        Product.findAll()
+        Product.findAll({
+            order: [
+                ['id','ASC']
+            ]
+        })
         .then((result) => {
             res.status(200).json({result})    
         }).catch((err) => {

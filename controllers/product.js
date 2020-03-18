@@ -72,8 +72,8 @@ class ProductController {
 					})
 				} else {
 					res.status(200).json({
-						message: 'Product successfully created',
-						product: result[1]
+						message: 'Product successfully updated',
+						product: result[1][0]
 					})
 				}
 			})

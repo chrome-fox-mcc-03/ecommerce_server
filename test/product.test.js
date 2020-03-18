@@ -335,6 +335,39 @@ describe('GET /products/:id', () => {
 })
 
 describe('PUT /products/:id', () => {
+	describe('success case', () => {
+		test('update product by id', done => {
+			request(app)
+				.put(`/products/${secondId}`)
+				.set('token', adminToken)
+				.send({
+					name: 'Product Updated',
+					description: 'This is description Updated',
+					stock: 52,
+					price: 50001,
+					imageUrl: 'https://images.unsplash.com/photo-1584444020170-cee15a93b5f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=638&q=80',
+					isActive: false
+				})
+				.end((err, res) => {
+					expect(err).toBe(null);
+					expect(res.body).toHaveProperty('product', expect.any(Object));
+					expect(res.body.product).toHaveProperty('id', expect.any(Number));
+					expect(res.body.product).toHaveProperty('name', 'Product Updated');
+					expect(res.body.product).toHaveProperty('description', 'This is description Updated');
+					expect(res.body.product).toHaveProperty('stock', 52);
+					expect(res.body.product).toHaveProperty('price', 50001);
+					expect(res.body.product).toHaveProperty('isActive', false);
+					expect(res.body.product).toHaveProperty('imageUrl', 'https://images.unsplash.com/photo-1584444020170-cee15a93b5f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=638&q=80')
+					expect(res.body.product).toHaveProperty('createdAt', expect.any(String));
+					expect(res.body.product).toHaveProperty('updatedAt', expect.any
+					(String));
+					expect(res.body).toHaveProperty('message', 'Product successfully updated');
+					expect(res.status).toBe(200);
+					done();
+				})
+		})
+	})
+
 	describe('error case', () => {
 		test('not authenticated', done => {
 			request(app)

@@ -86,9 +86,158 @@ Content: { Payload: Object,
 Error Response:
 
 Code: 400 Bad Request
-Content: { Message : "Bad Request" }
+Content: { Message : "Wrong Email / Password" }
 OR
 
 
 
 Notes:
+
+______________________________________________________________________________________
+
+Title
+
+Create Product
+
+URL
+
+"/product/create"
+
+Method:
+
+POST
+
+URL Params
+
+
+Required:
+
+Access_Token(From Login, in headers)
+
+Optional:
+
+
+Data Params
+
+Body : {
+    Name: String,
+    Image_Url: String,
+    Price: Integer,
+    Stock: Integer
+}
+
+Success Response:
+
+
+Code: 201 Created
+Content: {
+            Name: String,
+            Image_Url: String,
+            Price: Integer,
+            Stock: Integer
+        }
+Error Response:
+
+Code: 400 Bad Request
+Content: { Message : "Error Message" }
+OR
+
+
+
+Notes:
+
+______________________________________________________________________________________
+
+Title
+
+Update Product
+
+URL
+
+"/product/update/:id"
+
+Method:
+
+PUT
+
+URL Params
+
+
+Required:
+
+Access_Token(From Login, in headers)
+
+Optional:
+
+
+Data Params
+
+Body : {
+    Name: String,
+    Image_Url: String,
+    Price: Integer,
+    Stock: Integer
+}
+
+Success Response:
+
+
+Code: 201 Created
+Content: {
+            Message: Berhasil Update
+        }
+Error Response:
+
+Code: 400 Bad Request
+Content: { Message : "Error Message" }
+OR
+
+
+
+Notes:
+
+______________________________________________________________________________________
+
+Title
+
+Delete Product
+
+URL
+
+"/product/update/:id"
+
+Method:
+
+DELETE
+
+URL Params
+
+
+Required:
+
+Access_Token(From Login, in headers)
+
+Optional:
+
+
+Data Params
+
+id: from req.params.id
+
+Success Response:
+
+
+Code: 201 Created
+Content: {
+            Message: Berhasil Delete
+        }
+Error Response:
+
+Code: 400 Bad Request
+Content: { Message : "Error Message" }
+OR
+
+
+
+Notes:
+

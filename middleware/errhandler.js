@@ -25,7 +25,8 @@ module.exports = function(err, req, res, next) {
                 res.status(status).json(message)    
         
             default:
-           
+                console.log(err)
+                console.log(err.name)
                 message = {
                     message: "Bad Request Default",
                     errors
@@ -43,8 +44,15 @@ module.exports = function(err, req, res, next) {
                 res.status(400).json(message)
                 
                 break;
+            case "Not Authorized":
+                message = {
+                    message: "Not Authorized"
+                }
+                res.status(400).json(message)
         
             default:
+                console.log(err)
+                console.log(err.msg)
                 message = {
                     message: "Internal Server testing Error"
                 }

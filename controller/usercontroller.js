@@ -31,11 +31,13 @@ class Controller {
                 console.log(bcrypt.compareSync(Password, result[0].Password)); // true
                 if(bcrypt.compareSync(Password, result[0].Password )) {
                     let payloads = {
-                        Email: result[0].Email
+                        Email: result[0].Email,
+                        id: result[0].id,
+                        Role: result[0].Role
                     }
                     let Access_Token = jwt.sign(payloads, process.env.SECRET)
                     let payload = {
-                        Access_Token,
+                        "Access_Token": Access_Token,
                         Email: result[0].Email
                     }
                     res.status(200).json(payload)

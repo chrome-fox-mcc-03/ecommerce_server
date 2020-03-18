@@ -228,6 +228,8 @@ describe('User Router', () => {
                     .end((err, res) => {
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('token', expect.any(String))
+                        expect(res.body).toHaveProperty('name', dataRegister.name)
+                        expect(res.body).toHaveProperty('store_name', dataRegister.store_name)
                         done()
                     })
                 })

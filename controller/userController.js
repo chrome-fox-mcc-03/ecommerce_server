@@ -59,7 +59,6 @@ class Controller {
                 id: result.id,
                 name: result.name,
                 email: result.email,
-                hashedPassword: result.password,
                 store_name: storeData.name,
                 store_id: result.store_id
             }
@@ -73,6 +72,13 @@ class Controller {
             email: req.body.email,
             password: req.body.password
         }
+        let dataToThrow = {
+            id: null,
+            name: null,
+            store_name: null,
+            img_url: null
+        }
+        console.log(data)
         User.findOne({
             where: {
                 email: data.email
@@ -87,18 +93,29 @@ class Controller {
             }
             else {
                 if(!verifyPassword(data.password, result.password)){
-                throw({
-                    status: 400,
-                    msg: 'Wrong email/password'
+                    throw({
+                        status: 400,
+                        msg: 'Wrong email/password'
                 })
                 }
                 else {
-                    const token = jwt.sign({
-                        id: result.id
-                    }, process.env.SECRET_KEY)
-                    res.status(201).json({token})
+                    dataToThrow.id = result.id
+                    dataToThrow.name = result.name
+                    dataToThrow.img_url = result.img_url
+                    return Store.findOne({
+                        where: {
+                            id: result.store_id
+                        }
+                    })
                 }
             }
+        })
+        .then(result => {
+            dataToThrow.store_name = result.name
+            const token = jwt.sign({
+                id: dataToThrow.id
+            }, process.env.SECRET_KEY)
+            res.status(201).json({token, name: dataToThrow.name, store_name: dataToThrow.store_name, img_url: dataToThrow.img_url})
         })
         .catch(next)
     }

@@ -4,14 +4,17 @@ const { User } = require('../models')
 
 function authentication(req, res, next){
     try {
+        
         const access_token = req.headers.access_token
+        console.log(access_token);
+        
         const decoded = jwt.verify(access_token, process.env.SECRET)
-
-        const { email, id } = decoded.id
+        
         if (decoded) {
+            
             User.findOne({
-                where : {
-                    email
+                where: {
+                    email: decoded.email
                 }
             })
             .then((userFound) => {

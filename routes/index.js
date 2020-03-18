@@ -12,8 +12,8 @@ router.post('/login', UserController.login)
 router.use(authentication)
 router.get('/product', ProductController.fetchProduct) // fetch product
 router.post('/product', ProductController.addProduct) // add new product
-router.put('/product', ProductController.editProduct) // edit product
-router.delete('/product', ProductController.deleteProduct) //delete product
+router.put('/product/:id', ProductController.editProduct) // edit product
+router.delete('/product/:id', ProductController.deleteProduct) //delete product
 
 
 module.exports = router

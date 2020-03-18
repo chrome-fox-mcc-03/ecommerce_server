@@ -11,5 +11,6 @@ router.post('/register', UserController.register);
 router.use(authentication);
 router.get('/products', ProductController.findAll);
 router.get('/products/:id', ProductController.findOne);
+router.post('/products', ProductController.create);
 
 module.exports = router

@@ -3,7 +3,7 @@ const { Product } = require('../models/index');
 module.exports = (req, res, next) => {
   let id = +req.params.id
 
-  Task.findOne({
+  Product.findOne({
     where: { id }
   })
     .then(response => {

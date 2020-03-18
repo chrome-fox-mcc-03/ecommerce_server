@@ -18,8 +18,7 @@ describe('User routes', () => {
       password: 'qwertyuiop',
       role: true
     })
-      .then(user => {
-        console.log(user.password, 'PASSWORD admin@admin.com')
+      .then(() => {
         done()
       })
       .catch(done)

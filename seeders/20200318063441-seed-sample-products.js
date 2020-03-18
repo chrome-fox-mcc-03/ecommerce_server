@@ -2,6 +2,7 @@
 let sampleProducts = [
   {
     name: "Nissin Cup Noodle Chicken Flavor",
+    category: "food",
     image_url: "image.url",
     price: 10000,
     stock: 5000,
@@ -10,6 +11,7 @@ let sampleProducts = [
   },
   {
     name: "Enervon-C 30 Tablets Bottle",
+    category: "tablet supplements",
     image_url: "image.url",
     price: 30000,
     stock: 5000,
@@ -18,6 +20,7 @@ let sampleProducts = [
   },
   {
     name: "Panadol Cold & Flu Tablet Strip",
+    category: "otc internal medicine",
     image_url: "image.url",
     price: 15000,
     stock: 5000,
@@ -26,6 +29,7 @@ let sampleProducts = [
   },
   {
     name: "Tolak Angin Sachet Box",
+    category: "liquid supplements",
     image_url: "image.url",
     price: 20000,
     stock: 5000,

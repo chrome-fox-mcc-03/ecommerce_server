@@ -17,6 +17,20 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'CATEGORY REQUIRED'
+        },
+        notNull: {
+          args: true,
+          msg: 'CATEGORY REQUIRED'
+        }
+      }
+    },
     image_url: DataTypes.STRING,
     price: {
       type: DataTypes.FLOAT,

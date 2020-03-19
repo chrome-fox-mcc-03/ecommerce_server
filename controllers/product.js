@@ -14,6 +14,7 @@ class ProductController {
       name: req.body.name,
       image_url: req.body.image_url,
       description: req.body.description,
+      CategoryId: req.body.CategoryId,
       price: req.body.price,
       stock: req.body.stock
     }
@@ -45,6 +46,7 @@ class ProductController {
       name: req.body.name,
       image_url: req.body.image_url,
       description: req.body.description,
+      CategoryId: req.body.CategoryId,
       price: req.body.price,
       stock: req.body.stock
     }

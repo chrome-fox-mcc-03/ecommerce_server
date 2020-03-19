@@ -35,8 +35,9 @@ class ProductController {
     }
 
     static editProduct(req, res, next){
+        // console.log('we are in edit product controller');
+        
         const { name, image_url, price, stock } = req.body
-
         Product.update({
             name,
             image_url,
@@ -46,7 +47,7 @@ class ProductController {
             where :{
                 id : req.params.id
             }
-        })
+        }) 
         .then((result) => {
             res.status(200).json({
                 result

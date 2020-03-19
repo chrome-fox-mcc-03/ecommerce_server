@@ -42,7 +42,9 @@ class UserController {
               status: "OK",
               msg: "Successfully logged in",
               data: {
-                token: generateToken(payload)
+                token: generateToken(payload),
+                username : searched.username,
+                role : searched.role
               }
             });
           } else {

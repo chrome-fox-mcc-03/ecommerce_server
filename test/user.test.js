@@ -39,7 +39,7 @@ describe('User routes', () => {
             })
         })
         describe('errors process', () => {
-            test.only('should send an errors with status 400 because email format is wrong', (done) => {
+            test('should send an errors with status 400 because email format is wrong', (done) => {
                 const formatEmailWrong = { ...register, email: 'xavier.mail' }
                 request(app)
                     .post('/user/register')

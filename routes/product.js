@@ -6,7 +6,7 @@ const authorization = require('../middlewares/authorization')
 router.get('/', Controller.findAll)
 router.use(checkRole)
 router.post('/', Controller.create)
-router.patch('/:id', Controller.update)
-router.delete('/:id', Controller.deleteProduct)
+router.patch('/:id', authorization, Controller.update)
+router.delete('/:id', authorization, Controller.deleteProduct)
 
 module.exports = router

@@ -23,10 +23,12 @@ function authorization (req, res, next) {
                 next({
                     status: 404,
                     message: {
-                        error: 'Product Not Found'
+                        error: 'Product not found'
                     }
                 })
             }
         })
         .catch(err => next(err))
 }
+
+module.exports = authorization

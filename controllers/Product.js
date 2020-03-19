@@ -42,7 +42,15 @@ class Controller {
             }
         })
             .then(_ => {
-                res.status(200).json('success')
+                return Product.findOne({
+                    where: {
+                        id
+                    }
+                })
+            })
+            .then(response => {
+                const { name, price, stock, image_url, genre } = response
+                res.status(200).json({ name, price, stock, image_url, genre })
             })
             .catch(err => next(err))
     }

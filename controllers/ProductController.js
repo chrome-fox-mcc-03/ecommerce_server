@@ -1,19 +1,12 @@
 const { Product } = require('../models')
+const { customError } = require("../helpers/errorModel")
 
 class ProductController {
     static create(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: ADD PRODUCT ---');
-
-        // // DEVELOPMENT
-        // console.log("REQ BODY IS:");
+        // console.log('SANITY CHECK');
         // console.log(req.body);
-
-        // //TESTING
-        // console.log("REQ BODY DATA IS");
-        // console.log(req.body.data);
-        // console.log(req.body.data.name);
         
-        // Product.create(req.body.data) //TESTING
         Product.create(req.body)
             .then(response => {
                 console.log("NEW PRODUCT HAS BEEN ADDED");
@@ -52,33 +45,35 @@ class ProductController {
 
     static getById(req, res, next) {
         console.log(">>> FIND TODOS BY ID <<<");
-        console.log(`req decoded is`);
-        console.log(req.decoded);
+        // console.log(`req decoded is`);
+        // console.log(req.decoded);
         // console.log(`payload is`);
         // console.log(req.payload);
-        console.log("REQ PARAMS");
-        console.log(req.params);
+        // console.log("REQ PARAMS");
+        // console.log(req.params);
         Product.findAll({
                 where: {
                     id: +req.params.id
                 }
             })
             .then(response => {
-                console.log(`RECOVERED TODO: `);
-                console.log(response[0].dataValues);
+                console.log(`PRODUCT FOUND`);
+                // console.log(response[0].dataValues);
                 if (response) {
+                    console.log('PRODUCT FOUND & NOT NULL');
                     res.status(200).json({
                         data: response[0].dataValues,
                         message: "Entry found",
                         decoded: req.decoded
                     })
                 } else {
-                    console.log(`BAD MOVE! NOT FOUND!`);
+                    console.log(`PRODUCT NOT FOUND!`);
                     // res.status(404).json({error: "Entry Not Found"})
                     throw new customError(404, "ENTRY NOT FOUND")
                 }
             })
             .catch(err => {
+                console.log('ERROR FIND ALL PRODUCTS');
                 next(err)
             })
     }
@@ -86,13 +81,13 @@ class ProductController {
 
     static update(req, res, next) {
         console.log(`>>>> UPDATE PRODUCT BY ID <<<<`);
-        console.log(req.params.id);
-        console.log(`checking which user`);
-        console.log(req.decoded);
+        // console.log(req.params.id);
+        // console.log(`checking which user`);
+        // console.log(req.decoded);
         // console.log(`which payload again?`);
         // console.log(req.payload);
-        console.log("--- ACHTUNG! REQ.BODY IS ---");
-        console.log(req.body);
+        // console.log("--- ACHTUNG! REQ.BODY IS ---");
+        // console.log(req.body);
         Product.update({
 
                 // // TESTING
@@ -115,9 +110,10 @@ class ProductController {
                 returning: true
             })
             .then(updated => {
-                console.log(`UPDATED DATUM IS:`);
-                console.log(updated);
+                console.log(`SUCCESS UPDATING PRODUCT:`);
+                // console.log(updated);
                 if (updated[0] === 0) {
+                    console.log("TARGET PRODUCT NOT FOUND");
                     // res.status(404).json({error: "Entry Not Found"})
                     throw new customError(404, "Entry not found")
                 } else {
@@ -127,7 +123,8 @@ class ProductController {
                         data: updated[1],
                         message: "Entry updated"
                     })
-
+                    
+                    //// RESTDB STANDBY
                     // console.log(`entering restdb update`);
 
                     // restdb.post("/mail", {
@@ -148,6 +145,7 @@ class ProductController {
                 }
             })
             .catch(err => {
+                console.log("ERROR UPDATING PRODUCT");
                 next(err)
             })
     }
@@ -168,10 +166,12 @@ class ProductController {
                         message: "Delete Success"
                     })
                 } else {
+                    console.log("PRODUCT NOT FOUND TO DELETE");
                     throw new customError(404, "ENTRY NOT FOUND")
                 }
             })
             .catch(err => {
+                console.log("ERROR DELETEING PRODUCT");
                 next(err)
             })
     }

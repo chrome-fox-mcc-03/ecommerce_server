@@ -24,6 +24,7 @@ let testUser = {
 }
 
 let sampleId = 10
+let data
 
 let sampleItem = {
     name: 'Vitacimin',
@@ -36,55 +37,10 @@ let sampleItem1 = {
     name: 'Vitacimin',
     category: 'medicine',
     image_url: 'dasarese',
-    price: 5000,
-    stock: 5000
+    price: 5555,
+    stock: 555
 }
-let testToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoic3VwZXJhZG1pbjFAbWFpbC5jb20iLCJwYXNzd29yZCI6InN1cGVyYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1ODQ1MzgwNjR9.waap5upqWGdWbgnhwrfvOwUtWJ2sImy4NKBwoDh41eQ"
-// localStorage.setItem("token", testToken)
-
-// // MATCHERS
-//     // sampleToken = "hhahay"
-//     beforeAll((done) => {
-//         console.log("--- BEFORE ALL: CREATE USER & CREATE SAMPLE ITEM!");
-//         User.create({
-//                 email: testUser.email,
-//                 password: testUser.password,
-//                 role: testUser.role
-//             })
-//             .then(response => {
-//                 console.log("SAMPLE USER CREATED");
-//                 console.log(response);
-//                 testToken = createToken({
-//                     id: response.id,
-//                     email: response.email,
-//                     role: response.role
-//                 })
-//                 console.log("TEST TOKEN IS");
-//                 console.log(testToken);
-//                 localStorage.setItem("token", testToken)
-//                 // done()
-//                 return Product.create({
-//                         name: sampleItem.name,
-//                         image_url: sampleItem.image_url,
-//                         price: sampleItem.price,
-//                         stock: sampleItem.stock
-//                     })
-//                     .then(response1 => {
-//                         console.log("SAMPLE PRODUCT GENERATED");
-//                         done()
-//                     })
-//                     .catch(err => {
-//                         console.log("SAMPLE GENERATION ERROR");
-//                         done(err)
-//                     })
-//             })
-//     })
-
-
-//     afterAll((done) => {
-//         User.destroy({where: {email: testUser.email}}).then(done()).catch(err => {done(err)})
-//     })
-
+let testToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoic3VwZXJhZG1pbjFAbWFpbC5jb20iLCJwYXNzd29yZCI6InN1cGVyYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1ODQ2OTk1NzB9.3FW7QRUpIlARh-vrc2e0WEcErP3JM89upYhwLuBMpCs"
 
 
 describe("--- PRODUCT ROUTES ---", () => {
@@ -113,7 +69,7 @@ describe("--- PRODUCT ROUTES ---", () => {
                     })
                     .end((err, res) => {
                         // console.log(res);
-                        // console.log("RES BODY");
+                        // console.log("RES BODY --------------- READ PRODUCTS SUCCESS");
                         // console.log(res.body);
                         expect(res.status).toBe(200)
                         expect(res.body).toHaveProperty("data")
@@ -132,20 +88,26 @@ describe("--- PRODUCT ROUTES ---", () => {
 
         // ADD PRODUCT SUCCESS
         describe('ADD PRODUCT SUCCESS', () => {
+            data =  {
+                name: 'Vitacimin',
+                category: 'supplements',
+                image_url: 'dasarese',
+                price: 2000,
+                stock: 100
+            }
 
             test('SHOULD SEND AN OBJECT(NAME, IMAGE_URL, PRICE, STOCK) WITH STATUS CODE 201', (done) => {
                 request(app)
                     .post('/products')
-                    .send({
-                        data: sampleItem
-                    })
+                    .send(data)
                     .set('token', testToken)
                     .end((err, res) => {
                         // console.log(res);
-                        console.log("RES BODY");
-                        console.log(res.body);
-                        expect(res.status).toBe(201)
+                        // console.log("RES BODY ------------------------- CREATE PRODUCT SUCCESS");
+                        // console.log(res.body);
+                        // console.log(res.status);
                         expect(res.body).toHaveProperty("data")
+                        expect(res.status).toBe(201)
                         sampleId = res.body.data.id
                         console.log(`NEW SAMPLE ID IS: ${sampleId}`);
                         done()
@@ -162,17 +124,17 @@ describe("--- PRODUCT ROUTES ---", () => {
             test('SHOULD SEND AN ERROR 400 BECAUSE OF EMPTY NAME/CATEGORY', (done) => {
                 let noCat = {...sampleItem}
                 delete noCat.category
+                delete noCat.name
+                data = noCat
                 request(app)
                     .post('/products')
-                    .send({
-                        data: noCat
-                    })
+                    .send(data)
                     .set('token', testToken)
                     .end((err, res) => {
                         // console.log(res);
-                        // console.log("RES BODY");
-                        // console.log(res.body);
-                        // console.log(res.status)
+                        console.log("RES BODY--------------------------- CREATE PRODUCT FAIL");
+                        console.log(res.body);
+                        console.log(res.status)
                         expect(res.status).toBe(400)
                         expect(res.body).toHaveProperty("message", expect.any(String))
                         expect(res.body).toHaveProperty("errors", expect.any(Array))
@@ -191,18 +153,18 @@ describe("--- PRODUCT ROUTES ---", () => {
 
         // UPDATE PRODUCT SUCCESS
         describe('UPDATE PRODUCT SUCCESS', () => {
-
+            data = sampleItem1
             test('SHOULD SEND AN OBJECT(NAME, IMAGE_URL, PRICE, STOCK) WITH STATUS CODE 201', (done) => {
                 request(app)
                     .put(`/products/${sampleId}`)
-                    .send({
-                        data: sampleItem1
-                    })
+                    .send(data)
                     .set('token', testToken)
                     .end((err, res) => {
-                        console.log("RES BODY");
-                        console.log(res.body);
-                        console.log(res.status)
+                        // console.log("RES BODY--------------------------- UPDATE PRODUCT SUCCESS");
+                        // console.log(res.body);
+                        // console.log(res.status)
+                        // console.log(res.body);
+                        // console.log(res.status)
                         expect(res.status).toBe(200)
                         expect(res.body).toHaveProperty("data", expect.any(Array))
                         done()
@@ -215,20 +177,18 @@ describe("--- PRODUCT ROUTES ---", () => {
 
         // UPDATE PRODUCT FAILS
         describe('UPDATE PRODUCT FAIL', () => {
-
+            data = sampleItem
             test('SHOULD SEND AN ERROR 500 BECAUSE OF WRONG ID', (done) => {
                 request(app)
                     .put(`/products/1000000`) //impossible one
-                    .send({
-                        data: sampleItem
-                    })
+                    .send(data)
                     .set('token', testToken)
                     .end((err, res) => {
-                        // console.log("RES BODY");
+                        // console.log("RES BODY--------------------------- UPDATE PRODUCT FAIL");
                         // console.log(res.body);
                         // console.log(res.status)
-                        expect(res.status).toBe(500)
-                        // expect(res.body).toHaveProperty("data", expect.any(Array))
+                        expect(res.status).toBe(404)
+                        // expect(res.body).toHaveProperty("error", expect.any(Array))
                         done()
                     })
 
@@ -251,7 +211,7 @@ describe("--- PRODUCT ROUTES ---", () => {
                     .delete(`/products/${sampleId}`)
                     .set('token', testToken)
                     .end((err, res) => {
-                        // console.log("RES BODY");
+                        // console.log("RES BODY--------------------------- DELETE PRODUCT SUCCESS");
                         // console.log(res.body);
                         // console.log(res.status)
                         expect(res.status).toBe(200)
@@ -271,10 +231,10 @@ describe("--- PRODUCT ROUTES ---", () => {
                     .delete(`/products/1000000`) //impossible one
                     .set('token', testToken)
                     .end((err, res) => {
-                        // console.log("RES BODY");
+                        // console.log("RES BODY--------------------------- DELETE PRODUCT FAIL");
                         // console.log(res.body);
                         // console.log(res.status)
-                        expect(res.status).toBe(500)
+                        expect(res.status).toBe(404)
                         done()
                     })
 

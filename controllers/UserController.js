@@ -13,9 +13,9 @@ let flagMatchingPassword
 class UserController {
     static register(req, res, next) {
 
-        console.log("--- USER-CONTROLLERS: CREATE ---");
-        console.log("REQ BODY IS");
-        console.log(req.body);
+        // console.log("--- USER-CONTROLLERS: CREATE ---");
+        // console.log("REQ BODY IS");
+        // console.log(req.body);
         regParams = {
             email: req.body.email,
             password: req.body.password,
@@ -41,10 +41,10 @@ class UserController {
 
     static login(req, res, next) {
 
-        console.log("--- USER-CONTROLLERS: LOGIN ---");
-        console.log("REQ BODY IS");
-        console.log(req.body);
-        console.log(req.body.email);
+        // console.log("--- USER-CONTROLLERS: LOGIN ---");
+        // console.log("REQ BODY IS");
+        // console.log(req.body);
+        // console.log(req.body.email);
 
         User.findAll({
             where: {
@@ -57,8 +57,9 @@ class UserController {
             // console.log(response);
             
             if(response) {
-                console.log("WHAT'S RESPONSE 2?");
-                console.log(response[0]);
+                console.log("USER NOT NULL");
+                // console.log("WHAT'S RESPONSE 2?");
+                // console.log(response[0]);
                 flagMatchingPassword = checkPassword(req.body.password, response[0].password)
                 // console.log(`password flag: ${flag}`);
                 if(flagMatchingPassword) {
@@ -71,8 +72,8 @@ class UserController {
                     }
     
                     accessToken = createToken(payloadParams)
-                    console.log("ACCESS TOKEN IS");
-                    console.log(accessToken);
+                    console.log("ACCESS TOKEN FOUND");
+                    // console.log(accessToken);
                     // req.headers.token = accessToken --> AUTENTIKASI
                     // localStorage.setItem("token", accessToken) --> CLIENT
                     res.status(200).json({token:accessToken})
@@ -86,6 +87,9 @@ class UserController {
             }
         })
         .catch(err => {
+            console.log("ERROR LOGIN FROM USER-CONTROLLER");
+            // console.log(err.message);
+            // take err.code, err.message
             next(err)
         })
 

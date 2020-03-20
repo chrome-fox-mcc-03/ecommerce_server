@@ -17,18 +17,25 @@ function errorHandler(err, req, res, next) {
   else if(err.name === 'Invalid email or password') {
     status = 400;
     errName = {
-      message: 'Bad Request',
+      message: 'Invalid email or password',
       errors: [err.name]
     }
   }
   else if(err.name === 'Admin only!') {
     status = 400;
     errName = {
-      message: 'Bad Request',
+      message: 'Admin only',
       errors: [err.name]
     }
   }
-  'Admin only!'
+  else if(err.name === 'Product not Found') {
+    status = 404;
+    errName = {
+      message: 'Not Found',
+      errors: [err.name]
+    }
+  }
+  
   res.status(status).json(errName)
 }
 

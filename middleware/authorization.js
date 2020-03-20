@@ -25,7 +25,7 @@ function authorization(req, res, next) {
             }
         })
         .catch(err => {
-            console.log(err,'--------------------------------------------------------------------------------------')
+            console.log("AUTHORIZATION FAILS")
             next(err)
         })
 }

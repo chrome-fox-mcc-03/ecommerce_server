@@ -37,7 +37,7 @@ function authentication(req, res, next) {
     }
     catch(err) {
         console.log("ERROR AUTHENTICATING");
-        console.log(err);
+        // console.log(err);
         next(err)
     }
 }

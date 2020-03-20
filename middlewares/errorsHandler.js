@@ -44,6 +44,15 @@ module.exports = function (err, req, res, next) {
                 errors
             }
             break;
+        case 'autorization':
+            status = 403
+            errors = []
+            errors.push(err.msg.message)
+            message = {
+                message: 'Bad Request',
+                errors
+            }
+            break;
         default:
             status = 500
             message = {

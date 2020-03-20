@@ -36,12 +36,30 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     role: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'role Is Required'
+        }
+      }
+    },
+    name:{
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'name Is Required'
+        }
+      }
     }
   }, {
     hooks: {
       beforeCreate: (User, options) => {
         User.password = hashPassword(User.password)
+        if (User.role !== 'Super Admin') {
+          User.role = 'Admin'
+        }
       }
     },
     sequelize,

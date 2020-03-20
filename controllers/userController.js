@@ -12,12 +12,20 @@ const {
 class controller {
     static register(req, res, next) {
         let {
+            name,
             email,
+            role,
             password
         } = req.body
+        console.log(email, 'ini email reeeeeeg');
+        console.log(password, 'ini passworrrrrd reeeeg');
+        
+        
         User.create({
+            name,
                 email,
-                password
+                password,
+                role
             })
             .then(result => {
                 res.status(201).json({
@@ -41,6 +49,9 @@ class controller {
             }
         }).then(result => {
             let login = checkPassword(password, result.password)
+            console.log(login, 'ini logiiiiiiiin');
+            console.log(result);
+            
             if (login) {
                 let payload = {
                     id: result.id,

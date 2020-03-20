@@ -8,7 +8,9 @@ const {
 } = sequelize
 
 let data = {
+    name: 'hilmi',
     email: 'hilmi@mail.com',
+    role: 'Admin',
     password: '123456'
 }
 

@@ -28,6 +28,7 @@ let errorData = {
 }
 
 let productId;
+let adminToken;
 
 let UserToken
 describe('Product route', () => {
@@ -49,13 +50,17 @@ describe('Product route', () => {
         }),
         beforeAll((done) => {
             let userData = {
+                name: 'hilmi',
                 email: 'hilmi100@mail.com',
+                role: 'Super Admin',
                 password: '123456'
             }
             User.create({
-                    email: userData.email,
-                    password: userData.password
-                })
+                name: userData.name,
+                role: userData.role,
+                email: userData.email,
+                password: userData.password
+            })
                 .then(user => {
                     let payload = {
                         id: user.id,
@@ -195,6 +200,22 @@ describe('Product route', () => {
                     productId = product.id
                     done()
                 })
+            
+            User.create({
+                    name: 'admin',
+                    role: 'Admin',
+                    email: 'admin@mail.com',
+                    password: '123456'
+                })
+                .then(user => {
+                    let payload = {
+                        id: user.id,
+                        email: user.email
+                    }
+                    adminToken = tokenGenerate(payload)
+                    console.log(adminToken, 'admin tokeeeeen')
+                    done()
+                })
         })
         describe('Success Process', () => {
             test('Should send an object {id, name, image_url, price, stocks} with status code 200', (done) => {
@@ -216,6 +237,24 @@ describe('Product route', () => {
                         expect(res.body).toHaveProperty('image_url', data.image_url)
                         expect(res.body).toHaveProperty('price', data.price)
                         expect(res.body).toHaveProperty('stock', data.stock)
+                        done()
+                    })
+            })
+        })
+        describe('Error Process', () => {
+            test('Should send an error with status code 403 because Unauthorized', (done) => {
+                request(app)
+                    .delete(`/products/${productId}`)
+                    .set({
+                        token: adminToken
+                    })
+                    .end((err, res) => {
+                        expect(err).toBe(null)
+                        expect(res.body).toHaveProperty('message', 'Bad Request')
+                        expect(res.body).toHaveProperty('errors', expect.any(Array))
+                        expect(res.body.errors).toContain('Unauthorized, only Super Admin can do this action!')
+                        expect(res.body.errors.length).toBe(1)
+                        expect(res.status).toBe(403)
                         done()
                     })
             })

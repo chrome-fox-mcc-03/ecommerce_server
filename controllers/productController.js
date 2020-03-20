@@ -8,33 +8,41 @@ class controller {
             name,
             image_url,
             price,
-            stock
+            stock,
+            category,
+            description
         } = req.body
         Product.create({
                 name,
                 image_url,
                 price,
-                stock
+                stock,
+                category,
+                description
+
             })
-                .then(result => {
-                    let data = {
-                        id: result.id,
-                        name: result.name,
-                        image_url: result.image_url,
-                        price: result.price,
-                        stock: result.stock
-                    }
-                    res.status(201).json(data)
-                })
-                .catch(err => {
-                    next(err)
-                })
+            .then(result => {
+                let data = {
+                    id: result.id,
+                    name: result.name,
+                    image_url: result.image_url,
+                    price: result.price,
+                    stock: result.stock,
+                    category: result.category,
+                    description: result.description
+                }
+                res.status(201).json(data)
+            })
+            .catch(err => {
+                next(err)
+            })
     }
 
     static get(req, res, next) {
         Product.findAll()
             .then(result => {
                 res.status(200).json(result)
+                next()
             })
             .catch(err => {
                 next(err)
@@ -47,21 +55,30 @@ class controller {
             name,
             image_url,
             price,
-            stock
+            stock,
+            category,
+            description
         } = req.body
+        console.log(description.length, 'ini length deskripsi');
+
         Product.update({
-            name, image_url, price, stock
-        }, {
-            where:{
-                id: productId
-            },
-            returning: true,
+                name,
+                image_url,
+                price,
+                stock,
+                category,
+                description
+            }, {
+                where: {
+                    id: productId
+                },
+                returning: true,
                 plain: true
-        })
-            .then(result=>{
+            })
+            .then(result => {
                 res.status(200).json(result[1])
             })
-            .catch(err=>{
+            .catch(err => {
                 next(err)
             })
     }
@@ -70,18 +87,18 @@ class controller {
         let productId = req.params.id
         let data;
         Product.findByPk(productId)
-            .then(result=>{
+            .then(result => {
                 data = result
                 return Product.destroy({
-                    where:{
+                    where: {
                         id: productId
                     }
                 })
             })
-            .then(result=>{
+            .then(result => {
                 res.status(200).json(data)
             })
-            .catch(err=>{
+            .catch(err => {
                 next(err)
             })
     }

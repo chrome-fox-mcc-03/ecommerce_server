@@ -17,7 +17,9 @@ let data = {
     name: 'sandal bolong',
     image_url: 'https://pbs.twimg.com/profile_images/1142980748/crocstulisansampingkw20_400x400.jpg',
     price: 100,
-    stock: 10
+    stock: 10,
+    category: 'Lokal',
+    description: 'sandal bolong ini'
 }
 
 let errorData = {
@@ -56,11 +58,11 @@ describe('Product route', () => {
                 password: '123456'
             }
             User.create({
-                name: userData.name,
-                role: userData.role,
-                email: userData.email,
-                password: userData.password
-            })
+                    name: userData.name,
+                    role: userData.role,
+                    email: userData.email,
+                    password: userData.password
+                })
                 .then(user => {
                     let payload = {
                         id: user.id,
@@ -84,6 +86,8 @@ describe('Product route', () => {
                         expect(res.body).toHaveProperty('id', expect.any(Number))
                         expect(res.body).toHaveProperty('name', data.name)
                         expect(res.body).toHaveProperty('image_url', data.image_url)
+                        expect(res.body).toHaveProperty('category', expect.any(String))
+                        expect(res.body).toHaveProperty('description', expect.any(String))
                         expect(res.body).toHaveProperty('price', data.price)
                         expect(res.body).toHaveProperty('stock', data.stock)
                         done()
@@ -132,7 +136,7 @@ describe('Product route', () => {
     })
     describe('GET /products', () => {
         describe('Success Process', () => {
-            test('Should send an array of object [{id, name, image_url, price, stock}] with status code 200', (done) => {
+            test('Should send an array of object [{id, name, image_url, price, stock, category, description}] with status code 200', (done) => {
                 request(app)
                     .get('/products')
                     .end((err, res) => {
@@ -142,6 +146,8 @@ describe('Product route', () => {
                         expect(res.body[0]).toHaveProperty('id', expect.any(Number))
                         expect(res.body[0]).toHaveProperty('name', data.name)
                         expect(res.body[0]).toHaveProperty('image_url', data.image_url)
+                        expect(res.body[0]).toHaveProperty('category', expect.any(String))
+                        expect(res.body[0]).toHaveProperty('description', expect.any(String))
                         expect(res.body[0]).toHaveProperty('price', data.price)
                         expect(res.body[0]).toHaveProperty('stock', data.stock)
                         done()
@@ -155,7 +161,9 @@ describe('Product route', () => {
                     name: 'sandal bolong',
                     image_url: 'https://pbs.twimg.com/profile_images/1142980748/crocstulisansampingkw20_400x400.jpg',
                     price: 100,
-                    stock: 10
+                    stock: 10,
+                    category: 'Import',
+                    description: 'ini deskripsi'
                 })
                 .then(product => {
                     productId = product.id
@@ -168,7 +176,9 @@ describe('Product route', () => {
                     name: 'New sandal bolong',
                     image_url: 'https://pbs.twimg.com/profile_images/1142980748/crocstulisansampingkw20_400x400.jpg',
                     price: 100,
-                    stock: 15
+                    stock: 15,
+                    category: 'Lokal',
+                    description: ''
                 }
                 request(app)
                     .put(`/products/${productId}`)
@@ -178,9 +188,11 @@ describe('Product route', () => {
                     .send(data)
                     .end((err, res) => {
                         expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('id', expect.any(Number))
+                        expect(res.body).toHaveProperty('id', productId)
                         expect(res.body).toHaveProperty('name', data.name)
                         expect(res.body).toHaveProperty('image_url', data.image_url)
+                        expect(res.body).toHaveProperty('category', data.category)
+                        expect(res.body).toHaveProperty('description', data.description)
                         expect(res.body).toHaveProperty('price', data.price)
                         expect(res.body).toHaveProperty('stock', data.stock)
                         done()
@@ -200,7 +212,7 @@ describe('Product route', () => {
                     productId = product.id
                     done()
                 })
-            
+
             User.create({
                     name: 'admin',
                     role: 'Admin',
@@ -213,7 +225,6 @@ describe('Product route', () => {
                         email: user.email
                     }
                     adminToken = tokenGenerate(payload)
-                    console.log(adminToken, 'admin tokeeeeen')
                     done()
                 })
         })

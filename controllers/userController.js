@@ -17,20 +17,19 @@ class controller {
             role,
             password
         } = req.body
-        console.log(email, 'ini email reeeeeeg');
-        console.log(password, 'ini passworrrrrd reeeeg');
-        
-        
+
         User.create({
-            name,
+                name,
                 email,
                 password,
                 role
             })
             .then(result => {
                 res.status(201).json({
+                    id: result.id,
+                    name: result.name,
                     email: result.email,
-                    id: result.id
+                    role: result.role
                 })
             })
             .catch(err => {
@@ -49,9 +48,7 @@ class controller {
             }
         }).then(result => {
             let login = checkPassword(password, result.password)
-            console.log(login, 'ini logiiiiiiiin');
-            console.log(result);
-            
+
             if (login) {
                 let payload = {
                     id: result.id,

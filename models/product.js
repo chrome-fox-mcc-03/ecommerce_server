@@ -47,8 +47,23 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
-        stock: DataTypes.INTEGER
+        stock: {
+            type: DataTypes.INTEGER
+        },
+        category: {
+            type: DataTypes.STRING
+        },
+        description: {
+            type: DataTypes.STRING
+        }
     }, {
+        hooks: {
+            beforeCreate: (Product, options) =>{
+                if (!Product.category) Product.category = 'Other'
+                if (!Product.stock || Product.stock < 0 ) Product.stock = 0
+                if (!Product.description) Product.description = `This is ${Product.name}`
+            }
+        },
         sequelize,
         modelName: 'Product'
     })

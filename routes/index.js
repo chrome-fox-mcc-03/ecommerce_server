@@ -4,6 +4,7 @@ const authentification = require('../middlewares/authentification')
 const ProductRoute = require('../routes/product')
 const UserRoute = require('../routes/user')
 
+router.get('/', (req, res) => res.send('SERVER RUNNING'))
 router.post('/admin/login', UserController.login)
 router.post('/admin/register', UserController.register)
 

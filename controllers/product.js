@@ -83,7 +83,26 @@ class ProductController {
 	}
 
 	static delete (req, res,next) {
+		let { id } = req.params
 
+		Product.destroy({
+			where: { id }
+		})
+			.then(result => {
+				if (result === 0) {
+					next({
+						name: 'PageNotFound',
+						model: 'Product'
+					})
+				} else {
+					res.status(200).json({
+						message: 'Product successfully deleted'
+					})
+				}
+			})
+			.catch(err => {
+				next(err)
+			})
 	}
 }
 

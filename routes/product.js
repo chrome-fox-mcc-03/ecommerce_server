@@ -11,7 +11,6 @@ router.use(roleAuthorization);
 
 router.post('/', ProductController.create)
 router.put('/:id(\\d+)', ProductController.update);
-
-// router.delete('/:id(\\d+)', ProductController.delete);
+router.delete('/:id(\\d+)', ProductController.delete);
 
 module.exports = router;

@@ -454,3 +454,61 @@ describe('PUT /products/:id', () => {
 		})
 	})
 })
+
+describe('DELETE /products/:id', () => {
+	describe('success case', () => {
+		test('delete product by id', done => {
+			request(app)
+				.delete(`/products/${secondId}`)
+				.set('token', adminToken)
+				.end((err, res) => {
+					expect(err).toBe(null)
+					expect(res.body).toHaveProperty('message', 'Product successfully deleted')
+					expect(res.status).toBe(200)
+					done()
+				})
+		})
+	})
+	describe('error case', () => {
+		test('not authenticated', done => {
+			request(app)
+				.delete(`/products/${secondId}`)
+				.end((err, res) => {
+					expect(err).toBe(null)
+					expect(res.body).toHaveProperty('message', 'Invalid Credential')
+					expect(res.body).toHaveProperty('errors', expect.any(Array))
+					expect(res.body.errors).toContain('Please login!')
+					expect(res.status).toBe(401)
+					done()
+				})
+		})
+
+		test('not authorized', done => {
+			request(app)
+				.delete(`/products/${secondId}`)
+				.set('token', customerToken)
+				.end((err, res) => {
+					expect(err).toBe(null)
+					expect(res.body).toHaveProperty('message', 'Unauthorized')
+					expect(res.body).toHaveProperty('errors', expect.any(Array))
+					expect(res.body.errors).toContain('You are unauthorized')
+					expect(res.status).toBe(401)
+					done()
+				})
+		})
+		
+		test('invalid product id', done => {
+			request(app)
+				.delete(`/products/0`)
+				.set('token', adminToken)
+				.end((err, res) => {
+					expect(err).toBe(null)
+					expect(res.body).toHaveProperty('message', 'Product Not Found')
+					expect(res.body).toHaveProperty('errors', expect.any(Array))
+					expect(res.body.errors).toContain('The Product you are looking for is not found')
+					expect(res.status).toBe(404)
+					done()
+				})
+		})
+	})
+})

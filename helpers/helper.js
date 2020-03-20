@@ -12,5 +12,8 @@ module.exports = {
     },
     comparePassword: (password,passwordDb) => {
         return bcrypt.compareSync(password,passwordDb)
+    },
+    decodedToken: (token) => {
+        return jwt.verify(token,process.env.SECRET)
     }
 }

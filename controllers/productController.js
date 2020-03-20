@@ -64,7 +64,11 @@ class ProductController {
             where:{id}
         })
         .then((result) => {
-            res.status(200).json({message:'Success Delete'})   
+            if(result.status == 1) {
+                res.status(200).json({message:'Success Delete'})   
+            }else {
+                next({message:'Data Not Found',status:404})
+            }
         }).catch((err) => {
             next(err)
         });

@@ -49,12 +49,16 @@ class UserController {
         })
         .then((result) => {
             if(result) {
-                let {id} = result
+                let {id,isAdmin} = result
                 let passwordDb = result.password
                 let compared = comparePassword(password,passwordDb)
                 if(compared){
-                    let token = getToken({email,id})
-                    res.status(200).json({email,id,token})
+                    if(isAdmin) {
+                        let token = getToken({email,id})
+                        res.status(200).json({email,id,token})
+                    }else{
+                        next({status:403,message:"can't trespassing"})
+                    }
                 }else{
                     next({status:400,message:'Email or password wrong'})
                 }

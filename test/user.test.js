@@ -1,7 +1,8 @@
 const request = require('supertest')
 const app = require('../app')
-const {sequelize} = require('../models')
+const {sequelize,User} = require('../models')
 const {queryInterface} = sequelize
+const helper = require('../helpers/helper')
 
 let data = {
     email: 'testing@mail.com',
@@ -11,7 +12,8 @@ let data = {
 
 let dataAdmin = {
     email:'admin@mail.com',
-    password:'admin',
+    password:'admin12',
+    idAdmin:true
 }
 
 describe('User routes', () => {
@@ -23,7 +25,7 @@ describe('User routes', () => {
         .catch(err => done(err))
     })
 
-    describe('POST /register',() => {
+    describe.skip('POST /register',() => {
         describe('success process',() => {
             test('should send an object (email,id,token) with status 201 ', (done) => {
                 request(app)
@@ -75,9 +77,9 @@ describe('User routes', () => {
         })
     })
 
-    describe('POST /login', () => {
-        describe('success process',() => {
-            test('should send an object (email,id,token) with status 200',(done) => {
+    describe.skip('POST /login', () => {
+        describe('success process', () => {
+            test('should send an object (email,id,token) with status 200', (done) => {
                 request(app)
                 .post('/login')
                 .send(data)
@@ -91,8 +93,8 @@ describe('User routes', () => {
                 })
             })
         })
-        describe('error process',() => {
-            test('should send an error with status 400 cause email / password wrong',(done) => {
+        describe('error process', () => {
+            test('should send an error with status 400 cause email / password wrong', (done) => {
                 let wrongEmail = {...data,email:'wrong@mail.com'}
                 request(app)
                 .post('/login')
@@ -108,8 +110,23 @@ describe('User routes', () => {
     })
     
     describe('POST /loginAdmin', () => {
-        describe('success process',() => {
-            test('should send an object (email,id,token) with status 200',(done) => {
+        beforeAll((done) => {
+            User.create({
+                email: dataAdmin.email,
+                password: dataAdmin.password,
+                isAdmin: true
+            })
+            .then((result) => {
+                const {id} = result
+                token = helper.getToken({id,email:dataAdmin.email})
+                done()
+            }).catch((err) => {
+                console.log(err)
+                done(err)
+            });
+        })
+        describe('success process', () => {
+            test('should send an object (email,id,token) with status 200', (done) => {
                 request(app)
                 .post('/loginAdmin')
                 .send(dataAdmin)
@@ -123,5 +140,34 @@ describe('User routes', () => {
                 })
             })
         })
+        describe.skip('error process wrong token', () => {
+            test('should send and object(message, status) with status 403', (done) => {
+                request(app)
+                .post('/loginAdmin')
+                .send(dataAdmin)
+                .end((err,res) => {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('message',expect.any(String))
+                    expect(res.body).toHaveProperty('status',expect.any(Number))
+                    expect(res.status).toBe(403)
+                    done()
+                })
+            })
+        })
+        describe.skip('error process', () => {
+            test('should send an object (message, status) with status 400', (done) => {
+                request(app)
+                .post('/loginAdmin')
+                .send(dataAdmin)
+                .end((err,res) => {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty('message',expect.any(String))
+                    expect(res.body).toHaveProperty('status',expect.any(Number))
+                    expect(res.status).toBe(400)
+                    done()
+                })
+            })
+        })
+        
     })  
 })

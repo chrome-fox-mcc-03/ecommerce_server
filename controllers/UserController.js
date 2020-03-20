@@ -30,7 +30,8 @@ class UserController {
                         let token = getToken(payload)
                         res.status(200).json({
                             token,
-                            role: payload.role
+                            role: payload.role,
+                            payload
                         })
                     } else {
                         next({
@@ -67,7 +68,8 @@ class UserController {
                 let token = getToken(payload)
                 res.status(201).json({
                     token,
-                    role: payload.role
+                    role: payload.role,
+                    payload
                 })
             })
             .catch(next)

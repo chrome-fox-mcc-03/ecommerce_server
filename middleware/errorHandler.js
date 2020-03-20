@@ -12,7 +12,7 @@ module.exports = function(err, req, res, next) {
         })
         res.status(400).json({
             message: "BAD REQUEST",
-            errors: errors,
+            error: errors,
         })
     } else if (err instanceof Error) {
         res.status(err.code).json({

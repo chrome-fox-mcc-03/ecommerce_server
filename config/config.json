@@ -8,12 +8,12 @@
     "operatorsAliases": 0
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": "juli_postgres",
+    "password": 123456,
+    "database": "db_ecommerce_cms_test",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "dialect": "postgres",
+    "operatorsAliases": 0
   },
   "production": {
     "use_env_variable": "DATABASE_URL"

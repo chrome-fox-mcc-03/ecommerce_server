@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "set NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test": "set NODE_ENV=test&&jest --detectOpenHandles --forceExit --setupFiles dotenv/config",
     "dev": "set NODE_ENV=development&&nodemon bin/www/http.js",
     "start": "node ./bin/www/http.js"
   },

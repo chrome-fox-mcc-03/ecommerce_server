@@ -4,7 +4,6 @@ const { User } = require('../models');
 const { generateToken } = require('../helpers/generateToken');
 const { comparePassword } = require('../helpers/generatePassword');
 
-
 class UserController {
 
     static register(req, res, next) {
@@ -37,9 +36,8 @@ class UserController {
                         id: user.id
                     }
                     const token = generateToken(payload);
-                    res.status(200).json({
-                        access_token: token
-                    })
+                    res.status(200).json({ access_token: token })
+
                 } else {
                     next({
                         status: 400,

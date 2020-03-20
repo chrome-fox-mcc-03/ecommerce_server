@@ -1,0 +1,301 @@
+FORMAT: 1A
+HOST: http://localhost:3000
+
+# E-Commerce Server
+
+E-Commerce Server is an API for Admin to CRUD products
+
+# Group Admin
+
+## Login [/admin/login]
+### Login [POST]
+
++ Request (application/json)
+
+        {
+            "email": "mail@mail.com",
+            "password": "thisispassword"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "access_token": <generated token>
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "message": "Bad Request",
+            "errors": [
+                "Wrong email/password"
+            ]
+        }
+    
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+        
+        
+## Show Users [/admin/users]
+### Users [GET]
+
++ Request
+    + Headers
+    
+            access_token: <generated token>
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": 1,
+                    "email": "admin@admin.com",
+                    "role": "admin"
+                }
+            ]
+        }
+
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+        
+        
+# Group Users
+## Register [/users/register]
+### Register [POST]
++ Request (application/json)
+
+        {
+            "email": "mail@mail.com",
+            "password": "thisispassword"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "access_token": <generated token>
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "message": "Bad Request",
+            "errors": [
+                <validation errors>
+            ]
+        }
+    
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+        
+## Login [/users/login]
+### Login [POST]
+
++ Request (application/json)
+
+        {
+            "email": "mail@mail.com",
+            "password": "thisispassword"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "access_token": <generated token>
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "message": "Bad Request",
+            "errors": [
+                "Wrong email/password"
+            ]
+        }
+    
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+        
+
+
+# Group Products
+## Create and Read [/products]
+### Create [POST]
+
++ Request (application/json)
+    + Headers
+        
+            access_token: <generated token>
+            
+    + Body
+    
+            {
+                "name" : "this is name of the product",
+                "image_url" :"this is URL",
+                "price" : 10000000,
+                "stock" : 10
+            }
+
++ Response 201 (application/json)
+
+            {
+                "id" : 1
+                "name" : "this is name of the product",
+                "image_url" :"this is URL",
+                "price" : 10000000,
+                "stock" : 10,
+                "createdAt" : <date>,
+                "updatedAt" : <date>
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "message" : "Bad Request",
+                "errors" : [<validation errors>]
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }
+            
+            
+### Read [GET]
+
++ Request
+    + Headers
+    
+            access_token: <generated token>
+
++ Response 200 (application/json)
+
+            {
+                "data": [
+                    {
+                        "id": 6,
+                        "name": "Belt",
+                        "image_url": "https://images.pexels.com/photos/89783/belts-belt-buckle-leather-metal-89783.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                        "price": 20000,
+                        "stock": 12,
+                        "createdAt": "2020-03-18T09:54:57.008Z",
+                        "updatedAt": "2020-03-18T09:54:57.008Z"
+                    },
+                    {
+                        "id": 7,
+                        "name": "Hat",
+                        "image_url": "https://images.pexels.com/photos/984619/pexels-photo-984619.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+                        "price": 15000,
+                        "stock": 20,
+                        "createdAt": "2020-03-18T09:57:16.976Z",
+                        "updatedAt": "2020-03-18T09:57:16.976Z"
+                    }
+                ]
+            }
+
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        }
+            
+## Update and Delete Product [/products/{id}]
+
+### Update [PUT]
+
++ Parameters 
+    + id (number) - ID of the Product in the form of an integer
+
+
++ Request (application/json)
+    + Headers
+        
+            access_token: <generated token>
+            
+    + Body
+    
+            {
+                "name" : "this is name of the product updated"
+                "image_url" :"this is URL",
+                "price" : 10000000,
+                "stock" : 10
+            }
+
++ Response 200 (application/json)
+
+            {
+                "id" : 1
+                "name" : "this is name of the product updated",
+                "image_url" :"this is URL",
+                "price" : 10000000,
+                "stock" : 10,
+                "createdAt" : <date>,
+                "updatedAt" : <date>
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "message" : "Bad Request",
+                "errors" : [<validation errors>]
+            }
+            
+            or
+            
+            {
+                "message" : "Bad Request",
+                "errors" : ["Product not found"]
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }
+            
+            
+### Delete [DELETE]
+
+
++ Parameters 
+    + id (number) - ID of the Product in the form of an integer
+
+
++ Request (application/json)
+    + Headers
+        
+            access_token: <generated token>
+            
++ Response 200 (application/json)
+
+        {
+            "data" : "deleted"
+        }
+
++ Response 400 (application/json)
+
+            {
+                "message" : "Bad Request",
+                "errors" : ["Product not found"]
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }

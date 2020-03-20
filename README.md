@@ -2,4 +2,10 @@
 
 by ryanadhi
 
-see documentation : https://ecommerceserver1.docs.apiary.io/
+documentation :
+
+https://ecommerceserver1.docs.apiary.io/
+
+or
+
+./apiary.apib

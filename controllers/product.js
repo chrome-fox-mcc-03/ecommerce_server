@@ -8,7 +8,8 @@ class ProductController {
             name: req.body.name,
             image_url: req.body.image_url,
             price: req.body.price,
-            stock: req.body.stock
+            stock: req.body.stock,
+            category: req.body.category
         })
             .then(newProduct => {
                 res.status(201).json(newProduct)
@@ -54,7 +55,8 @@ class ProductController {
             name: req.body.name,
             image_url: req.body.image_url,
             price: req.body.price,
-            stock: req.body.stock
+            stock: req.body.stock,
+            category: req.body.category
         }, {
             where: {
                 id: req.params.id

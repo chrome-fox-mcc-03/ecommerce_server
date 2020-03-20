@@ -38,10 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notEmpty: {
-          args: true,
-          msg: 'price must be filled'
-        },
         notNull: {
           args: true,
           msg: 'price must be filled'
@@ -60,10 +56,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notEmpty: {
-          args: true,
-          msg: 'stock must be filled'
-        },
         notNull: {
           args: true,
           msg: 'stock must be filled'

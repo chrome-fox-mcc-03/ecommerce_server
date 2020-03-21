@@ -94,6 +94,19 @@ class UserController {
         })
 
     }
+
+    static getAllUsers(req, res, next) {
+        console.log('--- USER CONTROLLER: SEE ALL USERS ---');
+        User.findAll()
+            .then(response => {
+                console.log("VIEWING LIST OF USERS");
+                res.status(200).json({data: response})
+            })
+            .catch(err => {
+                console.log("ERROR VIEWING LIST OF USERS");
+                next(err)
+            })
+    }
 }
 
 module.exports = UserController

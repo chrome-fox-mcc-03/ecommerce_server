@@ -13,7 +13,6 @@ router.post('/oAuth', userController.googleLogin)
 router.get('/store/:name', storeController.findStore)
 
 router.use(authentication)
-router.put('/store/:id', authorization.checkRole, storeController.editStore)
 router.use('/product', productRouter)
 
 module.exports = router

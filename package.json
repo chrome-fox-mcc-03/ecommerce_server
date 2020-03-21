@@ -6,7 +6,7 @@
   "scripts": {
     "test": "SET NODE_ENV=test&& jest --detectOpenHandles --runInBand",
     "dev": "SET NODE_ENV=development&& nodemon bin/http.js",
-    "start": "node bin/html.js"
+    "start": "node bin/http.js"
   },
   "repository": {
     "type": "git",

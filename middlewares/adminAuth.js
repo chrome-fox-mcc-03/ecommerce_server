@@ -1,14 +1,15 @@
-const { Product } = require('../models/index');
+const { User } = require('../models/index');
 
 module.exports = (req, res, next) => {
-  let id = +req.params.id
+  const isAdmin = req.decoded.isAdmin
+  const id = +req.decoded.id
 
-  Product.findOne({
+  User.findOne({
     where: { id }
   })
     .then(response => {
       if(response) {
-        if(response.UserId === req.decoded.id) {
+        if(response.isAdmin) {
           next()
         }
         else {
@@ -20,12 +21,15 @@ module.exports = (req, res, next) => {
       }
       else {
         next({
-          status: 404,
-          msg: "Product not found!"
+          status: 403,
+          msg: "You're not authorized to perform this action!"
         })
       }
     })
     .catch(err => {
-      next(err)
+      next({
+        status: 401,
+        msg: "Authentication failed! Please re-login"
+      })
     })
 }

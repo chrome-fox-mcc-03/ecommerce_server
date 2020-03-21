@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     stock: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
@@ -72,6 +72,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         isNumeric: {
           args: true,
+          msg: "Please input product's quantity"
+        },
+        min: {
+          args: 1,
           msg: "Please input product's quantity"
         }
       }

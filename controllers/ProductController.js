@@ -42,13 +42,12 @@ class ProductController {
         res.status(201).json(response.dataValues)
       })
       .catch(err => {
-        console.log(err)
         next(err)
       })
   }
 
   static update(req, res, next) {
-    let id = +req.body.id
+    let id = +req.params.id
     const payload = {
       name: req.body.name,
       description: req.body.description,
@@ -68,7 +67,7 @@ class ProductController {
   }
 
   static delete(req, res, next) {
-    let id = +req.body.id
+    let id = +req.params.id
     Product.destroy({
       where: { id }
     })

@@ -33,7 +33,7 @@ class UserController {
         else {
           next({
             status: 400,
-            msg: "Invalid Email / Password "
+            msg: "Invalid Email / Password"
           })
         }
       })

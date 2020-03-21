@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node bin/http.js",
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand",
+    "testwin": "SET NODE_ENV=test&& jest --detectOpenHandles --runInBand",
     "dev": "NODE_ENV=development nodemon bin/http.js",
     "devwin": "set NODE_ENV=development&& nodemon bin/http.js",
     "undo": "NODE_ENV=development sequelize db:migrate:undo:all",

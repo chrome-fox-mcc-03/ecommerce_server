@@ -11,6 +11,14 @@ module.exports = {
         isAdmin: true,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        email: "notAdmin@admin.com",
+        password: hashPassword('qweqwe'),
+        fullname: "Not Andreas Anggara",
+        isAdmin: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }], {});
   },
 

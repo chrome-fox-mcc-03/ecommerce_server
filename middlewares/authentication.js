@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     })
       .then(response => {
         if(response) next()
-        return null
+        // return null
       })
       .catch(err => {
         next({

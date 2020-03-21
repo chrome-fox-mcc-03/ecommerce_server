@@ -1,10 +1,8 @@
 # ecommerce_server_cms
 
 ## Login
-
-----
-
-Login into website 
+<details open>
+<summary> Login into website </summary>
 
 * **URL**
 
@@ -36,12 +34,11 @@ Login into website
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ error : "Internal server error" }`
 <br /><br />
+</details>
 
 ## Register
-
-----
-
-Register into website 
+<details open>
+<summary>Register into website </summary>
 
 * **URL**
 
@@ -92,12 +89,11 @@ Register into website
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ error : "Internal server error" }`
 <br /><br />
-
-----
+</details>
 
 ## Add Product
-
-Adding product to website
+<details open>
+<summary>Adding product to website</summary>
 
 * **URL**
 
@@ -118,7 +114,7 @@ Adding product to website
   **Required:**
 
     `{ name: Ryzen 5 2400G,
-    image_url: 'https://cf.shopee.co.id/file/2cbf2db0873d72ce6924c1058d2fdbbc',
+    image_url: 'http://localhost:3000/img.img',
     price: Rp. 2,200,000,
     stock: 5}`
 
@@ -153,3 +149,150 @@ Adding product to website
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ error : "Internal server error" }`
 <br /><br />
+</details>
+
+## Edit Product
+<details open>
+<summary>Edit Product on Website</summary>
+
+* **URL**
+
+  `/products/:id`
+
+* **Method:**
+
+  `PUT`
+
+* **Headers Params**
+  
+  **Required:** 
+  
+  `id=[integer]`
+
+* **Headers Params**
+  
+  **Required:** 
+  
+  ` { token: < token > } `
+
+* **Data Params**
+  
+  **Required:**
+
+    `{ name: Ryzen 5 2400G,
+    image_url: 'http://localhost:3000/img.img',
+    price: Rp. 2,200,000,
+    stock: 5}`
+
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    `{ message: "Successfully edited Ryzen 5 2400G" }`
+ 
+* **Error Response:**
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: "Please input product's name" }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: "Please input product's description" }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: "Description's max characters is 200" }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: "Product's price cannot below 0" }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: "Please input product's price" }`
+
+    OR
+
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: "Please input product's stock" }`
+
+    OR
+
+  * **Code:** 403 NOT AUTHORIZED <br />
+    **Content:** `{ error : "Authentication failed! Please re-login" }`
+
+    OR
+
+  * **Code:** 403 NOT AUTHORIZED <br />
+    **Content:** `{ error : "You're not authorized to perform this action!" }`
+
+    OR
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Product not found!" }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal server error" }`
+<br /><br />
+</details>
+
+## Delete Product
+<details open>
+
+<summary>Delete Product on Website</summary>
+
+* **URL**
+
+  `/products/:id`
+
+* **Method:**
+
+  `DELETE`
+
+* **Headers Params**
+  
+  **Required:** 
+  
+  `id=[integer]`
+
+* **Headers Params**
+  
+  **Required:** 
+  
+  ` { token: < token > } `
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    `{ message: "Successfully delete product(s)" }`
+ 
+* **Error Response:**
+
+  * **Code:** 403 NOT AUTHORIZED <br />
+    **Content:** `{ error : "You're not authorized to perform this action!" }`
+
+    OR
+  
+  * **Code:** 403 NOT AUTHORIZED <br />
+    **Content:** `{ error : "Authentication failed! Please re-login" }`
+
+    OR
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Product not found!" }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+<br /><br />
+
+</details>

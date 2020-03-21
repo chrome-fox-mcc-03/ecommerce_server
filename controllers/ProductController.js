@@ -1,13 +1,30 @@
 const { Product } = require('../models')
 const { customError } = require("../helpers/errorModel")
-
+let inputParams
+let pic
+const DEFAULTPIC = "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg"
 class ProductController {
     static create(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: ADD PRODUCT ---');
         // console.log('SANITY CHECK');
         // console.log(req.body);
+
+        if(req.body.image_url) {
+            pic = req.body.image_url
+        } else {
+            pic = DEFAULTPIC
+        }
+
+        inputParams = {
+            name: req.body.name,
+            category: req.body.category,
+            image_url: pic,
+            price: req.body.price,
+            stock: req.body.stock
+        }
         
-        Product.create(req.body)
+        
+        Product.create(inputParams)
             .then(response => {
                 console.log("NEW PRODUCT HAS BEEN ADDED");
                 console.log(response);
@@ -81,29 +98,36 @@ class ProductController {
 
     static update(req, res, next) {
         console.log(`>>>> UPDATE PRODUCT BY ID <<<<`);
-        // console.log(req.params.id);
+        console.log(req.params.id);
         // console.log(`checking which user`);
         // console.log(req.decoded);
-        // console.log(`which payload again?`);
-        // console.log(req.payload);
-        // console.log("--- ACHTUNG! REQ.BODY IS ---");
-        // console.log(req.body);
+        console.log(`which payload again?`);
+        console.log(req.payload);
+        console.log("--- ACHTUNG! REQ.BODY IS ---");
+        console.log(req.body);
+
+        if(req.body.image_url) {
+            pic = req.body.image_url
+        } else {
+            pic = DEFAULTPIC
+        }
+
+        inputParams = {
+            name: req.body.name,
+            category: req.body.category,
+            image_url: pic,
+            price: req.body.price,
+            stock: req.body.stock
+        }
         Product.update({
 
-                // // TESTING
-                // title: req.body.data.title,
-                // category: req.body.data.category,
-                // image_url: req.body.data.image_url,
-                // price:req.body.data.price,
-                // stock: req.body.data.stock
-
                 //DEVELOPMENT
-                title: req.body.title,
-                category: req.body.category,
-                image_url: req.body.image_url,
-                price:req.body.price,
-                stock: req.body.stock
-            }, {
+                name: inputParams.name,
+                category: inputParams.category,
+                image_url: inputParams.image_url,
+                price: inputParams.price,
+                stock: inputParams.stock
+            } , {
                 where: {
                     id: +req.params.id
                 },

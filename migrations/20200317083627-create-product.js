@@ -17,7 +17,9 @@ module.exports = {
         allowNull: false
       },
       image_url: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg'
       },
       price: {
         type: Sequelize.FLOAT

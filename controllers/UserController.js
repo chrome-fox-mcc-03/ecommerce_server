@@ -31,8 +31,10 @@ class UserController {
                 })
             })
             .catch((err)=>{
-                console.log(err);
-                next(err)
+                res.status(500).json({
+                    error: err
+                })
+                // next(err)
             })
     }
 

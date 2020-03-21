@@ -6,10 +6,6 @@ function authentication(req, res, next){
     try {
         
         const access_token = req.headers.access_token
-        // console.log(req.params, 'params');
-        // console.log(req.body, 'body');
-        
-        // console.log(access_token);
         
         const decoded = jwt.verify(access_token, process.env.SECRET)
         
@@ -22,8 +18,6 @@ function authentication(req, res, next){
             })
             .then((userFound) => {
                 if(userFound){
-                    // console.log('user found next');
-                    
                     next()
                 }else {
                     const error = {

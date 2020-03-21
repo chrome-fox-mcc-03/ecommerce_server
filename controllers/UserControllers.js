@@ -56,7 +56,7 @@ class UserController {
                         message : 'email / password is incorrect'
                     }
 
-                    throw err
+                    next(err)
                 }
 
             } else {

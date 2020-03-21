@@ -2,12 +2,13 @@ const { Product } = require('../models')
 
 class ProductController {
     static addProduct(req, res, next){
-        const { name, image_url, price, stock } = req.body
+        const { name, imageUrl, price, stock } = req.body
+        console.log(imageUrl);
         Product.create({
-            name,
-            image_url,
-            price,
-            stock
+            name : name,
+            image_url : imageUrl,
+            price : price,
+            stock : stock
         })
         .then((productCreated) => {
             res.status(201).json({
@@ -35,14 +36,13 @@ class ProductController {
     }
 
     static editProduct(req, res, next){
-        // console.log('we are in edit product controller');
         
-        const { name, image_url, price, stock } = req.body
+        const { name, imageUrl, price, stock } = req.body
         Product.update({
-            name,
-            image_url,
-            price,
-            stock
+            name : name,
+            image_url : imageUrl,
+            price : price,
+            stock : stock
         }, {
             where :{
                 id : req.params.id

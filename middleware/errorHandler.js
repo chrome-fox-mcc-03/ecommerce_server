@@ -47,8 +47,7 @@ function errorHandler(err, req, res, next){
             status = 401
             res.status(status).json(message)
         default:
-            console.log(err, 'default here');
-            
+            // console.log(err, 'default here');
             res.status(status).json(message)
             break;
     }

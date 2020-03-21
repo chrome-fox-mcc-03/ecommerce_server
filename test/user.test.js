@@ -259,7 +259,7 @@ describe('User Routes', () => {
                         .post('/signin/admin')
                         .send(admin)
                         .end((err, res) => {
-                            expect(res.body).toBe('Admin only! No trespassing!')
+                            expect(res.body).toHaveProperty('message', expect.any(String))
                             expect(res.status).toBe(400)
                             expect(err).toBe(null)
                             done()

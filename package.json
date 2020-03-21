@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "**Register**\r ----\r * **URL**",
   "main": "index.js",
+  "bin": {
+    "heroku_config": "http.js"
+  },
   "scripts": {
-    "start": "set NODE_ENV=production&&node bin/http.js",
+    "start": "node bin/http.js",
     "test": "set NODE_ENV=test&&jest --detectOpenHandles",
     "dev": "set NODE_ENV=development&&nodemon bin/http.js"
   },

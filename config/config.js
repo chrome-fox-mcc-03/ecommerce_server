@@ -2,10 +2,10 @@ const env = process.env.NODE_ENV || "development"
 
 switch (env) {
   case "test":
-    require('dotenv').config({path : process.cwd() + '/.env'})
+    require('dotenv').config({path : process.cwd() + '/.env.test'})
     break;
   case "development":
-    require('dotenv').config({path : process.cwd() + '/.env.test'})
+    require('dotenv').config({path : process.cwd() + '/.env'})
     break;
   default:
     break;

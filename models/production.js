@@ -43,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
           args : true,
           msg : "Plese insert description to give infomation to the customer"
+        },
+        notEmpty : {
+          args : true,
+          msg : "Please Insert description to give infomation to the customer"
         }
       }
     },

@@ -27,6 +27,7 @@ module.exports = (err,req,res,next) => {
   else if(err.name =='JsonWebTokenError'){
     obj.status = 401
     obj.message = 'Please login first as admin'
+    res.status(obj.status).json(obj)
   }
   else{
     res.status(obj.status).json(obj)

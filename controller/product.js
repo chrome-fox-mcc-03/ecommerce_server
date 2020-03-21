@@ -14,10 +14,12 @@ class ControllerProduction {
         stock,
         CategoryId
       })
-      res.status(201).json({
-        message : "add success",
-        id : data.id
-      })
+      if(data) {
+        res.status(201).json({
+          message : "add success",
+          id : data.id
+        })
+      }
     } catch (error) {
       next(error)
     }
@@ -38,9 +40,11 @@ class ControllerProduction {
       {
         where: {id}
       })
-      res.status(200).json({
-        message : "edit success"
-      })
+      if(data) {
+        res.status(200).json({
+          message : "edit success"
+        })
+      }
     } catch (error) {
       next(error)
     }
@@ -75,7 +79,9 @@ class ControllerProduction {
       const data = await Production.findOne({
         id
       })
-      res.status(200).json(data)
+      if(data) {
+        res.status(200).json(data)
+      }
     } catch (error) {
       next(error)
     }
@@ -84,7 +90,6 @@ class ControllerProduction {
     try {
       const data = await Production.findAll({
       })
-      console.log(data)
       res.status(200).json(data)
     } catch (error) {
       next(error)
@@ -98,7 +103,9 @@ class ControllerProduction {
           CategoryId
         }
       })
-      res.status(200).json(data)
+      if(data) {
+        res.status(200).json(data)
+      }
     } catch (error) {
       next(error)
     }

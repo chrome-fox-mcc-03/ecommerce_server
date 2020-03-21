@@ -34,7 +34,6 @@ describe('Product Routes', () => {
     })
 
     describe('POST /products', () => {
-
         describe('Success Process', () => {
             test('Should return an object (name, image_url, price, stock) with status code 201', (done) => {
                 let newProduct = {
@@ -58,6 +57,28 @@ describe('Product Routes', () => {
                         // expect(res.body.stock).toBeGreaterThanOrEqual(0);
                         expect(res.status).toBe(201)
                         expect(err).toBe(null)
+                        done()
+                    })
+            })
+        })
+        describe('Error Process', () => {
+            test('Should return a message about authorization failed', (done) => {
+                let newProduct = {
+                    name: 'Nike Cortez G',
+                    image_url: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/jk6pwv5o9uos8n2ruecy/air-jordan-1-low-shoe-6Q1tFM.jpg',
+                    price: 929000,
+                    stock: 10,
+                    category: 'Women'
+                }
+                request(app)
+                    .post('/products')
+                    .set('token', token)
+                    .send(newProduct)
+                    .end((err, res) => {
+                        console.log('####', res.body);
+                        
+                        expect(res.body).toHaveProperty('message', expect.any(String))
+                        expect(res.status).toBe(401)
                         done()
                     })
             })

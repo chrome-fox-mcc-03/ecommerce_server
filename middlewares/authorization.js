@@ -8,6 +8,7 @@ module.exports = function(req, res, next) {
         }
     })
         .then(user => {
+            console.log('### The User ==> ', user);
             if (user.is_admin) {
                 next()
             } else {

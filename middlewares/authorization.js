@@ -18,6 +18,7 @@ module.exports = (req, res, next) => {
         }
     })
     .catch(error => {
+        console.log(`masukkkkkk`);
         next({
             status: 401,
             msg: `unauthorized access`

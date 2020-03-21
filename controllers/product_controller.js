@@ -2,12 +2,12 @@ const { Product } = require('../models');
 
 class ProductController {
     static createProduct(req, res, next) {
-        let { name, price, img_url, stock } = req.body;
+        let { name, price, image_url, stock } = req.body;
         
         Product.create({
             name,
             price,
-            img_url,
+            image_url,
             stock
         })
         .then(result => {
@@ -25,6 +25,23 @@ class ProductController {
         })
         .catch(error => {
             next(error);
+        })
+    }
+
+    static findById(req, res, next) {
+        Product.findOne({
+            where: {
+                id: id
+            }
+        })
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            next({
+                status: 404,
+                message: `cannot find product with spesific id`
+            });
         })
     }
 

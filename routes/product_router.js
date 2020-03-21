@@ -6,6 +6,7 @@ const authorization = require('../middlewares/authorization')
 router.use(authentication);
 router.post('/', ProductController.createProduct);
 router.get('/', ProductController.showAll);
+router.get('/:id', ProductController.findById);
 
 router.delete('/:id', authorization, ProductController.deleteById);
 router.put('/:id', authorization, ProductController.editById);

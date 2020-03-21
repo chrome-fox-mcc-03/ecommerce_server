@@ -11,8 +11,8 @@ class AdminController {
             }
         })
         .then(result => {
+            
             if(!result) {
-                
                 next({
                     status: 404,
                     message: `wrong email/password`

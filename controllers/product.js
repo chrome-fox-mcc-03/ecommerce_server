@@ -1,8 +1,13 @@
-const { Product } = require('../models')
+const { Product, Category} = require('../models')
 
 class ProductController {
   static findAll (req, res, next) {
-    Product.findAll()
+    Product.findAll({
+      include : [{
+        model: Category
+      }],
+      order: [['id']]
+    })
       .then(products => {
         res.status(200).json(products)
       })
@@ -27,7 +32,14 @@ class ProductController {
 
   static findOne (req, res, next) {
     let id = req.params.id
-    Product.findByPk(id)
+    Product.findOne({
+      where : {
+        id
+      },
+      include : [{
+        model: Category
+      }]
+    })
       .then(product => {
         if (product) {
           res.status(200).json(product)

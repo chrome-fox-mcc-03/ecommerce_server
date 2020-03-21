@@ -47,7 +47,8 @@ class UserController {
             }
             let token = generateToken(payload)
             res.status(200).json({
-              access_token: token
+              access_token: token,
+              name: payload.name
             })
           }
         }

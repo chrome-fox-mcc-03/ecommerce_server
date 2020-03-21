@@ -3,7 +3,7 @@ let sampleProducts = [
   {
     name: "Nissin Cup Noodle Chicken Flavor",
     category: "food",
-    image_url: "image.url",
+    image_url: "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg",
     price: 10000,
     stock: 5000,
     createdAt: new Date(),
@@ -12,7 +12,7 @@ let sampleProducts = [
   {
     name: "Enervon-C 30 Tablets Bottle",
     category: "supplements",
-    image_url: "image.url",
+    image_url: "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg",
     price: 30000,
     stock: 5000,
     createdAt: new Date(),
@@ -21,7 +21,7 @@ let sampleProducts = [
   {
     name: "Panadol Cold & Flu Tablet Strip",
     category: "medicine",
-    image_url: "image.url",
+    image_url: "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg",
     price: 15000,
     stock: 5000,
     createdAt: new Date(),
@@ -30,7 +30,7 @@ let sampleProducts = [
   {
     name: "Tolak Angin Sachet Box",
     category: "supplements",
-    image_url: "image.url",
+    image_url: "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg",
     price: 20000,
     stock: 5000,
     createdAt: new Date(),

@@ -12,6 +12,7 @@ router.post('/login', UserController.login);
 router.get('/userPayload', UserController.userPayload);
 
 router.use(authenticator);
+
 router.use('/product', productRouter);
 
 module.exports = router;

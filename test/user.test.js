@@ -8,7 +8,7 @@ let data = {
     password: "123456",
 }
 
-let acccess_token = '';
+let access_token = '';
 
 afterAll((done) => {
     queryInterface.bulkDelete("Users", {})
@@ -184,7 +184,7 @@ describe('user route', () => {
                         expect(res.body).toHaveProperty('access_token', expect.any(String));
                         expect(res.body).toHaveProperty('id', expect.any(Number));
                         expect(res.body).toHaveProperty('email', data.email);
-                        acccess_token = res.body.acccess_token;
+                        acccess_token = res.body.access_token;
                         done();
                     })
             })

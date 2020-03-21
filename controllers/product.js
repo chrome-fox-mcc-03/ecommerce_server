@@ -59,9 +59,8 @@ module.exports = {
   },
   findOneProduct(req, res, next) {
     const { id } = req.params
-
     Product.findOne({
-      where: { TypeId: id },
+      where: { id },
       include: [Type]
     })
       .then(data => {

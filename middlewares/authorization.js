@@ -16,7 +16,7 @@ module.exports = {
       where: { id }
     })
       .then(data => {
-        if(data) {
+        if (data) {
           req.product = data.dataValues
           next()
         } else {

@@ -14,5 +14,6 @@
     "dialect": "postgres"
   },
   "production": {
+    "user_env_variable": "DATABASE_URL"
   }
 }

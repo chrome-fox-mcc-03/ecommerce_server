@@ -23,9 +23,9 @@ module.exports = {
       where: { email }
     })
       .then(data => {
-        if(data) {
+        if (data) {
           const check = checkPassword(password, data.password)
-          if(check) {
+          if (check) {
             const token = createToken({
               id: data.id,
               email: data.email

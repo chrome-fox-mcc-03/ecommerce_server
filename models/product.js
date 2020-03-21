@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         hooks: {
             beforeCreate: (Product, options) =>{
-                if (!Product.category) Product.category = 'Other'
+                if (Product.category !== 'Lokal' || Product.category !== 'Import') Product.category = 'Other'
                 if (!Product.stock || Product.stock < 0 ) Product.stock = 0
                 if (!Product.description) Product.description = `This is ${Product.name}`
             }

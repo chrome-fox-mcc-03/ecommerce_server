@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
                 next()
             } else {
                 next({
-                    name: 'autorization',
+                    name: 'authorization',
                         status: 403,
                         msg: {
                             message: 'Unauthorized, only Super Admin can do this action!'

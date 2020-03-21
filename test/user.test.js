@@ -1,11 +1,15 @@
 const request = require('supertest')
 const app = require('../app')
 const {
-    sequelize
+    sequelize, User
 } = require('../models')
 const {
     queryInterface
 } = sequelize
+
+const {
+    tokenGenerate
+} = require('../helpers/jwt')
 
 let data = {
     name: 'hilmi',
@@ -29,12 +33,37 @@ describe('User routes', () => {
                 done(err)
             })
     })
+    beforeAll((done) => {
+        let userData = {
+            name: 'hilmi',
+            email: 'hilmi100@mail.com',
+            role: 'Super Admin',
+            password: '123456'
+        }
+        User.create({
+                name: userData.name,
+                role: userData.role,
+                email: userData.email,
+                password: userData.password
+            })
+            .then(user => {
+                let payload = {
+                    id: user.id,
+                    email: user.email
+                }
+                UserToken = tokenGenerate(payload)
+                done()
+            })
+    })
     describe('POST /register', () => {
         describe('Success Process', () => {
             test('Should send an object (email, id) with status code 201', (done) => {
                 request(app)
                     .post('/users/register')
                     .send(data)
+                    .set({
+                        token: UserToken
+                    })
                     .end((err, res) => {
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('email', data.email)
@@ -53,6 +82,9 @@ describe('User routes', () => {
                     request(app)
                         .post('/users/register')
                         .send(data)
+                        .set({
+                            token: UserToken
+                        })
                         .end((err, res) => {
                             expect(err).toBe(null)
                             expect(res.body).toHaveProperty('message', 'Bad Request')
@@ -71,6 +103,9 @@ describe('User routes', () => {
                     request(app)
                         .post('/users/register')
                         .send(data)
+                        .set({
+                            token: UserToken
+                        })
                         .end((err, res) => {
                             expect(err).toBe(null)
                             expect(res.body).toHaveProperty('message', 'Bad Request')
@@ -89,6 +124,9 @@ describe('User routes', () => {
                     request(app)
                         .post('/users/register')
                         .send(data)
+                        .set({
+                            token: UserToken
+                        })
                         .end((err, res) => {
                             expect(err).toBe(null)
                             expect(res.body).toHaveProperty('message', 'Bad Request')
@@ -107,6 +145,9 @@ describe('User routes', () => {
                     request(app)
                         .post('/users/register')
                         .send(data)
+                        .set({
+                            token: UserToken
+                        })
                         .end((err, res) => {
                             expect(err).toBe(null)
                             expect(res.body).toHaveProperty('message', 'Bad Request')

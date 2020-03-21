@@ -116,10 +116,15 @@ describe('Product route', () => {
         })
         describe('Error Process', () => {
             test('Should send an error with status code 403 because Access token is wrong', (done) => {
+                payload = {
+                    id: 100,
+                    email: 'userfake@mail.com'
+                }
+                fakeToken = tokenGenerate(payload)
                 request(app)
                     .post('/products')
                     .set({
-                        token: ''
+                        token: fakeToken
                     })
                     .send(data)
                     .end((err, res) => {

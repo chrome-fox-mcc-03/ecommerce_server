@@ -44,7 +44,7 @@ module.exports = function (err, req, res, next) {
                 errors
             }
             break;
-        case 'autorization':
+        case 'authorization':
             status = 403
             errors = []
             errors.push(err.msg.message)

@@ -2,6 +2,8 @@
 
 Products endpoints:
 - `GET /products`
+- `GET /products/:id`
+- `GET /products/:category`
 - `POST/products`
 - `PUT /products/:id`
 - `DELETE /products/:id`
@@ -18,6 +20,90 @@ User admin endpoints:
 - URL
 
   `/products`
+
+- Method:
+  `GET`
+
+- Success Response:
+
+​      **Code:** 200
+~~~~json
+[{
+    "id": 3,
+    "name": "Rambutan Rapiah",
+    "image_url": "https://i.imgur.com/0jEmiwl.jpg",
+    "price": 40000,
+    "stock": 10,
+    "category": "Lokal",
+    "description": "Rambutan Rapiah kecil tetapi manis, harga untuk 2 ikat",
+    "createdAt": "2020-03-20T14:36:55.068Z",
+    "updatedAt": "2020-03-20T14:36:55.068Z"
+  }]
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+------
+
+**Get Product By Id**
+
+------
+- URL
+
+  `/products/:id`
+
+- Method:
+  `GET`
+
+- Success Response:
+
+​      **Code:** 200
+~~~~json
+{
+    "id": 3,
+    "name": "Rambutan Rapiah",
+    "image_url": "https://i.imgur.com/0jEmiwl.jpg",
+    "price": 40000,
+    "stock": 10,
+    "category": "Lokal",
+    "description": "Rambutan Rapiah kecil tetapi manis, harga untuk 2 ikat",
+    "createdAt": "2020-03-20T14:36:55.068Z",
+    "updatedAt": "2020-03-20T14:36:55.068Z"
+  }
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+------
+
+**Get Products By Category**
+
+------
+- URL
+
+  `/products/category/:category`
 
 - Method:
   `GET`
@@ -75,6 +161,7 @@ User admin endpoints:
   + description: string
   
 - Request Headers:
+  
   + token: string
   
 - Success Response:
@@ -222,7 +309,10 @@ User admin endpoints:
   `DELETE`
   
 - Request Headers:  
+  
   + token: string
+  
+    ('only Super Admin can do this action!')
 
 
 - Success Response:
@@ -287,6 +377,12 @@ User admin endpoints:
 
 - Method:
   `POST`
+
+- Request Headers:  
+  
+  + token: string 
+  
+    ('only Super Admin can do this action!')
   
 - Request Body:
   

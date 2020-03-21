@@ -42,7 +42,32 @@ class controller {
         Product.findAll()
             .then(result => {
                 res.status(200).json(result)
-                next()
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static getById(req, res, next) {
+        let id = req.params.id
+        Product.findByPk(id)
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static getByCategory(req, res, next) {
+        let category = req.params.category
+        Product.findAll({
+            where: {
+                category: category
+            }
+        })
+            .then(result => {
+                res.status(200).json(result)
             })
             .catch(err => {
                 next(err)
@@ -59,8 +84,6 @@ class controller {
             category,
             description
         } = req.body
-        console.log(description.length, 'ini length deskripsi');
-
         Product.update({
                 name,
                 image_url,

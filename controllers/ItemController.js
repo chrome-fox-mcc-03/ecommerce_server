@@ -1,17 +1,22 @@
-const { Item } = require('../models')
+const { Item, Category } = require('../models')
 const { authAdmin } = require('../middlewares/auth')
 
 module.exports = 
   class ItemController {
     static findAll (req, res, next) {
-      Item.findAll()
+      Item.findAll({
+        order: [['id']],
+        include: Category
+      })
         .then(items => res.status(200).json({ items }))
         .catch(next)
     }
 
     static findByPk (req, res, next) {
       const { itemId } = req.params
-      Item.findByPk(itemId)
+      Item.findByPk(itemId, {
+        include: Category
+      })
         .then(item => {
           if (!item) {
             throw {

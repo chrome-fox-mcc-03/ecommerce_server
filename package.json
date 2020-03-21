@@ -2,10 +2,11 @@
   "name": "ecommerce_server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "NODE_ENV=test jest --testTimeout=20000 --forceExit --detectOpenHandles --runInBand",
-    "dev": "NODE_ENV=development nodemon bin/app.js"
+    "dev": "NODE_ENV=development nodemon bin/app.js",
+    "start": "node bin/app.js"
   },
   "repository": {
     "type": "git",

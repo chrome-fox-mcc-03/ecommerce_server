@@ -125,7 +125,7 @@ Returns json data about all products.
 - **Success Response:**
 
   - **Code:**
-    200 OK
+    - 200 OK
     **Content:**
     ```json
     {
@@ -136,11 +136,11 @@ Returns json data about all products.
 - **Error Response:**
 
   - **Code:**
-    401 UNAUTHENTICATED
+    - 401 UNAUTHENTICATED
     **Content:** `{ message : "Please Login" }`
 
   - **Code:**
-    500 INTERNAL SERVER ERROR
+    - 500 INTERNAL SERVER ERROR
     **Content:** `{ message : "Internal Server Error" }`
 
 ---

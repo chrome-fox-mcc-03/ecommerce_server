@@ -12,10 +12,11 @@ switch (env) {
 const app = require('../app.js')
 const http = require('http')
 const server = http.createServer(app)
+const PORT = process.env.PORT || 3000
 // const router = require("../routes/index.js")
 
 // app.use(router)
 
-server.listen(process.env.PORT, () => {
-  console.log('LISTENING ON PORT ' + process.env.PORT)
+server.listen(PORT, () => {
+  console.log('LISTENING ON PORT ' + PORT)
 })

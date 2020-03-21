@@ -2,7 +2,9 @@ const { Product } = require("../models");
 
 class ProductController {
   static findAll(req, res, next) {
-    Product.findAll()
+    Product.findAll({
+      order: [["id", "ASC"]]
+    })
       .then(allData => {
         res.status(200).json({
           status: "OK",

@@ -43,8 +43,8 @@ class UserController {
               msg: "Successfully logged in",
               data: {
                 token: generateToken(payload),
-                username : searched.username,
-                role : searched.role
+                username: searched.username,
+                role: searched.role
               }
             });
           } else {
@@ -53,6 +53,11 @@ class UserController {
               msg: "Email / Password was wrong, please try again"
             });
           }
+        } else {
+          next({
+            status: "Bad Request",
+            msg: "Email / Password was wrong, please try again"
+          });
         }
       })
       .catch(next);

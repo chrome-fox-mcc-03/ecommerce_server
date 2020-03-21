@@ -1,0 +1,524 @@
+FORMAT: 1A
+HOST: https://intense-chamber-47439.herokuapp.com/
+
+# E-Commerce
+
+E-commerce is an app to help you fulfill your daily needs
+
+## Register [/register]
+
+### Register [POST]
+
++ Request (application/json) 
+    
+    + Body
+    
+            {
+                "email": "budi@gmail.com",
+                "password": "12345",
+                "name": "budi",
+                "role": "admin"
+            }
+
++ Response 201 
+
+    + Body
+    
+            {
+                "email": "budi@gmail.com",
+                "id": 14,
+                "name": "budi",
+                "role": "admin"
+            }
+
++ Response 400 
+
+    + Body
+            
+            {
+                "message": "Invalid email format",
+                "errors": [
+                    "Invalid email format",
+                    "email must be filled",
+                    "password must be filled",
+                    "password is at least 5 character"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+    
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+## Login [/login]
+
+### Login [POST]
+
++ Request (application/json)
+        
+    + Body
+    
+            {
+                "email": "budi@gmail.com",
+                "password": "12345"
+            }
+
++ Response 200 
+
+    + Body
+    
+            {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJuYXVmYWx5dW5hbjQ1QGdtYWlsLmNvbSIsImlhdCI6MTU4NDM0NjIwOX0.t4PcSFqBT_JFVT8yXIERH9gUwM9LhCgYfeSTtt_CPBs"
+            }
+
++ Response 400 
+        
+    + Body
+    
+            {
+                "message": "Invalid email/password",
+                "errors": [
+                    "Invalid email/password"
+                ]
+            }
+
+## User [/users/{id}]
+
++ Parameters
+
+    + id (number) - ID of the User in the form of an integer
+
+### Update User [PUT]
+
++ Request (application/json)
+
+    + Headers
+        
+            Token: string
+    
+    + Body
+            
+            {
+                "email": "bege@gmail.com",
+                "password": "12345",
+                "name": "budi",
+                "role": "admin"
+            }
+    
++ Response 201 
+    
+    + Body
+
+            {
+                "id": 9,
+                "email": "bege@gmail.com",
+                "name": "budi",
+                "role": "admin"
+            }
+
++ Response 400 
+    
+    + Body
+    
+            {
+                "message": "Invalid email format",
+                "errors": [
+                    "Invalid email format",
+                    "email must be filled",
+                    "password must be filled",
+                    "password is at least 5 character",
+                    "name must be filled",
+                    "role must be filled"
+                ]
+            }
+
++ Response 400
+    
+    + Body
+        
+            {
+                "message": "user not found",
+                "errors": [
+                    "user not found"
+                ]
+            }
+
++ Response 404
+    
+    + Body 
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+### Delete User [DELETE]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 203 
+
+    + Body
+
+            {
+                "id": 9,
+                "email": "bege@gmail.com",
+                "name": "budi",
+                "role": "admin"
+            }
+
++ Response 400
+        
+    + Body
+        
+            {
+                "message": "user not found",
+                "errors": [
+                    "user not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+## Products [/products]
+        
+### Get All Products [GET]
+
++ Request 
+    
+    + Headers
+            
+            Token: string
+
++ Response 200
+    
+    + Body
+        
+            [
+                {
+                    "id": 1,
+                    "name": "mie goreng",
+                    "image_url": "http://google.com",
+                    "price": 10000,
+                    "stock": 20,
+                    "createdAt": "2020-03-17T04:07:02.268Z",
+                    "updatedAt": "2020-03-17T04:23:32.748Z"
+                },
+                {
+                    "id": 7,
+                    "name": "Pisang Bakar",
+                    "image_url": "https://kompas.com",
+                    "price": 15000,
+                    "stock": 17,
+                    "createdAt": "2020-03-18T06:58:48.936Z",
+                    "updatedAt": "2020-03-18T06:58:48.936Z"
+                },
+                {
+                    "id": 11,
+                    "name": "cincang daging",
+                    "image_url": "www.google.com",
+                    "price": 100000,
+                    "stock": 1,
+                    "createdAt": "2020-03-18T07:10:14.547Z",
+                    "updatedAt": "2020-03-18T07:10:14.547Z"
+                }
+            ]
+
++ Response 404
+        
+    + Body
+    
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+### Create Product [POST]
+
++ Request (application/json)
+    
+    + Headers
+            
+            Token: string
+    
+    + Body
+            
+            {
+                "id": 19,
+                "name": "hokben",
+                "image_url": "http://hokben.com",
+                "price": 0,
+                "stock": 0
+            }
+            
++ Response 201
+    
+    + Body
+            
+            {
+                "id": 19,
+                "name": "hokben",
+                "image_url": "http://hokben.com",
+                "price": 0,
+                "stock": 0,
+                "updatedAt": "2020-03-20T04:38:55.139Z",
+                "createdAt": "2020-03-20T04:38:55.139Z"
+            }
+
++ Response 400
+    
+    + Body
+            
+            {
+                "message": "name must be filled",
+                "errors": [
+                    "name must be filled",
+                    "image url must be in url format",
+                    "image url must be filled"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
+
+
+## Product [/products/{id}]
+
++ Parameters
+
+    + id (number) - ID of the User in the form of an integer
+
+### Find Product By Id [GET]
+
++ Request
+    
+    + Headers
+        
+            Token: string
+
++ Response 200
+
+    + Body
+            
+            {
+                "id": 4,
+                "name": "kfc",
+                "image_url": "http://kfc.com",
+                "price": 80000,
+                "stock": 3,
+                "createdAt": "2020-03-18T04:03:55.343Z",
+                "updatedAt": "2020-03-18T04:03:55.343Z"
+            }
+            
++ Response 400
+
+    + Body
+            
+            {
+                "message": "product not found",
+                "errors": [
+                    "product not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+    
+            {
+                "message": "Database Error",
+                "errors": [
+                    "Database Error"
+                ]
+            }
+
+
+### Update Product [PUT]
+
++ Request (application/json)
+
+    + Headers
+        
+            Token: string
+    
+    + Body
+            
+            {
+                "name": "spaghetti",
+                "image_url": "https://google.com",
+                "price": "40000,
+                "stock": 5
+            }
+    
++ Response 201 
+    
+    + Body
+
+            {
+                "name": "spaghetti",
+                "image_url": "https://google.com",
+                "price": "40000,
+                "stock": 5
+            }
+
++ Response 400 
+    
+    + Body
+    
+            {
+                "message": "name must be filled",
+                "errors": [
+                    "name must be filled",
+                    "image url must be in url format",
+                    "image url must be filled"
+                ]
+            }
+
++ Response 400
+    
+    + Body
+        
+            {
+                "message": "product not found",
+                "errors": [
+                    "product not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+### Delete Product [DELETE]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 200 
+
+    + Body
+
+            {
+                "name": "spaghetti",
+                "image_url": "https://google.com",
+                "price": "40000,
+                "stock": 5
+            }
+
++ Response 400
+        
+    + Body
+        
+            {
+                "message": "product not found",
+                "errors": [
+                    "product not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }

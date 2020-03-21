@@ -55,8 +55,11 @@ module.exports = function (err, req, res, next) {
             break;
         default:
             status = 500
+            errors = []
+            errors.push('internal server error')
             message = {
-                message: 'internal server error'
+                message: 'internal server error',
+                errors
             }
             break;
     }

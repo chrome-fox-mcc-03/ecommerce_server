@@ -45,7 +45,10 @@ User admin endpoints:
 
 ~~~~json
 {
-  "message": "internal server error"
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
 }
 ~~~~
 
@@ -97,7 +100,10 @@ User admin endpoints:
 
 ~~~~json
 {
-  "message": "internal server error"
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
 }
 ~~~~
 
@@ -173,7 +179,10 @@ User admin endpoints:
 
 ~~~~json
 {
-  "message": "internal server error"
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
 }
 ~~~~
 
@@ -239,7 +248,10 @@ User admin endpoints:
 
 ~~~~json
 {
-  "message": "internal server error"
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
 }
 ~~~~
 
@@ -301,7 +313,10 @@ User admin endpoints:
 
 ~~~~json
 {
-  "message": "internal server error"
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
 }
 ~~~~
 
@@ -349,7 +364,10 @@ User admin endpoints:
 
 ~~~~json
 {
-  "message": "internal server error"
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
 }
 ~~~~
 

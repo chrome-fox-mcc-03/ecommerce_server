@@ -47,26 +47,29 @@ class controller {
                 email
             }
         }).then(result => {
-            let login = checkPassword(password, result.password)
-
-            if (login) {
-                let payload = {
-                    id: result.id,
-                    email: result.email
+            let error = {
+                name: 'loginValidation',
+                status: 400,
+                msg: {
+                    message: 'Email/Password is wrong'
                 }
-                let token = tokenGenerate(payload)
-                res.status(200).json({
-                    'token': token
-                })
+            }
+            if(!result){
+                next(error)
             } else {
-                let error = {
-                    name: 'loginValidation',
-                    status: 400,
-                    msg: {
-                        message: 'Email/Password is wrong'
+                let login = checkPassword(password, result.password)
+                if (login) {
+                    let payload = {
+                        id: result.id,
+                        email: result.email
                     }
+                    let token = tokenGenerate(payload)
+                    res.status(200).json({
+                        'token': token
+                    })
+                } else {
+                    next(error)
                 }
-                throw error
             }
         }).catch(err => {
             next(err)

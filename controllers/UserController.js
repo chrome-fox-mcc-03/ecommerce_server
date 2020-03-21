@@ -21,7 +21,7 @@ class UserController {
             }
 
             const token = generateToken(payload)
-            res.status(200).json({ token, fulllname: response.fullname })
+            res.status(200).json({ token, fullname: response.fullname })
           }
           else {
             next({

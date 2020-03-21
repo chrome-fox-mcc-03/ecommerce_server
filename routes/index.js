@@ -6,7 +6,7 @@ const productRoute = require("./product.js")
 
 router.post("/register", UserController.register)
 router.post("/login", UserController.login)
-router.post("/getAllUsers", UserController.getAllUsers) // for testing
+router.get("/getAllUsers", UserController.getAllUsers) // for testing
 
 router.use("/products", productRoute)
 

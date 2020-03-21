@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --testTimeout=20000 --forceExit --detectOpenHandles",
+    "test": "NODE_ENV=test jest --testTimeout=20000 --forceExit --detectOpenHandles --runInBand",
     "dev": "NODE_ENV=development nodemon bin/app.js"
   },
   "repository": {

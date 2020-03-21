@@ -5,9 +5,7 @@ const { User, sequelize } = require('../models')
 const { queryInterface } = sequelize
 
 let access_token
-let productId
-
-const productImage = `${__dirname}/productImage.jpeg`
+let categoryId
 
 beforeAll(done => {
     let input = {
@@ -32,101 +30,81 @@ beforeAll(done => {
 })
 
 afterAll((done) => {
-    queryInterface.bulkDelete('Products', {})
+    queryInterface.bulkDelete('Categories', {})
         .then(_ => {
             done()
         })
         .catch(err => done(err))
 })
 
-describe('Product Endpoints', () => {
+describe('Category Endpoints', () => {
     describe('success process', () => {
-        describe('get products', () => {
-            it('should return an object product and status 200', (done) => {
+        describe('get categories', () => {
+            it('should return an object categories and status 200', (done) => {
                 request(app)
-                    .get('/products')
+                    .get('/categories')
                     .set('access_token', access_token)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(200)
-                        expect(res.body).toHaveProperty('products', expect.any(Array))
+                        expect(res.body).toHaveProperty('categories', expect.any(Array))
                         done()
                     })
             })
         })
 
-        describe('create product', () => {
-            it('should create a new product', done => {
+        describe('create category', () => {
+            it('should create a new category', done => {
+                const data = {
+                    name: 'baju'
+                }
                 request(app)
-                    .post(`/products`)
+                    .post(`/categories`)
                     .set('access_token', access_token)
-                    .attach('image', productImage, { contentType: 'application/octet-stream' })
-                    .field('name', 'Hijab Kotak')
-                    .field('price', 500000)
-                    .field('stock', 108)
-                    .field('CategoryId', 1)
+                    .send(data)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(201)
-                        expect(res.body).toHaveProperty('product')
-                        productId = res.body.product.id
+                        expect(res.body).toHaveProperty('category')
+                        categoryId = res.body.category.id
                         done()
                     })
             })
         })
 
-        describe('Get one products success', () => {
-            it('should fetch a single product', done => {
+        describe('Get one category success', () => {
+            it('should fetch a single category', done => {
                 request(app)
-                    .get(`/products/${productId}`)
+                    .get(`/categories/${categoryId}`)
                     .set('access_token', access_token)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(200)
-                        expect(res.body).toHaveProperty('product')
+                        expect(res.body).toHaveProperty('category')
                         done()
                     })
             })
         })
 
-        describe('update product with image', () => {
-            it('should update a product with image', done => {
+        describe('update category success', () => {
+            it('should update a category', done => {
+                const data = {
+                    name: 'Baju'
+                }
                 request(app)
-                    .put(`/products/${productId}`)
+                    .put(`/categories/${categoryId}`)
                     .set('access_token', access_token)
-                    .attach('image', productImage, { contentType: 'application/octet-stream' })
-                    .field('name', 'Hijab Kotak')
-                    .field('price', 500000)
-                    .field('stock', 108)
-                    .field('CategoryId', 1)
+                    .send(data)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(200)
-                        expect(res.body).toHaveProperty('product')
-                        productId = res.body.product.id
+                        expect(res.body).toHaveProperty('category')
+                        categoryId = res.body.category.id
                         done()
                     })
             })
         })
 
-        describe('update product without image', () => {
-            it('should update a product without image', done => {
+        describe('Delete one category success', () => {
+            it('should delete a single category', done => {
                 request(app)
-                    .put(`/products/${productId}`)
-                    .set('access_token', access_token)
-                    .field('name', 'Hijab Kotak Kotak')
-                    .field('price', 500000)
-                    .field('stock', 108)
-                    .field('CategoryId', 1)
-                    .end((err, res) => {
-                        expect(res.statusCode).toEqual(200)
-                        expect(res.body).toHaveProperty('product')
-                        productId = res.body.product.id
-                        done()
-                    })
-            })
-        })
-
-        describe('Delete one products success', () => {
-            it('should delete a single product', done => {
-                request(app)
-                    .delete(`/products/${productId}`)
+                    .delete(`/categories/${categoryId}`)
                     .set('access_token', access_token)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(200)
@@ -136,15 +114,12 @@ describe('Product Endpoints', () => {
         })
     })
     describe('error process', () => {
-        describe('create product', () => {
+        describe('create category', () => {
             it('should return validation error', (done) => {
                 request(app)
-                    .post('/products')
+                    .post('/categories')
                     .set('access_token', access_token)
-                    .attach('image', productImage, { contentType: 'application/octet-stream' })
-                    .field('price', 500000)
-                    .field('stock', 108)
-                    .field('CategoryId', 1)
+                    .field('price', '')
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(400)
                         expect(res.body).toHaveProperty('errors', expect.any(Array))
@@ -153,22 +128,21 @@ describe('Product Endpoints', () => {
             })
         })
 
-        describe('Get one products error', () => {
+        describe('Get one category error', () => {
             it('should return error not found', done => {
                 request(app)
-                    .get(`/products/0`)
+                    .get(`/category/0`)
                     .set('access_token', access_token)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(404)
-                        expect(res.body).toHaveProperty('error')
                         done()
                     })
             })
         })
-        describe('Delete one products error not found', () => {
+        describe('Delete one category error not found', () => {
             it('should return error not found', done => {
                 request(app)
-                    .delete(`/products/xxx`)
+                    .delete(`/category/xxx`)
                     .set('access_token', access_token)
                     .end((err, res) => {
                         expect(res.statusCode).toEqual(404)

@@ -26,7 +26,7 @@ class UserController {
                     access_token,
                     user: payload
                 }
-                res.status(201).json(data)
+                res.status(201).json({msg:'User created!', data})
             })
 
             .catch(next)

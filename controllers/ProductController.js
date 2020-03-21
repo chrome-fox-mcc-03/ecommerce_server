@@ -12,9 +12,7 @@ class ProductController {
         }
         Product.create(product)
             .then(result => {
-                res.status(201).json({
-                    product: result
-                })
+                res.status(201).json({ product: result, msg:'Product created!' })
             })
             .catch(next)
     }
@@ -22,7 +20,7 @@ class ProductController {
     static findAll(req, res, next) {
         Product.findAll()
             .then(result => {
-                res.status(200).json({ products: result })
+                res.status(200).json({ products: result})
             })
             .catch(next)
     }
@@ -62,7 +60,7 @@ class ProductController {
 
         Product.update(product, { where: { id }, returning: true })
             .then(result => {
-                res.status(200).json({ product: result[1][0] })
+                res.status(200).json({ product: result[1][0] , msg: 'Product updated!'})
             })
             .catch(next)
     }
@@ -72,7 +70,7 @@ class ProductController {
         const { id } = req.params
         Product.destroy({ where: { id } })
             .then(result => {
-                res.status(200).json()
+                res.status(200).json({msg: 'Product deleted!'})
             })
             .catch(next)
     }

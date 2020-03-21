@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "heroku_config": "http.js"
+  },
   "scripts": {
     "test": "NODE_ENV=test jest --detectOpenHandles",
-    "dev": "NODE_ENV=development nodemon bin/http.js"
+    "dev": "NODE_ENV=development nodemon bin/http.js",
+    "use_env_variable": "DATABASE_URL",
+    "start": "node bin/http.js"
   },
   "repository": {
     "type": "git",

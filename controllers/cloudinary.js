@@ -1,19 +1,12 @@
-const Axios = require('axios');
+const cloudinary = require('cloudinary');
 
 class CloudinaryController {
 	static upload (req, res, next) {
-		let { formData } = req.body
-		Axios({
-			method: 'POST',
-			url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/upload`,
-			data: { formData }
+		const { img64 } = req.body
+		cloudinary.v2.uploader.unsigned_upload(img64, 'hacktiv8', { cloud_name: process.env.CLOUDINARY_CLOUD_NAME }, (err, result) => {
+			console.log(err);
+			console.log(result);
 		})
-			.then(result => {
-				res.status(201).json(result.secure_url)
-			})
-			.catch(err => {
-				next(err)
-			})
 	}
 }
 

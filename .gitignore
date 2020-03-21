@@ -1,3 +1,5 @@
 node_modules
 config/config.json1
 .vscode
+.env
+.env.template

@@ -1,7 +1,5 @@
 # ecommerce_server
 
-# ecommerce_server
-
 **Register Admin**
 ----
   Returns json data about Admin.

@@ -8,7 +8,7 @@ switch(env) {
     require('dotenv').config({path:process.cwd() + '/.env.test'})
       break
   case 'production':
-    require('dotenv').config()
+    require('dotenv').config({path:process.cwd() + '/.env.production'})
 }
 
 module.exports = {

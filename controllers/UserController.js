@@ -27,7 +27,7 @@ class UserController {
                 let token = getToken(payload) ;
 
                 res.status(201).json({
-                    access_token : token
+                    token : token
                 })
             })
             .catch((err)=>{
@@ -60,7 +60,7 @@ class UserController {
                         let token = getToken(payload) ;
         
                         res.status(200).json({
-                            access_token : token
+                            token : token
                         })
                     } else {
                         let err = {

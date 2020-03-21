@@ -133,8 +133,6 @@ class ProductController {
                 next(err)
             })
     }
-
-
 }
 
 module.exports = ProductController

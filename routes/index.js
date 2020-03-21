@@ -4,6 +4,11 @@ const { UserController } = require('../controllers/UserControllers')
 const { ProductController } = require('../controllers/ProductController')
 const authentication = require('../middleware/authentication')
 
+//test connect
+router.get('/', (req, res) => {
+    res.send('Server is running')
+})
+
 //user route
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)

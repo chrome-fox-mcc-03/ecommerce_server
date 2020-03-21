@@ -97,6 +97,7 @@ describe('Product routes', () => {
             .end((err, res) => {
                 expect(err).toBe(null)
                 expect(res.status).toBe(200)
+                expect(res.body).toHaveProperty('result')
                 done()
             })
         })

@@ -1,5 +1,3 @@
-const { User } = require('./models')
-
 const express = require('express');
 const app = express();
 

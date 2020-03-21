@@ -7,7 +7,6 @@ const appError = require('../helpers/appError');
 class UserController {
     static register (req, res, next) {
         // post /register
-        // console.log("register route")
         let body = {
             email: req.body.email,
             password: req.body.password,

@@ -107,7 +107,6 @@ describe('user route', () => {
                     .post('/register')
                     .send(data)
                     .end((err, res) => {
-                        console.log(res.body);
                         expect(err).toBeNull();
                         expect(res.status).toBe(400);expect(res.body).toHaveProperty('message', 'bad request');
                         expect(res.body).toHaveProperty('errors', expect.any(Array));

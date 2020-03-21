@@ -5,7 +5,6 @@ const appPayload = require('../helpers/appPayload');
 
 class ProductController {
     static fetchAll(req, res, next) {
-        // console.log('product fetch');
         Product.findAll()
         .then(result => {
             res.status(200).json({
@@ -103,7 +102,6 @@ class ProductController {
                     .catch(next)
                 })
                 .catch(err => {
-                    console.log("fail to del id ", id)
                     next(err)
                 })
         } else {

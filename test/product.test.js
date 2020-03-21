@@ -27,7 +27,6 @@ beforeAll((done) => {
     // resolved with mocking register test :+1:
     User.create(user2)
         .then(result => {
-            // console.log(result)
             user2.id = result.id;
             user2.access_token = getToken(appPayload(result));
             done()
@@ -377,7 +376,6 @@ describe('product route', () => {
                         expect(res.body).toHaveProperty('price', product1.price);
                         expect(res.body).toHaveProperty('image_url', 'https://via.placeholder.com/150');
                         product1 = {...res.body}
-                        console.log(product1, "created")
                         done();
                     })
             })

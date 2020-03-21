@@ -2,7 +2,7 @@
   "name": "ecommerce_server",
   "version": "1.0.0",
   "description": "ecommerce server cms",
-  "main": "app.js",
+  "main": "bin/http.js",
   "scripts": {
     "test": "NODE_ENV=test jest --detectOpenHandles --runInBand",
     "dev": "NODE_ENV=development nodemon bin/http.js",

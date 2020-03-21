@@ -1,0 +1,50 @@
+[
+	{
+			"name": "Pisang Bakar",
+			"image_url": "https://hellosehat.com/wp-content/uploads/2017/04/shutterstock_733072618.jpg",
+			"price": 15000,
+			"stock": 17
+	},
+	{
+			"name": "Mie",
+			"image_url": "https://www.seriouseats.com/2018/11/20181113-homemade-ramen-noodles-vicky-wasik-32-1500x1125.jpg",
+			"price": 20000,
+			"stock": 10
+	},
+	{
+			"name": "Bebek CK",
+			"image_url": "https://awsimages.detik.net.id/community/media/visual/2018/01/12/a29dc951-83e0-41b4-a128-b3fa7459557d_169.jpeg?w=700&q=90",
+			"price": 17000,
+			"stock": 100
+	},
+	{
+			"name": "Cincang Daging",
+			"image_url": "https://www.nusantaratv.com/cdn/img/nusantaratv_750x_5df079a6e6c5e.jpg",
+			"price": 100000,
+			"stock": 1
+	},
+	{
+			"name": "Pizza",
+			"image_url": "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/dc23cd051d2249a5903d25faf8eeee4c/BFV36537_CC2017_2IngredintDough4Ways-FB.jpg",
+			"price": 10000,
+			"stock": 20
+	},
+	{
+			"name": "Es Krim",
+			"image_url": "https://i2.wp.com/klfoodie.com/wp-content/uploads/2019/12/35483179_2136247133283982_6921987981083410432_n.jpg?zoom=2.625&resize=382%2C253&ssl=1",
+			"price": 100000,
+			"stock": 10
+	},
+	{
+			"name": "Pulpen Pilot",
+			"image_url": "https://cf.shopee.co.id/file/931799d0e3501419c93d39872dae67eb",
+			"price": 100000,
+			"stock": 10
+	},
+	{
+			"name": "Nugget",
+			"image_url": "https://caramembuat.id/wp-content/uploads/2019/07/cara-membuat-nugget-ayam.jpg",
+			"price": 40000,
+			"stock": 10
+	}
+]

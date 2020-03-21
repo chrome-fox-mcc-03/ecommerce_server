@@ -377,4 +377,168 @@
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ error : "Internal Server Error" }`
 
+**CREATE**
+
+* **URL**
+
+    _/products_
+
+* **Method :**
+
+    `POST`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Data Params**
+
+  `{ 
+      "name": "Umama Hijab",
+      "image": file",
+      "price": "20000",
+      "stock": "20",
+      "CategoryId": "1"
+    }`
+
+* **Success Response :**
+
+  * **Code:** 201 <br />
+    **Content :** `
+    {
+        "id": 1,
+        "name": "Umama Hijab",
+        "img_url": "1584794201063S.png",
+        "price": 20000,
+        "stock": 20,
+        "CategoryId": 1,
+        "createdAt": "2020-03-21T12:36:41.102Z",
+        "updatedAt": "2020-03-21T12:36:41.102Z"
+    }`
+
+* **Error Response :**
+
+  * **Code:** 400 <br />
+    **Content:** `{ errors: 
+    [
+      "product name cannot be empty",
+      "product img_url cannot be empty",
+      "product price cannot be empty",
+      "product stock cannot be empty",
+      "product CategoryId cannot be empty",
+      "must be a non-negative number",
+    ] 
+    }`
+
+    OR
+
+  * **Code:** 401 <br />
+    **Content:** `{ error: "Unauthorized" }`
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+**UPDATE**
+
+* **URL**
+
+    _/products/:id_
+
+* **Method :**
+
+    `PUT`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Data Params**
+
+  `
+  { 
+      "name": "Umama Hijab",
+      "image": file",
+      "price": "20000",
+      "stock": "20",
+      "CategoryId": "1"
+    }
+   `
+
+* **Success Response :**
+
+  * **Code:** 200 <br />
+    **Content :** `{
+        "id": 1,
+        "name": "Umama Hijab",
+        "img_url": "1584794201063S.png",
+        "price": 20000,
+        "stock": 20,
+        "CategoryId": 1,
+        "createdAt": "2020-03-21T12:36:41.102Z",
+        "updatedAt": "2020-03-21T12:36:41.102Z"
+    }`
+
+* **Error Response :**
+
+  * **Code:** 400 <br />
+    **Content:** `{ errors: 
+    [
+      "product name cannot be empty",
+      "product img_url cannot be empty",
+      "product price cannot be empty",
+      "product stock cannot be empty",
+      "product CategoryId cannot be empty",
+      "must be a non-negative number",
+    ] 
+    }`
+
+    OR
+
+  * **Code:** 401 <br />
+    **Content:** `{ error: "Unauthorized" }`
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+**DELETE**
+
+* **URL**
+
+    _/products/:id_
+
+* **Method :**
+
+    `DELETE`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Success Response :**
+
+  * **Code:** 200 <br />
+    **Content :** `
+      {}
+    `
+
+* **Error Response :**
+
+  * **Code:** 401 <br />
+    **Content:** `{ error: "Unauthorized" }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
 

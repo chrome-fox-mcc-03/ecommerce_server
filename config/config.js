@@ -6,7 +6,6 @@ switch(env) {
       break
   case 'test':
     require('dotenv').config({path:process.cwd() + '/.env.test'})
-      break
 }
 
 module.exports = {

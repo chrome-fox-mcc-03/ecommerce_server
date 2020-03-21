@@ -1,5 +1,5 @@
 'use strict';
-
+//Default Password Admin = "tralala"
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -12,8 +12,8 @@ module.exports = {
           Email: 'Admin01@mail.com',
           Password: "$2a$05$XbJTk2P908pFY19dY0x2NO12S/DlaVqEmMU5.bazHdTbniYaFZ0Em",
           Role: "Admin",
-          createdAt: "2020-03-17 17:21:39.488+07",
-          updatedAt: "2020-03-17 17:21:39.488+07"
+          createdAt: "NOW()",
+          updatedAt: "NOW()"
         }], {});
   },
 
@@ -23,7 +23,7 @@ module.exports = {
       Return a promise to correctly handle asynchronicity.
 
       Example:
-      return queryInterface.bulkDelete('People', null, {});
-    */
+      */
+     return queryInterface.bulkDelete('Users', null, {});
   }
 };

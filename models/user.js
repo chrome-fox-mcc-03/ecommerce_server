@@ -31,8 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       Password: {
         type: DataTypes.STRING
       },
-      Role: DataTypes.STRING 
-    }, { 
+      Role: DataTypes.STRING,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE 
+    } , { 
       hooks:{
         beforeCreate(user, options) { 
           user.Password = encrypt(user.Password)

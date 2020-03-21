@@ -42,6 +42,7 @@ class Controller {
     static updateProduct(req, res, next) {
         let updateId = req.params.id
         let {Name, Image_Url, Price, Stock} = req.body
+        console.log(req.body, req.params.id)
         Product.update({
             Name,
             Image_Url,
@@ -56,6 +57,8 @@ class Controller {
                 let message = {
                     message: "Berhasil Update"
                 }
+                console.log('BERHASIL UPDATEEEEE')
+                console.log(result)
                 res.status(201).json(message)
             })
             .catch(function(err) {
@@ -77,6 +80,7 @@ class Controller {
                 let message = {
                     message: "Berhasil Delete"
                 }
+                console.log("BERHASIL DELETE")
                 res.status(201).json(message)
             })
             .catch(function(err) {

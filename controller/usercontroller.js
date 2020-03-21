@@ -10,7 +10,8 @@ class Controller {
                 let payload = {
                     Email: result.Email
                 }
-                
+                console.log('berhasil register')
+                console.log(payload)
                 res.status(201).json(payload)
             })
             .catch(function(err) {
@@ -38,7 +39,8 @@ class Controller {
                     let Access_Token = jwt.sign(payloads, process.env.SECRET)
                     let payload = {
                         "Access_Token": Access_Token,
-                        Email: result[0].Email
+                        Email: result[0].Email,
+                        Role: result[0].Role
                     }
                     res.status(200).json(payload)
                 }

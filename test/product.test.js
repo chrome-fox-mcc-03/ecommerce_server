@@ -238,7 +238,7 @@ describe('Product Router', () => {
                     .expect(401)
                     .end((err, res) => {
                         expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('msg', 'You cannot edit or add product to this store. Please contanct the owner.')
+                        expect(res.body).toHaveProperty('msg', 'You cannot remove or add product to this store. Please contanct the owner.')
                         done()
                     })
                 })

@@ -3,6 +3,8 @@
 const { User, Store } = require('../models/index')
 const { verifyPassword } = require('../helper/bcrypt')
 const jwt = require('jsonwebtoken')
+const {GoogleAuth, OAuth2Client} = require('google-auth-library')
+const client = new OAuth2Client(process.env.CLIENT_ID)
 
 class Controller {
 
@@ -30,41 +32,98 @@ class Controller {
                 msg: 'Password do not matches.'
             })
         }
-        Store.create(storeData)
-        .then(result => {
-            newStore.id = result.id
-            data.store_id = result.id
-            newStore.name = result.name
-        })
-        .then(id => {
-            return User.findOne({
+        if(data.role === 'Admin') {
+            Store.findOne({
                 where: {
-                    email: data.email
+                    name: storeData.name
                 }
             })
-        })
-        .then(result => {
-            if(result){
-                throw ({
-                    status: 400,
-                    msg: 'Email already been used.'
+            .then(result => {
+                if(result) {
+                    throw ({
+                        status: 400,
+                        msg: 'Store name already been used.'
+                    })
+                } 
+                else {
+                    return Store.create(storeData)
+                }
+            })
+            .then(result => {
+                newStore.id = result.id
+                data.store_id = result.id
+                newStore.name = result.name
+            })
+            .then(id => {
+                return User.findOne({
+                    where: {
+                        email: data.email
+                    }
                 })
-            }
-            else {
-                return User.create(data)
-            }
-        })
-        .then(result => {
-            const newUser = {
-                id: result.id,
-                name: result.name,
-                email: result.email,
-                store_name: storeData.name,
-                store_id: result.store_id
-            }
-            res.status(201).json(newUser)
-        })
-        .catch(next)
+            })
+            .then(result => {
+                if(result){
+                    throw ({
+                        status: 400,
+                        msg: 'Email already been used.'
+                    })
+                }
+                else {
+                    return User.create(data)
+                }
+            })
+            .then(result => {
+                const newUser = {
+                    id: result.id,
+                    name: result.name,
+                    email: result.email,
+                    store_name: storeData.name,
+                    store_id: result.store_id
+                }
+                res.status(201).json(newUser)
+            })
+            .catch(next)
+        } else {
+            Store.findOne({
+                where: {
+                    name: req.body.store_exist
+                }
+            })
+            .then(result => {
+                newStore.id = result.id
+                data.store_id = result.id
+                newStore.name = result.name
+            })
+            .then(id => {
+                return User.findOne({
+                    where: {
+                        email: data.email
+                    }
+                })
+            })
+            .then(result => {
+                if(result){
+                    throw ({
+                        status: 400,
+                        msg: 'Email already been used.'
+                    })
+                }
+                else {
+                    return User.create(data)
+                }
+            })
+            .then(result => {
+                const newUser = {
+                    id: result.id,
+                    name: result.name,
+                    email: result.email,
+                    store_name: storeData.name,
+                    store_id: result.store_id
+                }
+                res.status(201).json(newUser)
+            })
+            .catch(next)
+        }
     }
 
     static login(req, res, next){
@@ -76,9 +135,9 @@ class Controller {
             id: null,
             name: null,
             store_name: null,
-            img_url: null
+            img_url: null,
+            store_id: null
         }
-        console.log(data)
         User.findOne({
             where: {
                 email: data.email
@@ -102,6 +161,7 @@ class Controller {
                     dataToThrow.id = result.id
                     dataToThrow.name = result.name
                     dataToThrow.img_url = result.img_url
+                    dataToThrow.store_id = result.store_id
                     return Store.findOne({
                         where: {
                             id: result.store_id
@@ -115,13 +175,66 @@ class Controller {
             const token = jwt.sign({
                 id: dataToThrow.id
             }, process.env.SECRET_KEY)
-            res.status(201).json({token, name: dataToThrow.name, store_name: dataToThrow.store_name, img_url: dataToThrow.img_url})
+            res.status(201).json({
+                token, name: dataToThrow.name, 
+                store_name: dataToThrow.store_name, 
+                img_url: dataToThrow.img_url,
+                store_id: dataToThrow.store_id
+            })
         })
         .catch(next)
     }
 
     static googleLogin(req, res, next){
-        //oAuth
+        async function verify() {
+            const ticket = await client.verifyIdToken({
+                idToken: req.headers.user_token,
+                audience: process.env.CLIENT_ID
+            })
+            const payload = ticket.getPayload()
+            const email = payload.email
+            let dataToThrow = {
+                id: null,
+                name: null,
+                store_name: null,
+                img_url: null,
+                store_id: null
+            }
+            User.findOne({
+                where: {
+                    email: email
+                }
+            })
+            .then(result => {
+                if(result){
+                    dataToThrow.id = result.id
+                    dataToThrow.name = result.name
+                    dataToThrow.img_url = result.img_url
+                    dataToThrow.store_id = result.store_id
+                    return Store.findOne({
+                        where: {
+                            id: result.store_id
+                        }
+                    })
+                } else {
+                    res.status(200).json({email})
+                }
+            })
+            .then(result => {
+                dataToThrow.store_name = result.name
+                    const token = jwt.sign({
+                        id: dataToThrow.id
+                    }, process.env.SECRET_KEY)
+                    res.status(201).json({
+                        token, name: dataToThrow.name, 
+                        store_name: dataToThrow.store_name, 
+                        img_url: dataToThrow.img_url,
+                        store_id: dataToThrow.store_id
+                    })
+            })
+            .catch(next)
+        }
+        verify()
     }
 }
 

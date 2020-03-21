@@ -9,10 +9,10 @@ const authorization = require('../middlewares/authorization')
 
 router.post('/register', userController.register)
 router.post('/login', userController.login)
-// router.get('/oAuth', userController.googleLogin)
+router.post('/oAuth', userController.googleLogin)
+router.get('/store/:name', storeController.findStore)
 
 router.use(authentication)
-router.get('/store/:name', storeController.findStore)
 router.put('/store/:id', authorization.checkRole, storeController.editStore)
 router.use('/product', productRouter)
 

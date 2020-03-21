@@ -11,7 +11,8 @@ class Controller {
             category: req.body.category,
             store_id: req.params.storeId,
             description: req.body.description,
-            img_url: req.body.img_url
+            img_url: req.body.img_url,
+            highlighted: req.body.highlighted
         }
         Product.create(data)
         .then(result => {
@@ -49,7 +50,7 @@ class Controller {
             }
         })
         .then(result => {
-            res.status(200)
+            res.status(200).json({msg: 'ok'})
         })
         .catch(next)
     }
@@ -58,14 +59,15 @@ class Controller {
         Product.findAll({
             where: {
                 store_id: req.params.storeId
-            }
+            },
+            order: ['id']
         })
         .then(results => {
             if(results[0]){
-                res.status(200).json({data:result})
+                res.status(200).json({data:results})
             }
             else{
-                res.status(200).son({data:null})
+                res.status(200).json({data:null})
             }
         })
         .catch(next)
@@ -86,6 +88,21 @@ class Controller {
             else res.status(200).json({data:null})
         })
         .catch(next)
+    }
+
+    static getProductById(req, res, next) {
+        console.log(req.params.id)
+        Product.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(result => {
+            if(result) {
+                res.status(200).json(result)
+            }
+        })
+        .catch(next => console.log(next))
     }
 }
 

@@ -21,7 +21,7 @@ module.exports = {
                 if(result.role !== 'Admin'){
                     throw({
                         status: 401,
-                        msg: 'You cannot edit or add product to this store. Please contanct the owner.'
+                        msg: 'You cannot remove or add product to this store. Please contanct the owner.'
                     })
                 }
                 else{

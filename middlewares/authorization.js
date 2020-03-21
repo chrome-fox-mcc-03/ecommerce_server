@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const notFound = "User Not Found!";
 const unAuthorize = "You are unauthorize!";
+const CustomError = require('../helpers/customError');
 
 function authorization(req, res, next) {
     let userId = req.userId;

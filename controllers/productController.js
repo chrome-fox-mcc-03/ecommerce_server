@@ -4,9 +4,13 @@ const notFound = "Product Not Found!";
 
 class Controller {
     static get(req, res, next) {
-        Product.findAll()
+        Product.findAll({
+            order: [
+                ['updatedAt', 'DESC']
+            ],
+        })
             .then((result) => {
-                if (result) {
+                if (result.length) {
                     res.status(200).json({ data: result })
                 } else {
                     throw new CustomError(404, notFound)

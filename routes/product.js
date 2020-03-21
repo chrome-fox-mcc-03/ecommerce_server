@@ -4,10 +4,10 @@ const authentication = require('../middlewares/authentication');
 const authorization = require('../middlewares/authorization');
 
 
+router.use(authentication)
 router.get('/', ProductController.get)
 router.get('/:id', ProductController.getById)
 
-router.use(authentication)
 
 router.post('/', authorization, ProductController.create)
 router.put('/:id', authorization, ProductController.update)

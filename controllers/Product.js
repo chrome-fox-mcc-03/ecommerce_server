@@ -6,7 +6,8 @@ class Controller {
         Product.findAll({
             where: {
                 AdminId: id
-            }
+            },
+            order: [['id', 'ASC']]
         })
             .then(products => {
                 res.status(200).json(products)
@@ -49,8 +50,8 @@ class Controller {
                 })
             })
             .then(response => {
-                const { name, price, stock, image_url, genre } = response
-                res.status(200).json({ name, price, stock, image_url, genre })
+                const { name, price, stock, image_url, genre, id } = response
+                res.status(200).json({ name, price, stock, image_url, genre, id })
             })
             .catch(err => next(err))
     }

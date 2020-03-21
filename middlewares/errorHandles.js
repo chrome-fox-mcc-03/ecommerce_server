@@ -11,7 +11,8 @@ module.exports = function (err, req, res, next) {
             case 'SequelizeConnectionError':
                 res.status(500).json(err)
                 break
-            default:                
+            default:
+                console.log(err)
                 res.status(500).json(err)
                 break;
         }   

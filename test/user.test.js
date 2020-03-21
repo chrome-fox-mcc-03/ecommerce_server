@@ -1,6 +1,6 @@
 const request = require('supertest')
 const app= require('../app')
-const { sequelize } = require('../models/index')
+const { sequelize, User } = require('../models/index')
 const { queryInterface } = sequelize
 
 let register = {
@@ -9,20 +9,9 @@ let register = {
     password: 'hacktiv8',
     role: 'admin'
 }
-let login ={
-    email: 'xavier@gmail.com',
-    password: 'hacktiv8',
-    name: 'Xavier',
-    role: 'admin'
-}
 
 describe('User routes', () => {
     describe('POST /user/register', () => {
-        beforeEach((done) => {
-            queryInterface.bulkDelete('Users', {})
-                .then(_ => done())
-                .catch(err => done(err))
-        })
         describe('success process', () => {
             test('should send an object (id, name, access_token), with status code 201', (done) => {
                 request(app)
@@ -39,6 +28,11 @@ describe('User routes', () => {
             })
         })
         describe('errors process', () => {
+            beforeEach((done) => {
+                queryInterface.bulkDelete('Users', {})
+                    .then(_ => done())
+                    .catch(err => done(err))
+            })
             test('should send an errors with status 400 because email format is wrong', (done) => {
                 const formatEmailWrong = { ...register, email: 'xavier.mail' }
                 request(app)
@@ -49,17 +43,6 @@ describe('User routes', () => {
                         expect(res.body).toHaveProperty('errors', expect.any(Array))
                         expect(res.body.errors).toContain('Invalid email format')
                         expect(res.body.errors.length).toBeGreaterThan(0)
-                        expect(res.status).toBe(400)
-                        done()
-                    })
-            })
-            test('should send an errors with status 400 because email is not unique', (done) => {
-                request(app)
-                    .post('/user/register')
-                    .send(register)
-                    .end((err, res) => {
-                        expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('error', 'Email already been used, try another email')
                         expect(res.status).toBe(400)
                         done()
                     })
@@ -123,16 +106,36 @@ describe('User routes', () => {
         })
     })
     describe('POST /user/login', () => {
+        let data = {
+            name: 'Xavier',
+            email: 'xavier@x.com',
+            password: 'hacktiv8',
+            role: 'admin'
+        }
+        beforeAll(done => {
+            User.create(data)
+                .then(_ => done())
+                .catch(err => done(err))
+        })
+        afterAll(done => {
+            User.destroy({
+                where: {
+                    email: data.email
+                }
+            })
+                .then(_ => done())
+                .catch(err => done(err))
+        })
         describe('success process', () => {
             test('should send an object (id, name, access_token), with status code 200', (done) => {
                 request(app)
                     .post('/user/login')
-                    .send(login)
+                    .send(data)
                     .end((err, res) => {
                         expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('name', login.name)
+                        expect(res.body).toHaveProperty('name', data.name)
                         expect(res.body).toHaveProperty('id', expect.any(Number))
-                        expect(res.body).toHaveProperty('role', login.role)
+                        expect(res.body).toHaveProperty('role', data.role)
                         expect(res.status).toBe(200)
                         done()
                     })
@@ -140,7 +143,7 @@ describe('User routes', () => {
         })
         describe('error process', () => {
             test('should send an error with status 400 because password is wrong', (done) => {
-                const passwordWrong = {...login, password: '1234'}
+                const passwordWrong = {...data, password: '1234'}
                 request(app)
                     .post('/user/login')
                     .send(passwordWrong)
@@ -152,7 +155,7 @@ describe('User routes', () => {
                     })
             })
             test('should send an error with status 400 because email is wrong', (done) => {
-                const emailWrong = {...login, email: 'xavier@mail.com'}
+                const emailWrong = {...data, email: 'xavier@mail.com'}
                 request(app)
                     .post('/user/login')
                     .send(emailWrong)

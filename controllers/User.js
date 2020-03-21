@@ -20,7 +20,7 @@ class Controller{
         })
             .then(user => {
                 if(user) {
-                    next({
+                    throw ({
                         status: 400,
                         message: {
                             error: 'Email already been used, try another email'
@@ -54,7 +54,7 @@ class Controller{
                 if (user && comparePassword(password, user.password)) {
                     const { id, name, email,role } = user
                     const access_token = getToken({ id, name, email })
-                    res.status(201).json({ id, name, role, access_token })
+                    res.status(200).json({ id, name, role, access_token })
                 } else {
                     next({
                         status: 400,

@@ -6,10 +6,17 @@ switch (env) {
   case 'test':
     require('dotenv').config({path: process.cwd() + '/.env.test'})
     break;
+  case 'production':
+    require('dotenv').config({path: process.cwd() + 'use_env_variable'})
+    break;
   default:
     break;
 }
 
 module.exports = {
-  "use_env_variable": "DATABASE_URL"
+  "username": process.env.DB_USER,
+  "password": process.env.DB_PASSWORD,
+  "database": process.env.DB_NAME,
+  "host": process.env.DB_HOST,
+  "dialect": process.env.DB_DIALECT,
 }

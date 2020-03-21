@@ -1,4 +1,4 @@
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV || 'development'
 
 switch (env) {
   case 'development':
@@ -14,5 +14,5 @@ module.exports = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
-  dialect: process.env.DIALECT
+  dialect: process.env.DB_DIALECT
 }

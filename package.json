@@ -4,6 +4,7 @@
   "description": "**Register**\r ----\r * **URL**",
   "main": "index.js",
   "scripts": {
+    "start": "set NODE_ENV=production&&node bin/http.js",
     "test": "set NODE_ENV=test&&jest --detectOpenHandles",
     "dev": "set NODE_ENV=development&&nodemon bin/http.js"
   },

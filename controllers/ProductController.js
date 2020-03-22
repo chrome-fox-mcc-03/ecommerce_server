@@ -1,4 +1,4 @@
-const { Product, Category} = require('../models/index')
+const { Product, Category } = require('../models/index')
 const fs = require('fs');
 const axios = require('axios')
 class ProductController {
@@ -24,7 +24,11 @@ class ProductController {
                     }
                     Product.create(product)
                         .then(result => {
-                            res.status(201).json({ product: result, msg: 'Product created!' })
+                            Product.findByPk(result.id, { include: [Category] })
+                                .then(product => {
+                                    res.status(201).json({ product, msg: 'Product created!' })
+                                })
+                                .catch(next)
                         })
                         .catch(next)
                 })
@@ -33,7 +37,7 @@ class ProductController {
     }
 
     static findAll(req, res, next) {
-        Product.findAll({include: [Category]})
+        Product.findAll({ include: [Category] })
             .then(result => {
                 res.status(200).json({ products: result })
             })
@@ -73,7 +77,11 @@ class ProductController {
                     }
                     Product.update(product, { where: { id }, returning: true })
                         .then(result => {
-                            res.status(200).json({ product: result[1][0], msg: 'Product updated!' })
+                            Product.findByPk(id, { include: [Category] })
+                                .then(product => {
+                                    res.status(200).json({ product, msg: 'Product updated!' })
+                                })
+                                .catch(next)
                         })
                         .catch(next)
                 })

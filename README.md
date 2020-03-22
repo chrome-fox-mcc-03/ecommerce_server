@@ -17,3 +17,7 @@ Seed the data in the seeders folder first in order to inject admin to the server
 
 - email : bbb@gmail.com
 - password : bbb
+
+## Heroku
+
+https://dry-sea-66434.herokuapp.com/

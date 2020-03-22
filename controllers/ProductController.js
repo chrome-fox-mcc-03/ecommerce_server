@@ -1,27 +1,41 @@
 const { Product } = require('../models/index')
-
+const fs = require('fs');
+const axios = require('axios')
 class ProductController {
 
     static create(req, res, next) {
-        console.log(req.file, 'INI FILE')
-        const product = {
-            name: req.body.name,
-            img_url: req.file.filename,
-            price: req.body.price,
-            stock: req.body.stock,
-            CategoryId: req.body.CategoryId
+        if (!req.file) {
+            next({ name: 'imagenotfound' })
+        } else {
+            const options = {
+                headers: { Authorization: `Client-ID ${process.env.CLIENT_ID}` }
+            }
+            const image = fs.readFileSync(req.file.path, { encoding: 'base64' });
+            axios
+                .post('https://api.imgur.com/3/image', image, options)
+                .then(response => {
+
+                    const product = {
+                        name: req.body.name,
+                        img_url: response.data.data.link,
+                        price: +req.body.price,
+                        stock: +req.body.stock,
+                        CategoryId: +req.body.CategoryId
+                    }
+                    Product.create(product)
+                        .then(result => {
+                            res.status(201).json({ product: result, msg: 'Product created!' })
+                        })
+                        .catch(next)
+                })
+                .catch(next)
         }
-        Product.create(product)
-            .then(result => {
-                res.status(201).json({ product: result, msg:'Product created!' })
-            })
-            .catch(next)
     }
 
     static findAll(req, res, next) {
         Product.findAll()
             .then(result => {
-                res.status(200).json({ products: result})
+                res.status(200).json({ products: result })
             })
             .catch(next)
     }
@@ -43,13 +57,26 @@ class ProductController {
         const id = req.params.id
         let product
         if (req.file) {
-            product = {
-                name: req.body.name,
-                img_url: req.file.filename,
-                price: +req.body.price,
-                stock: +req.body.stock,
-                CategoryId: req.body.CategoryId
+            const options = {
+                headers: { Authorization: `Client-ID ${process.env.CLIENT_ID}` }
             }
+            const image = fs.readFileSync(req.file.path, { encoding: 'base64' });
+            axios
+                .post('https://api.imgur.com/3/image', image, options)
+                .then(response => {
+                    product = {
+                        name: req.body.name,
+                        img_url: response.data.data.link,
+                        price: +req.body.price,
+                        stock: +req.body.stock,
+                        CategoryId: +req.body.CategoryId
+                    }
+                    Product.update(product, { where: { id }, returning: true })
+                        .then(result => {
+                            res.status(200).json({ product: result[1][0], msg: 'Product updated!' })
+                        })
+                        .catch(next)
+                })
         } else {
             product = {
                 name: req.body.name,
@@ -57,13 +84,13 @@ class ProductController {
                 stock: +req.body.stock,
                 CategoryId: req.body.CategoryId
             }
+            Product.update(product, { where: { id }, returning: true })
+                .then(result => {
+                    res.status(200).json({ product: result[1][0], msg: 'Product updated!' })
+                })
+                .catch(next)
         }
 
-        Product.update(product, { where: { id }, returning: true })
-            .then(result => {
-                res.status(200).json({ product: result[1][0] , msg: 'Product updated!'})
-            })
-            .catch(next)
     }
 
 
@@ -71,7 +98,7 @@ class ProductController {
         const { id } = req.params
         Product.destroy({ where: { id } })
             .then(result => {
-                res.status(200).json({msg: 'Product deleted!'})
+                res.status(200).json({ msg: 'Product deleted!' })
             })
             .catch(next)
     }

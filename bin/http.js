@@ -7,6 +7,9 @@ switch (env) {
   case 'test':
     require('dotenv').config({path: process.cwd() + '/.env.test'})
       break
+  case 'production':
+    require('dotenv').config({path: process.cwd() + '/.env'})
+      break
 }
 
 const app = require('../app')

@@ -3,6 +3,7 @@ const { Product } = require('../models/index')
 class ProductController {
 
     static create(req, res, next) {
+        console.log(req.file, 'INI FILE')
         const product = {
             name: req.body.name,
             img_url: req.file.filename,

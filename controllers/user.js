@@ -41,7 +41,8 @@ class UserController {
                     email: result.email
                 })
                     res.status(200).json({
-                        token
+                        token,
+                        role: result.role
                     })
                 } else {
                     next({

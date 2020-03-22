@@ -157,16 +157,17 @@ describe('User Routes', () => {
 
     describe('POST /login', () => {
         describe('Success process login', () => {
-          test('it should return access token and status 201', (done) => {
+          test('it should return access token, role and status 201', (done) => {
             request(app)
               .post('/login')
               .send({
                 email: 'faa@mail.com',
                 password: '123456'
               })
-              .end((err, response) => {    
+              .end((err, response) => {
                 expect(err).toBe(null)                                                             
                 expect(response.body).toHaveProperty('token', expect.any(String))
+                expect(response.body.role === 'customer' || response.body.role === 'admin').toBe(true)
                 expect(response.status).toBe(200)
                 done()
               })

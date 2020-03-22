@@ -69,7 +69,8 @@ Add a new user to sign up
   * **Content:**
     ```javascript
     { 
-      "token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidWxmYUBtYWlsLmNvbSIsImlhdCI6MTU4NDQyMjc4Nn0.ClB3bSC9FQpGBhwOItswZMpRQVOa0o6sLYYgk6vOVK8' 
+      "token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoidWxmYUBtYWlsLmNvbSIsImlhdCI6MTU4NDQyMjc4Nn0.ClB3bSC9FQpGBhwOItswZMpRQVOa0o6sLYYgk6vOVK8',
+      "role": 'customer'
     }
     ````
     OR
@@ -84,6 +85,7 @@ Add a new user to sign up
     ```
 
 ## **Create**
+Add a new product
 
 * **URL**
 
@@ -132,6 +134,7 @@ Add a new user to sign up
     ```
 
 ## **DELETE**
+Delete a product
 
 * **URL**
 
@@ -170,6 +173,7 @@ Add a new user to sign up
     ```
 
 ## **Update**
+Edit a product
 
 * **URL**
 
@@ -183,6 +187,10 @@ Add a new user to sign up
   **Required**
 
   `token`
+
+* **Data Params**
+
+  `id=[integer]`
 
 * **Data Body**
 
@@ -219,6 +227,7 @@ Add a new user to sign up
 
 
 ## **Find One**
+Find a product
 
 * **URL**
 
@@ -262,6 +271,7 @@ Add a new user to sign up
     ```
 
 ## **Find All**
+Show all products
 
 * **URL**
 
@@ -297,19 +307,7 @@ Add a new user to sign up
           image_url:
           'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
           price: 23000,
-          stock: 1 },
-        { id: 3,
-          name: 'How to Win Friends and Influence People',
-          image_url:
-          'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
-          price: 25000,
-          stock: 1 },
-        { id: 4,
-          name: 'How to Win Friends and Influence People',
-          image_url:
-          'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
-          price: 25000,
-          stock: 1 } 
+          stock: 1 }
         ]
     }
     ````

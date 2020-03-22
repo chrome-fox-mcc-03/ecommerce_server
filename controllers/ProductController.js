@@ -1,4 +1,4 @@
-const { Product } = require('../models/index')
+const { Product, Category} = require('../models/index')
 const fs = require('fs');
 const axios = require('axios')
 class ProductController {
@@ -33,7 +33,7 @@ class ProductController {
     }
 
     static findAll(req, res, next) {
-        Product.findAll()
+        Product.findAll({include: [Category]})
             .then(result => {
                 res.status(200).json({ products: result })
             })

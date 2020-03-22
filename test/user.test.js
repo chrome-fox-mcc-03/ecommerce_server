@@ -18,6 +18,7 @@ let data = {
   username: "fadhilahxyz"
 };
 
+
 describe("User routes", () => {
   beforeAll(done => {
     queryInterface

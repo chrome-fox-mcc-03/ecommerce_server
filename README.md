@@ -117,7 +117,7 @@
 
 * **URL**
 
-  http://localhost:3000/admin/product
+  http://localhost:3000/product
 
 * **Method:**
   
@@ -201,7 +201,7 @@
 
 * **URL**
 
-  http://localhost:3000/admin/product
+  http://localhost:3000/product
 
 * **Method:**
   
@@ -256,7 +256,7 @@
 
 * **URL**
 
-  http://localhost:3000/admin/product/:id
+  http://localhost:3000/product/:id
 
 * **Method:**
   
@@ -347,7 +347,7 @@
 
 * **URL**
 
-  http://localhost:3000/admin/product/:id
+  http://localhost:3000/product/:id
 
 * **Method:**
   
@@ -405,7 +405,7 @@
 
 * **URL**
 
-  http://localhost:3000/admin/product/:id
+  http://localhost:3000/product/:id
 
 * **Method:**
   

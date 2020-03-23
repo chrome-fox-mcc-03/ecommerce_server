@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const admin = require('./admin')
+const admin = require('./user')
 const product = require('./product')
 const { isLogin } = require('../middlewares/authentication')
 
-router.use('/admin', admin)
+router.use('/', admin)
 router.use(isLogin)
 router.use('/admin/product', product)
 

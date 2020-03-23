@@ -243,11 +243,6 @@
 
     OR
 
-  * **Code:** 403 FORBIDDEN <br />
-    **Content:** `{ message : "this  action for admin only!" }`
-
-    OR
-
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ message : "Internal Server Error" }`
 
@@ -444,11 +439,6 @@
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ message : "please login first!" }`
-
-    OR
-
-  * **Code:** 403 FORBIDDEN <br />
-    **Content:** `{ message : "this  action for admin only!" }`
 
     OR
 

@@ -46,6 +46,24 @@ module.exports = (sequelize, DataTypes) => {
           msg : 'Stock cannot be empty'
         }
       }
+    },
+    category: {
+      type : DataTypes.INTEGER,
+      allowNull : false,
+      validate: {
+        notNull : {
+          args : true,
+          msg : 'Category cannot be empty'
+        },
+        notEmpty : {
+          args : true,
+          msg : 'Category cannot be empty'
+        },
+        isIn: {
+          args: [['food and beverages', 'electronic', 'fashion', 'hobby', 'automotive', 'others']],
+          msg: 'Category is not valid'
+        }
+      }
     }
 
   },{

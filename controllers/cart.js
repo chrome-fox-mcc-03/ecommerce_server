@@ -36,7 +36,8 @@ class CartController {
         Cart.findAll({
             where: {
                 UserId: req.currentUserId
-            }
+            },
+            order: [['updatedAt', 'DESC']]
         })
             .then(carts => {
                 res.status(200).json(carts)
@@ -74,6 +75,36 @@ class CartController {
         })
             .then(carts => {
                 res.status(200).json(carts[1][0])
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static delete(req, res, next) {
+        let cartId = req.params.cartId;
+        let deletedCart;
+        Cart.findByPk(cartId)
+            .then(cart => {
+                if (cart) {
+                    deletedCart = cart
+                    Cart.destroy({
+                        where: {
+                            id: cartId
+                        }
+                    })
+                        .then(() => {
+                            res.status(200).json(deletedCart)
+                        })
+                        .catch(err => {
+                            next(err)
+                        })
+                } else {
+                    next({
+                        status: 404,
+                        message: 'Cart not found'
+                    })
+                }
             })
             .catch(err => {
                 next(err)

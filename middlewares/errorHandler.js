@@ -1,5 +1,5 @@
 module.exports = function(err, req, res, next) {
-  console.log(err)
+  // console.log(err)
   switch (err.name) {
     case "SequelizeValidationError":
       const error = err.errors.map(el => el.message)

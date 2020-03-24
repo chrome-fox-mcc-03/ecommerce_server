@@ -6,9 +6,9 @@ const Authentication = require('../middlewares/authentication')
 const Authorization = require('../middlewares/authorization')
 
 router.post('/register', User.register)
-router.post('/login', User.login)
+router.post('/login', User.login)  // User.login
 
-router.use(Authentication)
+// router.use(Authentication)
 
 router.get('/catalogues', Product.findAll)
 router.post('/catalogues', Product.create)

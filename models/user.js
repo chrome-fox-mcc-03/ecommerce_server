@@ -13,52 +13,56 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: {
         args: true,
-        message: "Please use another mail"
+        msg: "Please use another mail"
       },
-      validation: {
+      validate: {
         isEmail: {
           args: true,
-          message: "Please use Email format"
+          msg: "Please use Email format"
         },
         notNull: {
           args: true,
-          message: "Please fill this email"
+          msg: "Please fill this email"
         },
         notEmpty: {
           args: true,
-          message: "Please fill this email"
+          msg: "Please fill this email"
         },
         notContains: {
           args: ' ',
-          message: 'Please use Email format'
+          msg: 'Please use Email format'
         }
       }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           args: true,
-          message: "Please fill this password field"
+          msg: "Please fill this password field"
+        },
+        notEmpty: {
+          args: true,
+          msg: "Please fill this password field"
         },
         len: {
           args: [5],
-          message: "Minimum length is 5"
+          msg: "Minimum length is 5"
         },
       }
     },
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           args: true,
-          message: "Please fill this role"
+          msg: "Please fill this role"
         },
         notEmpty: {
           args: true,
-          message: "Please fill this role"
+          msg: "Please fill this role"
         },
       }
     }
@@ -72,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   User.associate = function(models) {
     // associations can be defined here
-    User.hasOne(models.Cart)
+    // User.hasOne(models.Cart)
   };
   return User;
 };

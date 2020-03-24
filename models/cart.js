@@ -13,14 +13,14 @@ module.exports = (sequelize, DataTypes) => {
     UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           args: true,
-          message: "Needed UserID to bind Carts"
+          msg: "Needed UserID to bind Carts"
         },
         notEmpty: {
           args: true,
-          message: "Needed UserID to bind Carts"
+          msg: "Needed UserID to bind Carts"
         },
       }
     }
@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Cart.associate = function(models) {
     // associations can be defined here
-    Cart.hasMany(models.Product)
+    // Cart.hasMany(models.Product)
+    // Cart.belongsTo(models.User)
   };
   return Cart;
 };

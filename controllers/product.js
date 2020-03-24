@@ -2,6 +2,8 @@ const { Product } = require('../models')
 
 module.exports = class Controller{
   static create(req, res, next) {
+    console.log(req.body);
+    
     Product.create({
       name: req.body.name,
       img_url: req.body.img_url,
@@ -12,21 +14,21 @@ module.exports = class Controller{
       .then(data => {
         res.status(201).json(data)
       })
-      .err(err => next(err))
+      .catch(err => next(err))
   }
 
   static findAll(req, res, next) {
     Product.findAll({order: [['id', 'ASC']]})
       .then(data => {
-        let result = []
-        data.forEach(el => result.push({
-          name: el.name,
-          img_url: el.img_url,
-          price: el.price,
-          stock: el.stock,
-          category: el.category
-        }))
-        res.status(200).json(result)
+        // let result = []
+        // data.forEach(el => result.push({
+        //   name: el.name,
+        //   img_url: el.img_url,
+        //   price: el.price,
+        //   stock: el.stock,
+        //   category: el.category
+        // }))
+        res.status(200).json(data)
       })
       .catch(err => next(err))
   }

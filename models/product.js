@@ -13,50 +13,50 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           args: true,
-          message: "Please fill this name of product"
+          msg: "Please fill this name of product"
         },
         notEmpty: {
           args: true,
-          message: "Please fill this name of product"
+          msg: "Please fill this name of product"
         },
       }
     },
     img_url: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
+      validate: {
         isUrl: {
           args: true,
-          message: "Please use URL link"
+          msg: "Please use URL link"
         },
         notNull: {
           args: true,
-          message: "Please fill this URL link for picture"
+          msg: "Please fill this URL link for picture"
         },
         notEmpty: {
           args: true,
-          message: "Please fill this URL link for picture"
+          msg: "Please fill this URL link for picture"
         },
         notContains: {
           args: ' ',
-          message: 'Please use URL format'
+          msg: 'Please use URL format'
         }
       }
     },
     price: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           args: true,
-          message: "Please fill the Product's price"
+          msg: "Please fill the Product's price"
         },
         notEmpty: {
           args: true,
-          message: "Please fill the Product's price"
+          msg: "Please fill the Product's price"
         },
       }
     },
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {sequelize, modelName: "Product"})
   Product.associate = function(models) {
     // associations can be defined here
-    Product.belongsTo(models.Cart)
+    // Product.belongsTo(models.Cart)
   };
   return Product;
 };

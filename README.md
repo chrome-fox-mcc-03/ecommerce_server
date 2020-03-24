@@ -348,7 +348,7 @@
 
   * **Code:** 400 BAD REQUEST <br />
     **Content:** 
-    * `{ errors : ['Item name cannot empty', 'Item price cannot null', 'Item stock cannot null'] }`
+    * `{ errors : ['Item name cannot empty', 'Item price cannot be null' Price cannot be negative', 'Item stock cannot be null', 'Stock cannot be negative', 'Image path must URL] }`
 
   OR
 

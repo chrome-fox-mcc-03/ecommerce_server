@@ -8,5 +8,6 @@ router.post("/login", CustomerController.login)
 
 router.use(customerAuthenticator)
 router.get("/shop", CustomerController.shop)
+router.get("/cart", CustomerController.cart)
 
 module.exports = router

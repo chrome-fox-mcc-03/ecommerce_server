@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const { sequelize, Customer } = require('../models');
+const { sequelize, Customer, Cart } = require('../models');
 const { queryInterface } = sequelize;
 const { getToken } = require('../helpers/jwt')
 const appPayload = require('../helpers/appPayload')
@@ -32,6 +32,11 @@ beforeAll(done => {
       customer2.id = customer.id
       customer2.avaurl = customer.avaurl
       customer2.name = customer.name
+      return Cart.create({
+        CustomerId: customer2.id
+      })
+    })
+    .then(_ => {
       done()
     })
     .catch(err => done(err))
@@ -310,6 +315,62 @@ describe('customer route', () => {
             expect(res.status).toBe(200)
             expect(res.body).toHaveProperty('products', expect.any(Array))
             expect(res.body.products.length).toBe(20)
+            expect(res.body.products[0]).toHaveProperty('seller', expect.any(String))
+            done()
+          })
+      })
+    })
+  })
+  // describe('customer add item to cart', () => {})
+  describe('customer fetch cart', () => {
+    describe('customer fetch error', () => {
+      test('user token nonexist', (done) => {
+        request(app)
+          .get("/customer/cart")
+          .set({
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'token not found')
+            done()
+          })
+      })
+      test('invalid user token', (done) => {
+        let invalidToken = {}
+        invalidToken.token = "wrong token"
+        request(app)
+          .get("/customer/cart")
+          .set({
+            token: invalidToken.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'invalid token')
+            done()
+          })
+      })
+    })
+    describe('customer fetch success', () => {
+      test('valid user token', (done) => {
+        let validUser = {...customer2}
+        request(app)
+          .get("/customer/cart")
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(200)
+            expect(res.body).toHaveProperty('cartItems', expect.any(Array))
+            if (res.body.cartItems.length > 0) {
+              expect(res.body.cartItems[0]).toHaveProperty('name', expect.any(String))
+              expect(res.body.cartItems[0]).toHaveProperty('quantity', expect.any(Number))
+              expect(res.body.cartItems[0]).toHaveProperty('seller', expect.any(String))
+              expect(res.body.cartItems[0]).toHaveProperty('stock', expect.any(Number))
+              expect(res.body.cartItems[0]).toHaveProperty('price', expect.any(Number))
+            }
             done()
           })
       })

@@ -1,6 +1,6 @@
-const { sequelize, Customer, Product, User, Cart } = require('../models')
+const { sequelize, Customer, Product, User, Cart, CartProducts } = require('../models')
 const { Sequelize } = sequelize
-const { getToken } = require('../helpers/jwt')
+const { getToken, getPayload } = require('../helpers/jwt')
 const { compareHash } = require('../helpers/bcrypt')
 const appPayload = require('../helpers/appPayload')
 const appError = require('../helpers/appError')
@@ -88,6 +88,7 @@ class CustomerController {
         let products = []
         result.forEach(item => {
           let product = {
+            id: item.id,
             name: item.name,
             price: item.price,
             stock: item.stock,
@@ -103,7 +104,50 @@ class CustomerController {
       .catch(next)
   }
   static cart(req, res, next) {
-    res.status(200).json('cart')
+    // res.status(200).json('cart')
+    const token = req.headers.token
+    const { id } = getPayload(token)
+    Cart.findOne({
+      where: {
+        CustomerId: id
+      }
+    })
+      .then(result => {
+        const CartId = result.dataValues.id
+        return CartProducts.findAll({
+          where: {
+            CartId,
+            quantity: {[gt]: 0}
+          },
+          include: [
+            { 
+              model: Product,
+              include: [ User ]
+            }
+          ]
+        })
+      })
+      .then(result => {
+        console.log(result)
+        let cartItems = []
+        result.forEach(item => {
+          let cartItem = {
+            name: item.Product.name,
+            quantity: item.quantity,
+            seller: item.Product.User.email.split('@')[0],
+            stock: item.Product.stock,
+            price: item.Product.price
+          }
+          cartItems.push(cartItem)
+        })
+        res.status(200).json({
+          cartItems
+        })
+      })
+      .catch(err => {
+        // console.log(err)
+        next(err)
+      })
   }
   static appendToCart(req, res, next) {
     res.status(200).json('append item to cart')

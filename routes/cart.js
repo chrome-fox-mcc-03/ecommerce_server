@@ -5,7 +5,7 @@ const authentication = require ('../middlewares/authentication') ;
 
 router.use(authentication)
 router.get('/', CartController.findAllActive)
-// router.post('/', CartController.createCart)
+router.post('/', CartController.addToCart)
 
 // router.put('/:id', authorizationUser, CartController.editCart)
 // router.delete('/:id', authorizationUser, CartController.deleteCart)

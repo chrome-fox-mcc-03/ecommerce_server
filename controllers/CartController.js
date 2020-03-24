@@ -2,7 +2,7 @@ const { sequelize, Product, Cart } = require('../models');
 
 class CartController {
   static findCurrentItems(req, res, next) {
-    const id = req.currentUserId;
+    const id = req.UserId;
     Cart.findAll({
       where: {
         UserId: id,
@@ -22,7 +22,7 @@ class CartController {
   }
 
   static history(req, res, next) {
-    const id = req.currentUserId;
+    const id = req.UserId;
     Cart.findAll({
       where: {
         UserId: id,
@@ -41,7 +41,7 @@ class CartController {
   }
 
   static create(req, res, next) {
-    const UserId = req.currentUserId;
+    const UserId = req.UserId;
     const { status, quantity, ProductId } = req.body;
     let productName = '';
 
@@ -66,7 +66,7 @@ class CartController {
   }
 
   static update(req, res, next) {
-    const UserId = req.currentUserId;
+    const UserId = req.UserId;
     const cartId = req.params.id;
     const { ProductId, status, quantity } = req.body;
 
@@ -109,7 +109,7 @@ class CartController {
 
   static checkout(req, res, next) {
     const { carts } = req.body;
-    const UserId = req.currentUserId;
+    const UserId = req.UserId;
 
     sequelize.transaction(t => {
       const promises = [];

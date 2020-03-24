@@ -67,6 +67,7 @@ module.exports = (sequelize, DataTypes) => {
   })
   Customer.associate = function(models) {
     // associations can be defined here
+    Customer.hasOne(models.Cart)
   };
   return Customer;
 };

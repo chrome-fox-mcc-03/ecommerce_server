@@ -1,4 +1,4 @@
-const { Cart, sequelize } = require('../models')
+const { Cart, sequelize, Product } = require('../models')
 
 class CartController {
     static add(req, res, next) {
@@ -37,7 +37,8 @@ class CartController {
             where: {
                 UserId: req.currentUserId
             },
-            order: [['updatedAt', 'DESC']]
+            order: [['updatedAt', 'DESC']],
+            include: [Product]
         })
             .then(carts => {
                 res.status(200).json(carts)

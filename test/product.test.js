@@ -135,7 +135,6 @@ describe('Product routes', () => {
                 .set('token',token)
                 .send(errorName)
                 .end((err,res) => {
-                    console.log(res.body)
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty('message',expect.any(Array))
                     done()
@@ -165,7 +164,6 @@ describe('Product routes', () => {
                 .delete(`/product/2`)
                 .set('token',token)
                 .end((err,res) => {
-                    console.log(res.body)
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty('message', expect.any(String))
                     expect(res.body).toHaveProperty('status',expect.any(Number))

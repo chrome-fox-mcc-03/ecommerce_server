@@ -2,7 +2,6 @@ module.exports = function (err, req, res, next) {
     let status;
     let message;
     let errors = []
-    console.log( 'ini error handler')
     switch (err.name) {
         case 'SequelizeValidationError':
             errors = []
@@ -45,6 +44,15 @@ module.exports = function (err, req, res, next) {
             }
             break;
         case 'authorization':
+            status = 403
+            errors = []
+            errors.push(err.msg.message)
+            message = {
+                message: 'Bad Request',
+                errors
+            }
+            break;
+        case 'cartAuthorization':
             status = 403
             errors = []
             errors.push(err.msg.message)

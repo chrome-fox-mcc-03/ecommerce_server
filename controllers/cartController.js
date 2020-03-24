@@ -16,7 +16,7 @@ class controller {
         })
             .then( CartUser => {
                 if(CartUser < 1){
-                      return CartItem.create({ quantity,
+                    return CartItem.create({ quantity,
                             ProductId,
                             isPaid,
                             Cart: { UserId }
@@ -35,7 +35,7 @@ class controller {
                             res.status(201).json(data)
                         })
                         .catch( err => {
-                            next(err)
+                            throw err
                         })
                 } else {
                     cartId = CartUser[0].CartId
@@ -55,7 +55,7 @@ class controller {
                 }
             })
             .then(result => {
-                if (!result) {
+                if (result === null) {
                     CartItem.create({
                             quantity,
                             ProductId,
@@ -70,7 +70,7 @@ class controller {
                         .catch(err => {
                             next(err)
                         })
-                } else {
+                } else if( result !== undefined) {
                     let nowQuantity = Number(result.quantity) + Number(quantity)
                     CartItem.update({
                             quantity: nowQuantity
@@ -87,6 +87,8 @@ class controller {
                         .catch(err => {
                             next(err)
                         })   
+                } else {
+                    next()
                 }
             })
         
@@ -112,7 +114,44 @@ class controller {
             })
     }
 
-    
+    static update(req, res, next) {
+        let CartItemId = req.params.id
+        let {quantity, isPaid} = req.body
+        if (isPaid !== true) isPaid = false
+        CartItem.update({
+            quantity,
+            isPaid
+        }, {
+            where: {
+                id: CartItemId
+            },
+            returning: true,
+            plain: true
+        })
+        .then( result =>{
+            res.status(200).json(result[1])
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static delete(req, res, next) {
+        let CartItemId = req.params.id
+        CartItem.destroy({
+            where: {
+                id: CartItemId
+            }
+        })
+        .then(result => {
+                res.status(200).json(result)
+        })
+        .catch(err => {
+                next(err)
+        })
+    }
+
+
 }
 
 module.exports = controller

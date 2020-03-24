@@ -56,6 +56,8 @@ class controller {
             }
             if(!result){
                 next(error)
+            } else if (result.role === 'Customer') {
+                next(error)
             } else {
                 let login = checkPassword(password, result.password)
                 if (login) {
@@ -65,7 +67,7 @@ class controller {
                     }
                     let token = tokenGenerate(payload)
                     res.status(200).json({
-                        'token': token
+                        'token': token,
                     })
                 } else {
                     next(error)

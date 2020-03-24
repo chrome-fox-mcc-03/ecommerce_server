@@ -5,7 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      User.hasMany(models.Cart)
+    }
   }
   User.init({
     email: {
@@ -62,8 +64,8 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (User, options) => {
         User.password = hashPassword(User.password)
-        if (User.role !== 'Super Admin') {
-          User.role = 'Admin'
+        if (User.role !== 'Super Admin' && User.role !== 'Admin') {
+          User.role = 'Customer'
         }
       }
     },

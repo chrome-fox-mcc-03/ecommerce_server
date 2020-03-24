@@ -22,6 +22,7 @@ module.exports = (req, res, next) => {
             }
         })
         .catch(err => {
+            console.log('here')
             next(err)
         })
 }

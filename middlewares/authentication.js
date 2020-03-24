@@ -20,7 +20,6 @@ module.exports = function (req, res, next) {
                     }
                 })
                 .then(result => {
-                    console.log(result, 'ini resuuult');
                     if (!result) {
                         next({
                             name: 'authentication',

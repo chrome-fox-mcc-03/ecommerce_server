@@ -16,6 +16,6 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
 
-    return queryInterface.removeConstraint('Carts', 'FK-productId-CartItems')
+    return queryInterface.removeConstraint('CartItems', 'FK-productId-CartItems')
   }
 };

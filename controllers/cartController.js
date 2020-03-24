@@ -19,12 +19,9 @@ class controller {
                       return CartItem.create({ quantity,
                             ProductId,
                             isPaid,
-                            Cart: {
-                                UserId
-                            }
-                            }, {
-                            include: [Cart]
-                            })
+                            Cart: { UserId }
+                            }, 
+                            { include: [Cart] })
                         .then( result => {
                             let data = {
                                 id: result.id,
@@ -58,8 +55,6 @@ class controller {
                 }
             })
             .then(result => {
-                
-                console.log(result, 'ini result dari create')
                 if (!result) {
                     CartItem.create({
                             quantity,
@@ -75,7 +70,6 @@ class controller {
                         .catch(err => {
                             next(err)
                         })
-                    console.log('ini null ya')
                 } else {
                     let nowQuantity = Number(result.quantity) + Number(quantity)
                     CartItem.update({
@@ -111,14 +105,14 @@ class controller {
             }]
         })
             .then(result => {
-                // console.log(result, 'ini result controller')
-                res.status(201).json(result)
+                res.status(200).json(result)
             })
-            .catch(error => {
-                // console.log(error, 'ini errorr ctr')
-                res.status(400).json(error)
+            .catch(err => {
+                res.status(400).json(err)
             })
     }
+
+    
 }
 
 module.exports = controller

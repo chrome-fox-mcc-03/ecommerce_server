@@ -1,12 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Cart = sequelize.define('Cart', {
+  const Model = sequelize.Sequelize.Model
+  class Cart extends Model {
+    static associate(models) {
+       Cart.belongsTo(models.User)
+       Cart.hasMany(models.CartItem)
+    }
+  }
+  Cart.init({
     UserId: DataTypes.INTEGER
-  }, {});
-  Cart.associate = function(models) {
-    // associations can be defined here
-    Cart.belongsTo(models.User)
-    Cart.hasMany(models.CartItem)
-  };
+  },{
+    sequelize,
+    modelName: 'Cart'
+  })
   return Cart;
 };

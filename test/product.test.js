@@ -37,12 +37,8 @@ describe('Product route', () => {
     afterAll((done) => {
             queryInterface.bulkDelete('Products', {})
                 .then(() => {
-                    done()
+                    return queryInterface.bulkDelete('Users', {})
                 })
-                .catch(err => {
-                    done(err)
-                })
-            queryInterface.bulkDelete('Users', {})
                 .then(() => {
                     done()
                 })

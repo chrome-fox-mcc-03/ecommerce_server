@@ -4,9 +4,10 @@ const authenticationAdmin = require('../middlewares/authenticationAdmin')
 const userRoutes = require('./user')
 const productRoutes = require('./product')
 const customerRoutes = require('./customer')
+const cartRoutes = require('./cart')
 
-router.use('/customers', customerRoutes)
-
+// router.use('/customers', customerRoutes)
+// router.use('/carts', cartRoutes)
 router.post('/register', ControllerUser.register)
 router.post('/login', ControllerUser.login)
 router.use(authenticationAdmin)

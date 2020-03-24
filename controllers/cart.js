@@ -1,4 +1,4 @@
-const { Cart } = require('../models')
+const { Cart, sequelize } = require('../models')
 
 class CartController {
     static add(req, res, next) {
@@ -40,6 +40,40 @@ class CartController {
         })
             .then(carts => {
                 res.status(200).json(carts)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static increase(req, res, next) {
+        Cart.update({
+            product_qty: sequelize.literal('product_qty + 1')
+        }, {
+            where: {
+                id: req.params.cartId
+            },
+            returning: true
+        })
+            .then(carts => {
+                res.status(200).json(carts[1][0])
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static decrease(req, res, next) {
+        Cart.update({
+            product_qty: sequelize.literal('product_qty - 1')
+        }, {
+            where: {
+                id: req.params.cartId
+            },
+            returning: true
+        })
+            .then(carts => {
+                res.status(200).json(carts[1][0])
             })
             .catch(err => {
                 next(err)

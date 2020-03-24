@@ -4,7 +4,7 @@
   "description": "ecommerce server cms",
   "main": "bin/http.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --detectOpenHandles --runInBand",
+    "test": "NODE_ENV=test jest --detectOpenHandles --runInBand --forceExit",
     "dev": "NODE_ENV=development nodemon bin/http.js",
     "start": "node bin/http.js"
   },

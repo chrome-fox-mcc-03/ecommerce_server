@@ -1,3 +1,12 @@
+const env = process.env.NODE_ENV
+
+if (env === "test") {
+  require('dotenv').config( { path: process.cwd() + '/.env.test' } );
+} else if (env === "development") {
+  require('dotenv').config( { path: process.cwd() + '/.env' } );
+}
+
+
 const express = require('express');
 const app = express();
 

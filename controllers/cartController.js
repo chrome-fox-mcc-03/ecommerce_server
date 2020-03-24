@@ -114,6 +114,30 @@ class controller {
             })
     }
 
+    static getByProductId(req, res, next) {
+        let UserId = req.decoded.id
+        let ProductId = req.params.productid
+        CartItem.findAll({
+            include: [ {
+                model: Product,
+                where: {
+                    id: ProductId
+                }
+            }, {
+                model: Cart,
+                where: {
+                    UserId: UserId
+                }
+            }]
+        })
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => {
+                res.status(400).json(err)
+            })
+    }
+
     static update(req, res, next) {
         let CartItemId = req.params.id
         let {quantity, isPaid} = req.body

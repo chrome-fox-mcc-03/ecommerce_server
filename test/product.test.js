@@ -18,7 +18,7 @@ let product = {
 }
 
 let updateProduct = {
-    id:9,
+    id:1,
     name:'soap',
     image_url:'https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/12/19/81976385.jpg',
     price:10000,
@@ -137,7 +137,7 @@ describe('Product routes', () => {
     })
 
     describe('DELETE /product:id', () => {
-        describe.skip('success process', () => {
+        describe('success process', () => {
             test('should send an object (name,image_url,price,stock) with status 200',(done) => {
                 request(app)
                 .delete(`/product/${updateProduct.id}`)

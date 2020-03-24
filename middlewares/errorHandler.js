@@ -52,6 +52,15 @@ const errorHandler = (err, req, res, next) => {
                 errors: [message]
             }
             res.status(400).json(error)
+            break;
+        case 'customer not found': 
+            message = err.name
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(400).json(error)
+            break;
         default:
             message = 'Database Error'
             error = {

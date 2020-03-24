@@ -1,7 +1,7 @@
-const { verify } = require('./../helper/jwt')
-const { User } = require('./../models')
+const { verify } = require('../helper/jwt')
+const { User } = require('../models')
 
-function authentication(req,res,next) {
+function authenticationAdmin(req,res,next) {
     try{
         const token = req.headers.token
         const decoded = verify(token)
@@ -30,7 +30,8 @@ function authentication(req,res,next) {
         } 
     }catch(err){
         next(err)
+        // res.status(500).json(err)
     }
 }
 
-module.exports = authentication
+module.exports = authenticationAdmin

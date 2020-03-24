@@ -18,7 +18,8 @@ module.exports = {
     const { filter } = req.params
 
     Product.findAll({
-      include: [Type]
+      include: [Type],
+      order: [['id', 'ASC']]
     })
       .then(data => {
         res.status(200).json({

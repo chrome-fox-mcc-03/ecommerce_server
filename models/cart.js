@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Cart.belongsTo(models.User)
       Cart.belongsTo(models.Product)
-      Cart.hasMany(models.History)
     }
   }
   Cart.init({
@@ -31,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'amount cannot less than 1'
         }
       }
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, { sequelize })
   return Cart;

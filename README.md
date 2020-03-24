@@ -561,7 +561,7 @@
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** `{ message : "Internal Server Error" }`
 
-**Update cart**
+**Update amount cart**
 ----
 
 * **URL**
@@ -570,7 +570,7 @@
 
 * **Method:**
   
-  `PUT`
+  `PATCH`
   
 *  **URL Params**
 
@@ -580,8 +580,7 @@
 
   ```javascript
     {
-      ProductId: "Integer",
-      amount: "Integer"
+      newAmount: "Integer"
     }
   ```
 
@@ -614,18 +613,69 @@
 
     OR
 
-  * **Code:** 404 BAD REQUEST <br />
+  * **Code:** 404 NOT FOUND <br />
     **Content:** `{ message : "cart not found" }`
 
     OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ message : "product cannot be empty" }`
+    **Content:** `{ message : "amount cannot less than 1" }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message : "Internal Server Error" }`
+
+**Checkout cart**
+----
+
+* **URL**
+
+  http://localhost:3000/cart
+
+* **Method:**
+  
+  `PUT`
+  
+*  **URL Params**
+
+    None
+
+* **Data Params**
+
+    None
+
+*  **URL headers**
+
+    **Required:**
+
+    `token=[string]`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+
+  ```javascript
+    {
+      message: "success checkout cart"
+    }
+  ```
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ message : "please login first!" }`
+
+    OR
+
+  * **Code:** 403 FORBIDDEN <br />
+    **Content:** `{ message : "you haven't access to access this cart" }`
 
     OR
 
   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ message : "amount cannot less than 1" }`
+    **Content:** `{ message : "<product> stock is less than your cart amount" }`
 
     OR
 
@@ -664,7 +714,7 @@
 
   ```javascript
     {
-      message: "success add / reduce amount"
+      message: "success delete product from cart"
     }
   ```
  
@@ -680,7 +730,7 @@
 
     OR
 
-  * **Code:** 404 BAD REQUEST <br />
+  * **Code:** 404 NOT FOUND <br />
     **Content:** `{ message : "cart not found" }`
 
     OR
@@ -715,7 +765,7 @@
 
 * **Success Response:**
 
-  * **Code:** 201 <br />
+  * **Code:** 200 <br />
     **Content:** 
 
   ```javascript

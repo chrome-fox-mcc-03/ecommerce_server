@@ -11,8 +11,6 @@ router.post('/register', UserController.register);
 router.post('/login', UserController.login);
 router.get('/userPayload', UserController.userPayload);
 
-router.use(authenticator);
-
-router.use('/product', productRouter);
+router.use('/product', authenticator, productRouter);
 
 module.exports = router;

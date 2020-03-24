@@ -2,8 +2,10 @@ const request = require('supertest')
 const app = require('../app')
 const {User} = require('../models')
 const helper = require('../helpers/helper')
-const {sequelize} = require('../models')
+const {sequelize,Product} = require('../models')
 const {queryInterface} = sequelize
+
+let id = 0
 
 let admin = {
     email: 'admindong@mail.com',
@@ -18,7 +20,7 @@ let product = {
 }
 
 let updateProduct = {
-    id:1, // 17, tiap dijalankan harus diganti idnya
+    // id:1, // 17, tiap dijalankan harus diganti idnya
     name:'soap',
     image_url:'https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/12/19/81976385.jpg',
     price:10000,
@@ -104,8 +106,14 @@ describe('Product routes', () => {
     describe('PUT /product:id', () => {
         describe('success process', () => {
             test('should send an object (name,image_url,price,stock) with status 200',(done) => {
+                Product.findAll()
+                .then((result) => {
+                    id = result[0].dataValues.id
+                }).catch((err) => {
+                    console.log (err)
+                });
                 request(app)
-                .put(`/product/${updateProduct.id}`)
+                .put(`/product/${id}`)
                 .set('token',token)
                 .send(updateProduct)
                 .end((err,res) => {
@@ -140,7 +148,7 @@ describe('Product routes', () => {
         describe('success process', () => {
             test('should send an object (name,image_url,price,stock) with status 200',(done) => {
                 request(app)
-                .delete(`/product/${updateProduct.id}`)
+                .delete(`/product/${id}`)
                 .set('token',token)
                 .end((err,res) => {
                     expect(err).toBe(null)

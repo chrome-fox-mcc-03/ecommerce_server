@@ -36,7 +36,7 @@ describe('/products', ()=> {
                 role : 'admin'
             })
             .end((err, res)=> {
-                token = res.body.access_token
+                token = res.body.token
                 done()
             })
     })
@@ -45,7 +45,7 @@ describe('/products', ()=> {
             test('respond will return all products data with status code (200)', (done)=> {
                 request(app)
                 .get('/products')
-                .set('access_token', token)
+                .set('token', token)
                 .end((err,res)=>{
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty('data', expect.any(Array))
@@ -58,7 +58,7 @@ describe('/products', ()=> {
             test('error caused by wrong token (not authenticated) with status code (401)', (done)=> {
                 request(app)
                 .get('/products')
-                .set('access_token', 'wrongtoken')
+                .set('token', 'wrongtoken')
                 .end((err,res)=>{
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty('message', 'Bad Request')
@@ -82,7 +82,7 @@ describe('/products', ()=> {
                 }
                 request(app)
                     .post('/products')
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -107,7 +107,7 @@ describe('/products', ()=> {
                 }
                 request(app)
                     .post('/products')
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -128,7 +128,7 @@ describe('/products', ()=> {
                 }
                 request(app)
                     .post('/products')
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -149,7 +149,7 @@ describe('/products', ()=> {
                 }
                 request(app)
                     .post('/products')
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -175,7 +175,7 @@ describe('/products', ()=> {
                 let idToUpdate = idCreated ;
                 request(app)
                     .put(`/products/${idToUpdate}`)
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -200,7 +200,7 @@ describe('/products', ()=> {
                 let idToUpdate = idCreated ;
                 request(app)
                     .put(`/products/${idToUpdate}`)
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -222,7 +222,7 @@ describe('/products', ()=> {
                 let idToUpdate = idCreated ;
                 request(app)
                     .put(`/products/${idToUpdate}`)
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -244,7 +244,7 @@ describe('/products', ()=> {
                 let idToUpdate = idCreated ;
                 request(app)
                     .put(`/products/${idToUpdate}`)
-                    .set('access_token', token)
+                    .set('token', token)
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
@@ -264,7 +264,7 @@ describe('/products', ()=> {
                 let idToDelete = idCreated ;
                 request(app)
                     .put(`/products/${idToDelete}`)
-                    .set('access_token', token)
+                    .set('token', token)
                     .end((err,res)=>{
                         expect(err).toBe(null)
                         expect(res.status).toBe(200)
@@ -277,7 +277,7 @@ describe('/products', ()=> {
                 let idToDelete = idCreated + 1 ;
                 request(app)
                     .put(`/products/${idToDelete}`)
-                    .set('access_token', token)
+                    .set('token', token)
                     .end((err,res)=>{
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty('message', 'Bad Request')

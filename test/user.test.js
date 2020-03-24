@@ -20,13 +20,13 @@ describe('/users', () => {
     })
     describe('POST /users/register', ()=> {
         describe('success case', () => {
-            test('respond will be an object (access_token) with status code (201)', (done)=> {
+            test('respond will be an object (token) with status code (201)', (done)=> {
                 request(app)
                     .post('/users/register')
                     .send(data)
                     .end((err,res)=>{
                         expect(err).toBe(null)
-                        expect(res.body).toHaveProperty('access_token', expect.anything())
+                        expect(res.body).toHaveProperty('token', expect.anything())
                         expect(res.status).toBe(201)
                         done()
                     })
@@ -132,7 +132,7 @@ describe('/users', () => {
 
     describe('POST /users/login', () => {
         describe('success case', () => {
-            test('respond will be an object (access_token) with status code (200)', (done) => {
+            test('respond will be an object (token) with status code (200)', (done) => {
                 request(app)
                 .post('/users/login')
                 .send({
@@ -141,7 +141,7 @@ describe('/users', () => {
                 })
                 .end((err,res)=>{
                     expect(err).toBe(null)
-                    expect(res.body).toHaveProperty('access_token', expect.anything())
+                    expect(res.body).toHaveProperty('token', expect.anything())
                     expect(res.status).toBe(200)
                     done()
                 })

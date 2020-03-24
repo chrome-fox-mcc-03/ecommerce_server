@@ -2,17 +2,33 @@ const { Cart } = require('../models')
 
 class CartController {
     static add(req, res, next) {
-        Cart.create({
-            product_qty: 1,
-            paid: false,
-            UserId: req.currentUserId,
-            ProductId: req.body.ProductId
+        Cart.findOne({
+            where: {
+                UserId: req.currentUserId,
+                ProductId: req.body.ProductId
+            }
         })
-            .then(cart => {
-                res.status(201).json(cart)
-            })
-            .catch(err => {
-                next(err)
+            .then(existingCart => {
+                console.log(['existed ===>'], existingCart);
+                if (existingCart) {
+                    next({
+                        status: 400,
+                        message: 'Product existed, try updating instead of adding a new one'
+                    })
+                } else {
+                    Cart.create({
+                        product_qty: 1,
+                        paid: false,
+                        UserId: req.currentUserId,
+                        ProductId: req.body.ProductId
+                    })
+                        .then(cart => {
+                            res.status(201).json(cart)
+                        })
+                        .catch(err => {
+                            next(err)
+                        })
+                }
             })
     }
 

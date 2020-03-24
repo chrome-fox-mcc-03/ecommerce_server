@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    image_url: DataTypes.STRING,
+    image_url: {
+      type: DataTypes.STRING,
+      defaultValue: `https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png`
+    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -36,9 +39,17 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     stock: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER
-  }, {});
+  }, { sequelize,
+    hooks: {
+      beforeCreate(User, options) {
+        if (Product.image_url == '') {
+          Product.image_url = `https://bitsofco.de/content/images/2018/12/Screenshot-2018-12-16-at-21.06.29.png`
+        }
+      }
+    } });
   Product.associate = function (models) {
-    Product.belongsTo(models.User)
+    Product.belongsTo(models.User);
+    Product.hasMany(models.Cart);
   };
   return Product;
 };

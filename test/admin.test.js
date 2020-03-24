@@ -27,6 +27,7 @@ describe('Admin routes', () => {
                     .post('/admins/login')
                     .send(loginDummy)
                     .end((err, res) => {
+                        console.log(res.body, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< masuk login admin");
                         
                         expect(res.body).toHaveProperty('token', res.body.token)
                         expect(res.status).toBe(200)

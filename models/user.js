@@ -6,6 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     role: {
       type: DataTypes.STRING,
+      defaultValue: `user`,
+      validate: {
+        isIn: {
+          args: [['admin', 'user']],
+          msg: `invalid role`
+        }
+      }
     },
     email: {
       type: DataTypes.STRING,
@@ -51,11 +58,15 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     hooks: {
       beforeCreate(User, options) {
-        User.password = hashPassword(User.password)
+        User.password = hashPassword(User.password);
+        if (!role) {
+          User.role = `user`
+        }
       }
     }
   });
   User.associate = function(models) {
+    User.hasMany(models.Cart);
     User.hasMany(models.Product);
   };
   return User;

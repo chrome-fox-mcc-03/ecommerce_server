@@ -3,14 +3,16 @@ const { Product } = require('../models');
 class ProductController {
     static createProduct(req, res, next) {
         let { name, price, image_url, stock } = req.body;
-        
+        console.log(req.body.image_url, "<<<<<<<<<<<<<<<<<<<<<<<< IMAGE")
         Product.create({
             name,
             price,
             image_url,
-            stock
+            stock,
+            UserId : req.decoded.id
         })
         .then(result => {
+            // console.log(result);
             res.status(201).json(result);
         })
         .catch(error => {
@@ -19,7 +21,11 @@ class ProductController {
     }
 
     static showAll(req, res, next) {
-        Product.findAll()
+        Product.findAll({
+            where: {
+                UserId: req.decoded.id
+            }
+        })
         .then(result => {
             res.status(200).json(result);
         })
@@ -31,7 +37,7 @@ class ProductController {
     static findById(req, res, next) {
         Product.findOne({
             where: {
-                id: id
+                id: req.params.id
             }
         })
         .then(result => {
@@ -40,7 +46,7 @@ class ProductController {
         .catch(error => {
             next({
                 status: 404,
-                message: `cannot find product with spesific id`
+                message: `cannot find product with specific id`
             });
         })
     }

@@ -1,4 +1,4 @@
-const { User } = require('../models/index.js');
+const { User, Cart } = require('../models/index.js');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 
@@ -8,7 +8,7 @@ class UserController {
     const { email, password } = req.body;
 
     User.findOne({
-      where: { email }
+      where: { email },
     })
       .then(response => {
         if (response) {
@@ -42,24 +42,30 @@ class UserController {
     })
   }
 
-  static register(req, res, nexxt) {
+  static register(req, res, next) {
     const { email, password, fullname } = req.body
+    let userData, token;
 
     User.create({ email, password, fullname })
       .then(response => {
-        const payload = {
+
+        userData = {
           id: response.id,
           email: response.email,
           fullname: response.fullname,
           isAdmin: response.isAdmin
         }
-
-        const token = generateToken(payload);
-        res.status(201).json({ token, fullname: response.fullname })
-      })
-        .catch(err => {
-          next(err)
+        token = generateToken(userData);
+        return Cart.create({
+          UserId: response.id
         })
+      })
+      .then(_ => {
+        res.status(201).json({token, fullname: userData.fullname})
+      })
+      .catch(err => {
+        next(err)
+      })
   }
 }
 

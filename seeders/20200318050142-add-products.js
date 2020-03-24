@@ -10,7 +10,6 @@ module.exports = {
         description: 'Ryzen 5 2400G',
         price: 2500000,
         stock: 5,
-        UserId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -20,7 +19,6 @@ module.exports = {
         price: 4799000,
         description: "Ryzen 7 3700X",
         stock: 5,
-        UserId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -30,7 +28,6 @@ module.exports = {
         price: 1165000,
         description: "Ryzen 3 2200G",
         stock: 5,
-        UserId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -40,7 +37,6 @@ module.exports = {
         price: 8800000,
         description: "Intel i9 9900k",
         stock: 5,
-        UserId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -50,7 +46,6 @@ module.exports = {
         price: 2189000,
         description: "Intel i5 9400f",
         stock: 5,
-        UserId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }

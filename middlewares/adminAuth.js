@@ -11,6 +11,7 @@ module.exports = (req, res, next) => {
       if(response) {
         if(response.isAdmin) {
           next()
+          return null
         }
         else {
           next({

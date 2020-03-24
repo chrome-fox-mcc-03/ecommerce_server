@@ -11,8 +11,10 @@ module.exports = (req, res, next) => {
       where: { email }
     })
       .then(response => {
-        if(response) next()
-        // return null
+        if(response) {
+          next()
+          return null
+        }
       })
       .catch(err => {
         next({

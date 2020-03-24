@@ -1,5 +1,4 @@
 'use strict';
-
 const { hashPassword } = require('../helpers/bcrypt')
 
 module.exports = (sequelize, DataTypes) => {
@@ -69,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   User.associate = function (models) {
-    User.hasMany(models.Product)
+    User.hasOne(models.Cart)
   };
   return User;
 };

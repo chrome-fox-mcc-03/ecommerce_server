@@ -20,6 +20,7 @@ class ProductController {
     })
     .then(response => {
       res.status(200).json({ response })
+      return null
     })
     .catch(err => {
       next(err

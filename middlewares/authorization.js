@@ -1,15 +1,17 @@
-const { Product } = require('../models/index');
+const { Cart } = require('../models/index');
 
 module.exports = (req, res, next) => {
-  let id = +req.params.id
-
-  Product.findOne({
-    where: { id }
+  let UserId = +req.decoded.id
+  
+  Cart.findOne({
+    where: { UserId }
   })
     .then(response => {
       if(response) {
         if(response.UserId === req.decoded.id) {
+          console.log('masuk authorization');
           next()
+          return null
         }
         else {
           next({
@@ -21,7 +23,7 @@ module.exports = (req, res, next) => {
       else {
         next({
           status: 404,
-          msg: "Product not found!"
+          msg: "Cart not found! Please contact your administrator"
         })
       }
     })

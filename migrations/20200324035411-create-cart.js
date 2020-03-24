@@ -1,24 +1,22 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ProductUsers', {
+    return queryInterface.createTable('Carts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ProductId: {
-        type: Sequelize.INTEGER
-      },
       UserId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
+        reference: {
+          model: "Users",
+          key: "id"
         },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +29,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ProductUsers');
+    return queryInterface.dropTable('Carts');
   }
 };

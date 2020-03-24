@@ -79,17 +79,13 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Please input product's quantity"
         }
       }
-    },
-    UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
     }
   },
   {
     sequelize
   })
   Product.associate = function(models) {
-    Product.belongsTo(models.User)
+    Product.belongsToMany(models.Cart, { through: models.CartProduct })
   };
   return Product;
 };

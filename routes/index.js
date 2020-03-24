@@ -5,9 +5,12 @@ const userRoutes = require('./user')
 const productRoutes = require('./product')
 const customerRoutes = require('./customer')
 const cartRoutes = require('./cart')
+const cartProductRoutes = require('./cartProduct')
 
 router.use('/customers', customerRoutes)
 router.use('/carts', cartRoutes)
+router.use('/cartProducts', cartProductRoutes)
+
 router.post('/register', ControllerUser.register)
 router.post('/login', ControllerUser.login)
 router.use(authenticationAdmin)

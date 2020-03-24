@@ -77,6 +77,14 @@ const errorHandler = (err, req, res, next) => {
             }
             res.status(400).json(error)
             break;
+        case 'cart-product not found': 
+            message = err.name
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(400).json(error)
+            break;
         default:
             message = 'Database Error'
             error = {

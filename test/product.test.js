@@ -18,7 +18,7 @@ let product = {
 }
 
 let updateProduct = {
-    id:1,
+    id:1, // 17, tiap dijalankan harus diganti idnya
     name:'soap',
     image_url:'https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/12/19/81976385.jpg',
     price:10000,

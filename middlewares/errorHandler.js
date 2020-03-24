@@ -61,6 +61,22 @@ const errorHandler = (err, req, res, next) => {
             }
             res.status(400).json(error)
             break;
+        case 'cart not found': 
+            message = err.name
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(400).json(error)
+            break;
+        case 'you are not authorized': 
+            message = err.name
+            error = {
+                message,
+                errors: [message]
+            }
+            res.status(400).json(error)
+            break;
         default:
             message = 'Database Error'
             error = {

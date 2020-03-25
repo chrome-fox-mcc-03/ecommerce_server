@@ -454,7 +454,7 @@ describe('customer route', () => {
           .end((err, res) => {
             expect(err).toBeNull()
             expect(res.status).toBe(400)
-            expect(res.body).toHaveProperty('error', 'insufficient product stock')
+            expect(res.body).toHaveProperty('error', 'itemid & amount required')
             done()
           })
       })
@@ -558,7 +558,110 @@ describe('customer route', () => {
       })
     })
   })
-  // describe('customer update cart qty', () => {})
+  describe('customer update cart qty', () => {
+    describe('customer update cart qty error', () => {
+      test('user token nonexist', (done) => {
+        let validUser = {...customer2}
+        let validCartItemId = {...cartItem}
+        request(app)
+          .patch(`/customer/cart/${validCartItemId.cartItemId}`)
+          .send(validCartItemId)
+          .set({
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'token not found')
+            done()
+          })
+      })
+      test('invalid token', (done) => {
+        let invalidToken = {...customer2}
+        invalidToken.token = 'notvalidtoken'
+        let validCartItemId = {...cartItem}
+        request(app)
+          .patch(`/customer/cart/${validCartItemId.cartItemId}`)
+          .send(validCartItemId)
+          .set({
+            token: invalidToken.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'invalid token')
+            done()
+          })
+      })
+      test('invalid cartitemid', (done) => {
+        let validUser = {...customer2}
+        let invalidCartItemId = {...cartItem}
+        invalidCartItemId.cartItemId = 'not'
+        request(app)
+          .patch(`/customer/cart/${invalidCartItemId.cartItemId}`)
+          .send(invalidCartItemId)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'cart item id required')
+            done()
+          })
+      })
+      test('cart item id nonexist', (done) => {
+        let validUser = {...customer2}
+        let nonexistCartItemId = {...cartItem}
+        delete nonexistCartItemId.cartItemId
+        request(app)
+          .patch(`/customer/cart/${nonexistCartItemId.cartItemId}`)
+          .send(nonexistCartItemId)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'cart item id required')
+            done()
+          })
+      })
+      test('wrong user token', (done) => {
+        let wrongUser = {...customer1}
+        let validCartItemId = {...cartItem}
+        request(app)
+          .patch(`/customer/cart/${validCartItemId.cartItemId}`)
+          .send(validCartItemId)
+          .set({
+            token: wrongUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(401)
+            expect(res.body).toHaveProperty('error', 'not authorized for cart item id')
+            done()
+          })
+      })
+    })
+    describe('customer update cart qty success', () => {
+      test('valid token, valid item id, and stock >= quantity', (done) => {
+        let validUser = {...customer2}
+        let validCartItemId = {...cartItem}
+        request(app)
+          .patch(`/customer/cart/${validCartItemId.cartItemId}`)
+          .send(validCartItemId)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(200)
+            expect(res.body).toHaveProperty('message', 'product qty updated')
+            done()
+          })
+      })
+    })
+  })
   describe('customer remove item from cart', () => {
     describe('customer remove cart item error', () => {
       test('invalid token', (done) => {

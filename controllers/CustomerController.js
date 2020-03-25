@@ -153,7 +153,8 @@ class CustomerController {
   }
   static appendToCart(req, res, next) {
     // res.status(200).json('append item to cart')
-    const { itemId, amount } = req.body;
+    let { itemId, amount } = req.body;
+    amount = Number(amount)
     const token = req.headers.token;
     const customer = getPayload(token);
     let CartId
@@ -188,7 +189,7 @@ class CustomerController {
         })
         .then(result => {
           if (result) {
-            if (result.quantity + amount <= productItem.stock) {
+            if ((result.quantity + amount) <= productItem.stock) {
               let newQty = result.quantity + amount
               return CartProducts.update({
                 quantity: newQty
@@ -260,7 +261,39 @@ class CustomerController {
       })
   }
   static updateCartQty(req, res, next) {
-    res.status(200).json('update cart qty')
+    // res.status(200).json('update cart qty')
+    // cart item id
+    const id = req.params.id;
+    const { amount } = req.body;
+    CartProducts.findOne({
+      where: {
+        id
+      },
+      include: [Product]
+    })
+      .then(result => {
+        console.log(result.Product.stock)
+        console.log(amount)
+        if (result.Product.stock > amount) {
+          return CartProducts.update({
+              quantity: amount
+            }, {
+              where: {
+                id
+              }
+            })
+        } else {
+          throw appError(400, 'product stock insufficient')
+        }
+      })
+      .then(_ => {
+        res.status(200).json({
+          message: 'product qty updated'
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
   }
   static status(req, res, next) {
     res.status(200).json({

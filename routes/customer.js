@@ -13,5 +13,6 @@ router.get("/cart", CustomerController.cart)
 router.post("/cart", CustomerController.appendToCart)
 // otorisasi
 router.delete("/cart/:id", customerAuthorizator, CustomerController.removeFromCart)
+router.patch("/cart/:id", customerAuthorizator, CustomerController.updateCartQty)
 
 module.exports = router

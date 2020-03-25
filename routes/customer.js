@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const CustomerController = require('../controllers/CustomerController')
 const customerAuthenticator = require('../middlewares/customer_auth')
+const { customerAuthorizator } = require('../middlewares/authorizator')
 
 router.get("/", CustomerController.status)
 router.post("/register", CustomerController.register)
@@ -10,5 +11,7 @@ router.use(customerAuthenticator)
 router.get("/shop", CustomerController.shop)
 router.get("/cart", CustomerController.cart)
 router.post("/cart", CustomerController.appendToCart)
+// otorisasi
+router.delete("/cart/:id", customerAuthorizator, CustomerController.removeFromCart)
 
 module.exports = router

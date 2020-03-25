@@ -27,6 +27,7 @@ let customer2 = {
   password: "leleyeye",
   name: "not test 02"
 }
+let cartItem = {}
 
 beforeAll(done => {
   Customer
@@ -202,6 +203,7 @@ describe('customer route', () => {
             expect(res.body.user).toHaveProperty('name', newCustomer2.name)
             expect(res.body.user).toHaveProperty('avaurl', newCustomer2.avaurl)
             expect(res.body.user).toHaveProperty('token', expect.any(String))
+            customer1.token = res.body.user.token
             done()
           })
       })
@@ -491,10 +493,12 @@ describe('customer route', () => {
           })
           .end((err, res) => {
             expect(err).toBeNull()
-            expect(res.status).toBe(201)
+            expect(res.status).toBe(200)
             expect(res.body).toHaveProperty('message', 'added to cart')
             expect(res.body).toHaveProperty('itemId', addedItem.itemId)
+            expect(res.body).toHaveProperty('cartItemId', expect.any(Number))
             expect(res.body).toHaveProperty('amount', addedItem.amount)
+            cartItem = {...res.body}
             done()
           })
       })
@@ -549,6 +553,105 @@ describe('customer route', () => {
               expect(res.body.cartItems[0]).toHaveProperty('stock', expect.any(Number))
               expect(res.body.cartItems[0]).toHaveProperty('price', expect.any(Number))
             }
+            done()
+          })
+      })
+    })
+  })
+  // describe('customer update cart qty', () => {})
+  describe('customer remove item from cart', () => {
+    describe('customer remove cart item error', () => {
+      test('invalid token', (done) => {
+        let invalidToken = {...customer2}
+        invalidToken.token = 'nottoken'
+        let validCartItemId = {...cartItem}
+        request(app)
+          .delete(`/customer/cart/${validCartItemId.cartItemId}`)
+          .set({
+            token: invalidToken.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'invalid token')
+            done()
+          })
+      })
+      test('token nonexist', (done) => {
+        let validUser = {...customer2}
+        let validCartItemId = {...cartItem}
+        request(app)
+          .delete(`/customer/cart/${validCartItemId.cartItemId}`)
+          .set({
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'token not found')
+            done()
+          })
+      })
+      test('invalid cartitemid', (done) => {
+        let validUser = {...customer2}
+        let invalidCartItemId = {...cartItem}
+        invalidCartItemId.cartItemId = 'notitemid'
+        request(app)
+          .delete(`/customer/cart/${invalidCartItemId.cartItemId}`)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'cart item id required')
+            done()
+          })
+      })
+      test('cartitemid nonexist', (done) => {
+        let validUser = {...customer2}
+        let nonexistCartItemId = {...cartItem}
+        delete nonexistCartItemId.cartItemId
+        request(app)
+          .delete(`/customer/cart/${nonexistCartItemId.cartItemId}`)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'cart item id required')
+            done()
+          })
+      })
+      test('wrong user token', (done) => {
+        let wrongUser = {...customer1}
+        let validCartItemId = {...cartItem}
+        request(app)
+          .delete(`/customer/cart/${validCartItemId.cartItemId}`)
+          .set({
+            token: wrongUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(401)
+            expect(res.body).toHaveProperty('error', 'not authorized for cart item id')
+            done()
+          })
+      })
+    })
+    describe('customer remove cart item success', () => {
+      test('valid token, valid cart item id', (done) => {
+        let validUser = {...customer2}
+        let validCartItemId = {...cartItem}
+        request(app)
+          .delete(`/customer/cart/${validCartItemId.cartItemId}`)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(200)
+            expect(res.body).toHaveProperty('message', 'item deleted')
             done()
           })
       })

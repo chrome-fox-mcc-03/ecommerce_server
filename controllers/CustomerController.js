@@ -132,6 +132,8 @@ class CustomerController {
         let cartItems = []
         result.forEach(item => {
           let cartItem = {
+            id: item.id,
+            itemId: item.Product.id,
             name: item.Product.name,
             quantity: item.quantity,
             seller: item.Product.User.email.split('@')[0],
@@ -155,6 +157,7 @@ class CustomerController {
     const token = req.headers.token;
     const customer = getPayload(token);
     let CartId
+    let productItem
 
     if (itemId && amount) {
       Cart.findOne({
@@ -172,7 +175,35 @@ class CustomerController {
         })
         .then(result => {
           if (result) {
-            if (result.stock >= amount) {
+            productItem = {...result.dataValues}
+            return CartProducts.findOne({
+              where: {
+                CartId,
+                ProductId: itemId
+              }
+            })
+          } else {
+            throw appError(404, 'itemid not found')
+          }
+        })
+        .then(result => {
+          if (result) {
+            if (result.quantity + amount <= productItem.stock) {
+              let newQty = result.quantity + amount
+              return CartProducts.update({
+                quantity: newQty
+              }, {
+                where: {
+                  CartId,
+                  ProductId: itemId
+                }
+              })
+            } else {
+              throw appError(400, 'insufficient product stock')
+            }
+          } else {
+            // create new cartitem
+            if (productItem.stock >= amount) {
               return CartProducts.create({
                 CartId,
                 ProductId: itemId,
@@ -181,19 +212,18 @@ class CustomerController {
             } else {
               throw appError(400, 'insufficient product stock')
             }
-          } else {
-            throw appError(404, 'itemid not found')
           }
         })
-        .then(_ => {
-          res.status(201).json({
+        .then(result => {
+          res.status(200).json({
             message: 'added to cart',
+            cartItemId: result.id,
             itemId,
             amount
           })
         })
         .catch(err => {
-          console.log(err)
+          // console.log(err)
           next(err)
         })
     } else {
@@ -202,7 +232,35 @@ class CustomerController {
 
   }
   static removeFromCart(req, res, next) {
-    res.status(200).json('remove item from cart')
+    // res.status(200).json('remove item from cart')
+    const id = req.params.id;
+    CartProducts.findOne({
+      where: {
+        id
+      }
+    })
+      .then(result => {
+        if (result) {
+          return CartProducts.destroy({
+            where: {
+              id
+            }
+          })
+        } else {
+          throw appError(404, 'cart item not found')
+        }
+      })
+      .then(_ => {
+        res.status(200).json({
+          message: 'item deleted'
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+  static updateCartQty(req, res, next) {
+    res.status(200).json('update cart qty')
   }
   static status(req, res, next) {
     res.status(200).json({

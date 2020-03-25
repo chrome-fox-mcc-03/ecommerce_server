@@ -13,7 +13,8 @@ class CartController {
                     [gt]: 0
                 }
             },
-            include: [ Product ]
+            include: [ Product ],
+            order: [['id', 'ASC']]
         })
             .then((response) => {
                 res.status(200).json({
@@ -63,20 +64,62 @@ class CartController {
                         ProductId
                     }
                 })
-
             })
             .then((response) => {
                 res.status(200).json({
-                    data: response
+                    data: 'Cart updated'
+                })
+            })
+            .catch((err) => {
+                next(err)
+            })   
+    }
+    
+    static reduceFromCart (req, res, next) {
+        const CartId = req.params.id
+
+        Cart.findByPk(CartId)
+            .then((response) => {
+                if (response) {
+                    if (response.quantity === 1) {
+                        return Cart.destroy({
+                            where: {
+                                id: CartId
+                            }
+                        })
+                    }  else if (response.quantity > 1) {
+                        const reducedQuantity = {
+                            totalPrice: response.totalPrice -= (response.totalPrice / response.quantity),
+                            ProductId: response.ProductId,
+                            UserId: response.UserId,
+                            quantity: response.quantity -= 1,
+                            isPaid: false
+                        }
+                        return Cart.update(reducedQuantity, {
+                            where: {
+                                id: CartId
+                            }
+                        })
+                    }
+                } else {
+                    let err = {
+                        name : 'custom',
+                        status : 400,
+                        message : 'Cart not found'
+                    }
+                    throw err
+                }
+            })
+            .then((response) => {
+                res.status(200).json({
+                    data: 'Cart updated'
                 })
             })
             .catch((err) => {
                 next(err)
             })
 
-        
     }
-
 }
 
 module.exports = CartController

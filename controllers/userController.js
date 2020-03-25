@@ -3,8 +3,9 @@ const { getToken } = require('../helper/jwt')
 const { comparePassword } = require('../helper/bcrypt')
 
 class userController {
-
+  // ---USER---
   static Create(req, res, next) {
+    console.log('masuk');
     User.create({
       email: req.body.email,
       password: req.body.password
@@ -52,6 +53,7 @@ class userController {
     })
   }
 
+  // ---ADMIN---
   static adminRegister(req, res, next) {
     User.create({
       email: req.body.email,

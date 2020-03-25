@@ -17,7 +17,7 @@ class CartItemController {
                     return CartItem.update({
                         ProductId: req.body.product.id,
                         CartId: Number(req.headers.cartid),
-                        quantity: (result.dataValues.quantity += req.body.quantity),
+                        quantity: (Number(result.dataValues.quantity) += Number(req.body.quantity)),
                         isPaid: false
                     }, {
                         where: {

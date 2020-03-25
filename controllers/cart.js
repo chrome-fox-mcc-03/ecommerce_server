@@ -32,6 +32,37 @@ class CartController {
             })
     }
 
+    static addWithBody(req, res, next) {
+        Cart.findOne({
+            where: {
+                UserId: req.currentUserId,
+                ProductId: req.body.ProductId
+            }
+        })
+            .then(existingCart => {
+                console.log(['existed ===>'], existingCart);
+                if (existingCart) {
+                    next({
+                        status: 400,
+                        message: 'Product existed, try updating instead of adding a new one'
+                    })
+                } else {
+                    Cart.create({
+                        product_qty: req.body.product_qty,
+                        paid: false,
+                        UserId: req.currentUserId,
+                        ProductId: req.body.ProductId
+                    })
+                        .then(cart => {
+                            res.status(201).json(cart)
+                        })
+                        .catch(err => {
+                            next(err)
+                        })
+                }
+            })
+    }
+
     static findAll(req, res, next) {
         Cart.findAll({
             where: {

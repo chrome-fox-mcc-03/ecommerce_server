@@ -6,6 +6,7 @@ const { customerAuth } = require('../middlewares/authorization');
 router.use(authentication);
 
 router.post('/', CartController.add);
+router.post('/alt', CartController.addWithBody);
 router.get('/', CartController.findAll);
 router.patch('/increase/:cartId', customerAuth, CartController.increase);
 router.patch('/decrease/:cartId', customerAuth, CartController.decrease);

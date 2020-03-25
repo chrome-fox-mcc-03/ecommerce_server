@@ -91,19 +91,15 @@ describe('Product routes', () => {
                     role
                 }
                 access_token = signToken(userData)
-                done()
-            }).catch((err) => {
-                console.log(err);
-            });
-
-        Product.create({
-            name : 'Usb Sandisk',
-            image_url : 'https://www.jakartanotebook.com/images/products/28/31/23969/1/sandisk-cruzer-blade-usb-flash-drive-sdcz50-004g-4gb-bulk-packing-1.jpg',
-            price : 7500,
-            stock : 10
-        })
-            .then((result) => {
+                return Product.create({
+                    name : 'Usb Sandisk',
+                    image_url : 'https://www.jakartanotebook.com/images/products/28/31/23969/1/sandisk-cruzer-blade-usb-flash-drive-sdcz50-004g-4gb-bulk-packing-1.jpg',
+                    price : 7500,
+                    stock : 10
+                })
+            }).then((result) => {
                 testProduct = result.dataValues
+                done()
             }).catch((err) => {
                 console.log(err)
             });

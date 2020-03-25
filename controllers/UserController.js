@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Cart, sequelize } = require('../models')
 const { compare } = require('../helpers/bcrypt')
 const { sign } = require('../helpers/jwt')
 
@@ -71,8 +71,21 @@ module.exports =
 
     static register (req, res, next) {
       const { username, email, password } = req.body
-      User.create({ username, email, password })
-        .then(() => res.status(201).json({ message: 'Register successful' }))
-        .catch(next)
+      return sequelize.transaction(transaction => {
+        return User
+          .create(
+            { username, email, password },
+            { transaction }  
+          )
+          .then(user => {
+            return Cart
+              .create(
+                { UserId: user.id },
+                { transaction }
+              )
+          })
+          .then(() =>res.status(201).json({ message: 'Register successful' }))
+          .catch(next)
+      })
     }
   }

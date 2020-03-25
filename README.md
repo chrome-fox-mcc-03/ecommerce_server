@@ -373,7 +373,7 @@
         token
       }
     });
-      .then(response => {
+      .then(({ data }) => {
         ...
       })
       .catch(err => {
@@ -464,7 +464,7 @@
         token
       }
     });
-      .then(response => {
+      .then(({ data }) => {
         ...
       })
       .catch(err => {
@@ -531,7 +531,7 @@
         token
       }
     });
-      .then(response => {
+      .then(({ data }) => {
         ...
       })
       .catch(err => {
@@ -572,11 +572,8 @@
     Axios({
       url: "http://localhost:3000/categories",
       method : "GET",
-      headers: {
-        token
-      }
     });
-      .then(categories => {
+      .then(({ data }) => {
         ...
       })
       .catch(err => {
@@ -627,11 +624,8 @@
     Axios({
       url: "http://localhost:3000/categories",
       method : "GET",
-      headers: {
-        token
-      }
     });
-      .then(category => {
+      .then(({ data }) => {
         ...
       })
       .catch(err => {
@@ -639,4 +633,232 @@
       })
   ```
 
-  
+---
+
+**Cart**
+---
+*findCart*
+----
+  Returns user's shopping cart
+
+* **URL**
+
+  /cart
+
+* **Method:**
+
+  `GET`
+
+* **Headers:**
+
+  **Required:**
+
+  token
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    * `{ cart }`
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+    * `{ errors: ['Please login properly'] }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    * `{ err }`
+
+* **Sample Call:**
+
+  ```javascript
+    Axios({
+      url: "http://localhost:3000/carts",
+      method : "GET",
+      headers: {
+        token
+      }
+    });
+      .then(({ data }) => {
+        ...
+      })
+      .catch(err => {
+        ...
+      })
+  ```
+---
+*addCart*
+----
+  Add item(s) to user's cart
+
+* **URL**
+
+  /cart/addCart
+
+* **Method:**
+
+  `POST`
+
+* **Headers:**
+
+  **Required:**
+
+  token
+
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    * `{ message: 'Add Cart successful' }`
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+    * `{ errors: ['Please login properly'] }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    * `{ err }`
+
+* **Sample Call:**
+
+  ```javascript
+    Axios({
+      url: "http://localhost:3000/carts/addCart",
+      method : "POST",
+      headers: {
+        token
+      }
+    });
+      .then(({ data }) => {
+        ...
+      })
+      .catch(err => {
+        ...
+      })
+  ```
+
+---
+*checkout*
+----
+  Mark all unpaid items in user's cart as paid
+
+* **URL**
+
+  /cart/checkout
+
+* **Method:**
+
+  `PATCH`
+
+* **Headers:**
+
+  **Required:**
+
+  token
+
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    * `{ message: 'Checkout successful' }`
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+    * `{ errors: ['Please login properly'] }`
+
+    OR
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** 
+    * `{ errors: ['No item in cart'] }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    * `{ errors }`
+
+* **Sample Call:**
+
+  ```javascript
+    Axios({
+      url: "http://localhost:3000/carts/checkout",
+      method : "PATCH",
+      headers: {
+        token
+      }
+    });
+      .then(({ data }) => {
+        ...
+      })
+      .catch(err => {
+        ...
+      })
+  ```
+
+---
+*findCart*
+----
+  Returns all items in user's shopping cart that has been paid 
+
+* **URL**
+
+  /cart/history
+
+* **Method:**
+
+  `GET`
+
+* **Headers:**
+
+  **Required:**
+
+  token
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    * `{ cart }`
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+    * `{ errors: ['Please login properly'] }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    * `{ err }`
+
+* **Sample Call:**
+
+  ```javascript
+    Axios({
+      url: "http://localhost:3000/carts/history",
+      method : "GET",
+      headers: {
+        token
+      }
+    });
+      .then(({ data }) => {
+        ...
+      })
+      .catch(err => {
+        ...
+      })
+  ```

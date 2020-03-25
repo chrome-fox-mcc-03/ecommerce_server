@@ -18,7 +18,7 @@ let testPayload
 sampleToken = "hahay"
 
 let testUser = {
-    email: "super@mail.com",
+    email: "superadmin1@mail.com",
     password: "superadmin",
     role: "admin"
 }
@@ -43,34 +43,44 @@ let sampleItem1 = {
 let testToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoic3VwZXJhZG1pbjFAbWFpbC5jb20iLCJwYXNzd29yZCI6InN1cGVyYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1ODQ2OTk1NzB9.3FW7QRUpIlARh-vrc2e0WEcErP3JM89upYhwLuBMpCs"
 
 
+
 describe("--- PRODUCT ROUTES ---", () => {
 
-    /*     // MATCHERS
-        beforeAll((done) => {
-            console.log("--- BEFORE ALL: GENERATE TOKEN BASED ON SEEDED ADMIN!");
-            localStorage.setItem("token", testToken)
-            done()
-        }) */
-
+    beforeAll((done) => {
+        request(app)
+            .post("/login")
+            .send(testUser)
+            .end((req, res) => {
+                // console.log(res);
+                // console.log("TEST: RES BODY IS:");
+                // console.log("LOGIN SUCCESS");
+                // console.log(res.body);
+                testToken = res.body.token
+                
+                console.log("Token is now");
+                console.log(testToken);
+                done()
+            })
+    })
 
     // READ PRODUCTS
     describe('GET /products', () => {
 
         // READ PRODUCT SUCCESS
         describe('READ PRODUCT SUCCESS', () => {
-
+            console.log('CHECK: TOKEN IS')
+            console.log(testToken);
             test('SHOULD SEND AN OBJECT(NAME, IMAGE_URL, PRICE, STOCK) WITH STATUS CODE 201', (done) => {
                 request(app)
                     .get('/products')
-                    .send({
-                        headers: {
-                            token: testToken
-                        }
+                    .set({
+                        token: testToken
                     })
                     .end((err, res) => {
                         // console.log(res);
                         // console.log("RES BODY --------------- READ PRODUCTS SUCCESS");
                         // console.log(res.body);
+                        // console.log(res.status);
                         expect(res.status).toBe(200)
                         expect(res.body).toHaveProperty("data")
                         done()
@@ -88,7 +98,7 @@ describe("--- PRODUCT ROUTES ---", () => {
 
         // ADD PRODUCT SUCCESS
         describe('ADD PRODUCT SUCCESS', () => {
-            data =  {
+            data = {
                 name: 'Vitacimin',
                 category: 'supplements',
                 image_url: 'dasarese',
@@ -109,7 +119,6 @@ describe("--- PRODUCT ROUTES ---", () => {
                         expect(res.body).toHaveProperty("data")
                         expect(res.status).toBe(201)
                         sampleId = res.body.data.id
-                        console.log(`NEW SAMPLE ID IS: ${sampleId}`);
                         done()
                     })
 
@@ -132,9 +141,9 @@ describe("--- PRODUCT ROUTES ---", () => {
                     .set('token', testToken)
                     .end((err, res) => {
                         // console.log(res);
-                        console.log("RES BODY--------------------------- CREATE PRODUCT FAIL");
-                        console.log(res.body);
-                        console.log(res.status)
+                        // console.log("RES BODY--------------------------- CREATE PRODUCT FAIL");
+                        // console.log(res.body);
+                        // console.log(res.status)
                         expect(res.status).toBe(400)
                         expect(res.body).toHaveProperty("message", expect.any(String))
                         expect(res.body).toHaveProperty("errors", expect.any(Array))

@@ -1,19 +1,15 @@
 const { Product } = require('../models')
 const { customError } = require("../helpers/errorModel")
+const defaultPic = require("../helpers/defaultPic")
 let inputParams
 let pic
-const DEFAULTPIC = "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg"
 class ProductController {
     static create(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: ADD PRODUCT ---');
         // console.log('SANITY CHECK');
         // console.log(req.body);
 
-        if(req.body.image_url) {
-            pic = req.body.image_url
-        } else {
-            pic = DEFAULTPIC
-        }
+        pic = defaultPic(req.body)
 
         inputParams = {
             name: req.body.name,
@@ -49,7 +45,9 @@ class ProductController {
 
     static getAll(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: SEE ALL PRODUCTS ---');
-        Product.findAll()
+        Product.findAll({
+            attributes: { exclude: ['CartId', 'UserId'] }
+        })
             .then(response => {
                 console.log("VIEWING LIST OF PRODUCTS");
                 res.status(200).json({data: response})
@@ -68,18 +66,21 @@ class ProductController {
         // console.log(req.payload);
         // console.log("REQ PARAMS");
         // console.log(req.params);
-        Product.findAll({
+        Product.findOne({
                 where: {
                     id: +req.params.id
-                }
+                },
+                attributes: { exclude: ['CartId', 'UserId'] }
+
             })
             .then(response => {
                 console.log(`PRODUCT FOUND`);
+                console.log(response);
                 // console.log(response[0].dataValues);
                 if (response) {
                     console.log('PRODUCT FOUND & NOT NULL');
                     res.status(200).json({
-                        data: response[0].dataValues,
+                        data: response.dataValues,
                         message: "Entry found",
                         decoded: req.decoded
                     })
@@ -106,11 +107,7 @@ class ProductController {
         console.log("--- ACHTUNG! REQ.BODY IS ---");
         console.log(req.body);
 
-        if(req.body.image_url) {
-            pic = req.body.image_url
-        } else {
-            pic = DEFAULTPIC
-        }
+        pic = defaultPic(req.body)
 
         inputParams = {
             name: req.body.name,
@@ -124,13 +121,14 @@ class ProductController {
                 //DEVELOPMENT
                 name: inputParams.name,
                 category: inputParams.category,
-                image_url: inputParams.image_url,
+                image_url: pic,
                 price: inputParams.price,
                 stock: inputParams.stock
             } , {
                 where: {
                     id: +req.params.id
                 },
+                attributes: { exclude: ['CartId'] },
                 returning: true
             })
             .then(updated => {
@@ -180,7 +178,8 @@ class ProductController {
         Product.destroy({
                 where: {
                     id: +req.params.id
-                }
+                },
+                attributes: { exclude: ['CartId'] }
             })
             .then(deleted => {
                 console.log("DELETE SUCCESS");

@@ -6,6 +6,7 @@ const { customError } = require("../helpers/errorModel")
 let regParams
 let datum
 let data
+let defRole
 let accessToken
 let payloadParams
 let flagMatchingPassword
@@ -16,10 +17,15 @@ class UserController {
         // console.log("--- USER-CONTROLLERS: CREATE ---");
         // console.log("REQ BODY IS");
         // console.log(req.body);
+        if(req.body.role) {
+            defRole = req.body.role
+        } else {
+            defRole = "user"
+        }
         regParams = {
             email: req.body.email,
             password: req.body.password,
-            role: req.body.role
+            role: defRole
         }
 
         User.create(regParams)
@@ -41,22 +47,24 @@ class UserController {
 
     static login(req, res, next) {
 
-        // console.log("--- USER-CONTROLLERS: LOGIN ---");
-        // console.log("REQ BODY IS");
-        // console.log(req.body);
+        console.log("--- USER-CONTROLLERS: LOGIN ---");
+        console.log("REQ BODY IS");
+        console.log(req.body);
         // console.log(req.body.email);
 
         User.findAll({
             where: {
                 email: req.body.email
-            }
+            },
+            attributes: { exclude: ['CartId', 'ProductId'] }
+
         })
         .then(response => {
             console.log("USER FOUND");
             // console.log("RESPONSE IS");
             // console.log(response);
             
-            if(response) {
+            if(response[0]) {
                 console.log("USER NOT NULL");
                 // console.log("WHAT'S RESPONSE 2?");
                 // console.log(response[0]);
@@ -88,6 +96,8 @@ class UserController {
         })
         .catch(err => {
             console.log("ERROR LOGIN FROM USER-CONTROLLER");
+            console.log(err,'ERRRRRRRRRRORRRRRRRRRRRRRRRRRRR');
+            
             // console.log(err.message);
             // take err.code, err.message
             next(err)
@@ -97,7 +107,9 @@ class UserController {
 
     static getAllUsers(req, res, next) {
         console.log('--- USER CONTROLLER: SEE ALL USERS ---');
-        User.findAll()
+        User.findAll({
+            attributes: { exclude: ['CartId', 'ProductId'] }
+        })
             .then(response => {
                 console.log("VIEWING LIST OF USERS");
                 res.status(200).json({data: response})

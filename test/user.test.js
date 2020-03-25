@@ -59,7 +59,7 @@ describe('--- USER ROUTES ---', () => {
                     .send(data)
                     .end((err, res) => {
                         // console.log(res);
-                        // console.log(res.body);
+                        console.log(res.body);
                         expect(err).toBe(null)
                         expect(res.body).toHaveProperty("data", expect.any(Object))
                         expect(res.body.data).toHaveProperty('id', expect.any(Number))
@@ -82,6 +82,8 @@ describe('--- USER ROUTES ---', () => {
                     ...data
                 }
                 delete withoutEmail.email
+                console.log("sans email");
+                console.log(withoutEmail);
                 request(app)
                     .post('/register')
                     .send(withoutEmail)
@@ -92,8 +94,8 @@ describe('--- USER ROUTES ---', () => {
                         // console.log(res.body);
                         // console.log("RES STATUS");
                         // console.log(res.status);
-                        // expect(err).toBe(null)
-                        // expect(res.status).toBe(400)
+                        expect(err).toBe(null)
+                        expect(res.status).toBe(400)
                         expect(res.body).toHaveProperty('message', expect.any(String))
                         expect(res.body.errors.length).toBeGreaterThan(0)
                         expect(res.body).toHaveProperty('errors', expect.any(Array))
@@ -233,8 +235,8 @@ describe('--- USER ROUTES ---', () => {
                 .send(data)
                 .end((req, res) => {
                     // console.log(res);
-                    // console.log("TEST: RES BODY IS:");
-                    // console.log(res.body);
+                    console.log("TEST: RES BODY IS:");
+                    console.log(res.body);
                     expect(res.status).toBe(200)
                     expect(res.body).toHaveProperty("token", expect.any(String))
                     done()
@@ -259,33 +261,33 @@ describe('--- USER ROUTES ---', () => {
                     // console.log(res.status);
                     expect(err).toBe(null)
                     expect(res.status).toBe(400)
-                    expect(res.body).toHaveProperty("error", expect.any(String))
+                    expect(res.body).toHaveProperty("errors", expect.any(Array))
                     done()
                 })
             })
         })
 
 
-        // // LOGIN FAIL: WRONG EMAIL
-        // describe("LOGIN FAIL TYPE 2: WRONG EMAIL", () => {
-        //     test('SHOULD SEND ERROR 400 BECAUSE OF WRONG EMAIL', (done) => {
-        //         let wrongEmail = {...data, email: "sysadmina@mail.com"}
-        //         request(app)
-        //         .post("/login")
-        //         .send(wrongEmail)
-        //         .end((err, res) => {
-        //             // console.log(res);
-        //             console.log("TEST: RES BODY IS:");
-        //             console.log(res.body);
-        //             console.log("RES STATUS IS");
-        //             console.log(res.status);
-        //             expect(err).toBe(null)
-        //             // expect(res.status).toBe(400)
-        //             // expect(res.body).toHaveProperty("error", expect.any(String))
-        //             done()
-        //         })
-        //     })
-        // })
+        // LOGIN FAIL: WRONG EMAIL
+        describe("LOGIN FAIL TYPE 2: WRONG EMAIL", () => {
+            test('SHOULD SEND ERROR 400 BECAUSE OF WRONG EMAIL', (done) => {
+                let wrongEmail = {...data, email: "sysadmina@mail.com"}
+                request(app)
+                .post("/login")
+                .send(wrongEmail)
+                .end((err, res) => {
+                    // console.log(res);
+                    // console.log("TEST: RES BODY IS:");
+                    // console.log(res.body);
+                    // console.log("RES STATUS IS");
+                    // console.log(res.status);
+                    expect(err).toBe(null)
+                    expect(res.status).toBe(400)
+                    expect(res.body).toHaveProperty("errors", expect.any(Array))
+                    done()
+                })
+            })
+        })
 
 
     })

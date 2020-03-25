@@ -6,6 +6,10 @@ let payload
 function authentication(req, res, next) {
     console.log(">>> AUTHENTICATION <<<");
     try {
+        // console.log("WHAT IS REQ");
+        // console.log(req);
+        // console.log("what is req headers? \n");
+        // console.log(req.headers);
         token = req.headers.token
         console.log("token is");
         console.log(token);
@@ -25,7 +29,7 @@ function authentication(req, res, next) {
             // console.log(response);
             // console.log(`RESPONSE ID:`);
             // console.log(response[0].id);
-            if((response[0].id === payload.id) && (payload.role === "admin")) {
+            if(response[0].id === payload.id) {
                 console.log(`AUTHENTICATION PASSED!`)
                 req.decoded = payload
                 next()

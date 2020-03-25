@@ -28,7 +28,7 @@ module.exports = function(err, req, res, next) {
                 console.log(err)
                 console.log(err.name)
                 message = {
-                    message: "Bad Request Default",
+                    message: err.message,
                     errors
                 }
                 res.status(400).json(message)
@@ -49,7 +49,15 @@ module.exports = function(err, req, res, next) {
                     message: "Not Authorized"
                 }
                 res.status(400).json(message)
-        
+                break;
+            case "Insufficient Stock":
+                message = {
+                    message: "Insufficient Stock",
+                    id: err.id,
+                    Stock: err.Stock
+                }
+                res.status(400).json(message)
+                break;
             default:
                 console.log(err)
                 console.log(err.msg)

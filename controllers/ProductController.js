@@ -3,7 +3,7 @@ const { Product } = require('../models')
 class ProductController {
     static addProduct(req, res, next){
         const { name, imageUrl, price, stock } = req.body
-        console.log(imageUrl);
+        // console.log(imageUrl);
         Product.create({
             name : name,
             image_url : imageUrl,

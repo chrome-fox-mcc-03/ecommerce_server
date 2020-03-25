@@ -10,6 +10,7 @@ function errorHandler(err, req, res, next){
             err.errors.forEach(element => {
                 errors.push(element.message)
             });
+            console.log(errors)
             message = {
                 message : 'Bad Request',
                 errors
@@ -17,7 +18,7 @@ function errorHandler(err, req, res, next){
             status = 400
             res.status(status).json(message)
             break;
-        case 'UniqueConstraintError':
+        case 'SequelizeUniqueConstraintError':
             // const errors = []
             err.errors.forEach(element => {
                 errors.push(element.message)

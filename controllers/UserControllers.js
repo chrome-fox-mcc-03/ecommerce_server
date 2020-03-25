@@ -16,16 +16,15 @@ class UserController {
             password,
             role
         })
-        .then((userCreated) => {
-            res.status(201).json({
-                "email" : userCreated.email,
-                "id" : userCreated.id,
-                "role" : userCreated.role
-            })
-        }).catch((err) => {
-            console.log(err, 'created');
-            next(err)
-        });
+            .then((userCreated) => {
+                res.status(201).json({
+                    "email" : userCreated.email,
+                    "id" : userCreated.id,
+                    "role" : userCreated.role
+                })
+            }).catch((err) => {
+                next(err)
+            });
     }
 
 

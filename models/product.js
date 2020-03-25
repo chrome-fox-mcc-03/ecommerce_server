@@ -5,10 +5,13 @@ module.exports = (sequelize, DataTypes) => {
   Product.init({
     name: {
       type : DataTypes.STRING,
-      allowNull : {
-        args : false,
-        msg : 'please insert product name'
-      },
+      allowNull : false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'product name cannot be null'
+        }
+      }
     },
     image_url: {
       type : DataTypes.STRING
@@ -16,28 +19,36 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type : DataTypes.INTEGER,
       allowNull : false,
-      validate : {
-        isNegative : (product) => {
-          if(product.price < 0){
-            throw new Error('price cannot be negative')
-          }
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'price cannot be null'
         },
-        isInt : {
-          args : true,
+        isNumeric: {
+          args: true,
+          msg: 'price should be number'
+        },
+        min: {
+          args: [0],
+          msg: 'price cannot be negative'
         }
       }
     },
     stock: {
       type : DataTypes.INTEGER,
       allowNull : false,
-      validate : {
-        isNegative : (product) => {
-          if(product.price < 0){
-            throw new Error('stock cannot be negative')
-          }
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'stock cannot be null'
         },
-        isInt : {
-          args : true,
+        isNumeric: {
+          args: true,
+          msg: 'stock should be number'
+        },
+        min: {
+          args: [0],
+          msg: 'stock cannot be negative'
         }
       }
     },

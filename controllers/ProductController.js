@@ -94,7 +94,11 @@ class ProductController {
             }
             Product.update(product, { where: { id }, returning: true })
                 .then(result => {
-                    res.status(200).json({ product: result[1][0], msg: 'Product updated!' })
+                    Product.findByPk(id, { include: [Category] })
+                                .then(product => {
+                                    res.status(200).json({ product, msg: 'Product updated!' })
+                                })
+                                .catch(next)
                 })
                 .catch(next)
         }

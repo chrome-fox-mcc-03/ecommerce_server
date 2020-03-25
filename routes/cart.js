@@ -8,6 +8,6 @@ router.get('/', CartController.findAllActive)
 router.post('/', CartController.addToCart)
 
 router.put('/:id', authorizationUser, CartController.reduceFromCart)
-// router.delete('/:id', authorizationUser, CartController.deleteCart)
+router.delete('/:id', authorizationUser, CartController.deleteCart)
 
 module.exports = router

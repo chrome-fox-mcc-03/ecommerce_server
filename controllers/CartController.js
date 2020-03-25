@@ -29,10 +29,12 @@ class CartController {
     static addToCart ( req, res, next ) {
         const ProductId = req.body.ProductId
         const UserId = req.decoded.id
+        let productStock;
         let productPrice;
 
         Product.findByPk(ProductId)
             .then((response) => {
+                productStock = response.stock
                 productPrice = response.price
                 return Cart.findOrCreate({
                     where: {
@@ -52,6 +54,14 @@ class CartController {
                 if (created) {
                     return cart
                 }
+                if (cart.quantity === productStock) {
+                    const err = {
+                        name: 'custom',
+                        status: 400,
+                        message: 'You reached stock limit'
+                    }
+                    throw err
+                }
                 return Cart.update({
                     UserId: UserId,
                     ProductId: ProductId,
@@ -67,7 +77,7 @@ class CartController {
             })
             .then((response) => {
                 res.status(200).json({
-                    data: 'Cart updated'
+                    message: 'Cart successfully updated'
                 })
             })
             .catch((err) => {
@@ -112,13 +122,30 @@ class CartController {
             })
             .then((response) => {
                 res.status(200).json({
-                    data: 'Cart updated'
+                    message: 'Cart successfully updated'
                 })
             })
             .catch((err) => {
                 next(err)
             })
+    }
 
+    static deleteCart (req, res, next) {
+        const CartId = req.params.id
+
+        Cart.destroy({
+            where: {
+                id: CartId
+            }
+        })
+            .then((response) => {
+                res.status(200).json({
+                    message: ['Cart successfully deleted']
+                })
+            })
+            .catch((err) => {
+                next(err)
+            })
     }
 }
 

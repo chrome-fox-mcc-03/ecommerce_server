@@ -4,7 +4,8 @@
     "password": "user",
     "database": "db_ecommerce_cms",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": false
   },
   "test": {
     "username": "user",

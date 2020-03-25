@@ -1,5 +1,6 @@
 'use strict';
 const { hashPassword } = require('../helpers/bcrypt')
+const email = require('../helpers/email')
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
   class User extends Model {}
@@ -44,13 +45,24 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (User, options) => {
         User.password = hashPassword(User.password)
+      },
+      afterCreate: (User, options) => {
+        const body = {
+          form: '"hacktiv8 shop" <hacktiv8shop@gmail.com',
+          to: User.email,
+          subject: 'H8 Shop',
+          text: 'Thanks For Registering on H8 Shop!!'
+        }
+        email.sendMail(body, (error, info) => {
+          if(error) console.log(error);
+          else console.log(info);
+        })
       }
     },
     sequelize
   })
   User.associate = function(models) {
-    User.belongsToMany(models.Product, { through: models.ProductUser })
-    User.hasMany(models.ProductUser)
+    User.hasOne(models.Cart)
   };
   return User;
 };

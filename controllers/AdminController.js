@@ -1,6 +1,5 @@
 const {
-    User,
-    Cart
+    User
 } = require('../models')
 const {
     comparePassword
@@ -23,8 +22,16 @@ class UserController {
             .then(response => {
                 if (response) {
                     if (comparePassword(password, response.password)) {
-                        return Cart.create({
-                            UserId: response.id
+                        let payload = {
+                            id: response.id,
+                            email: response.email,
+                            role: response.role
+                        }
+                        let token = getToken(payload)
+                        res.status(200).json({
+                            token,
+                            role: payload.role,
+                            payload
                         })
                     } else {
                         next({
@@ -39,52 +46,30 @@ class UserController {
                     })
                 }
             })
-            .then(response => {
-                let payload = {
-                    id: response.UserId,
-                    email,
-                    role: false,
-                    CartId: response.id
-                }
-                let token = getToken(payload)
-                res.status(200).json({
-                    token,
-                    role: payload.role,
-                    payload,
-                    email,
-                    CartId: response.id
-                })
-            })
             .catch(next)
     }
     static register(req, res, next) {
         let {
             email,
-            password
+            password,
+            role
         } = req.body
         User.create({
-            email,
-            password
-        })
-            .then(response => {
-                return Cart.create({
-                    UserId: response.id
-                })
+                email,
+                password,
+                role
             })
             .then(response => {
                 let payload = {
-                    id: response.UserId,
-                    email,
-                    role: false,
-                    CartId: response.id
+                    id: response.id,
+                    email: email,
+                    role: response.role
                 }
                 let token = getToken(payload)
                 res.status(201).json({
                     token,
                     role: payload.role,
-                    payload,
-                    email,
-                    CartId: response.id
+                    payload
                 })
             })
             .catch(next)

@@ -1,7 +1,7 @@
 const { Cart } = require('../models');
 
 module.exports = (req, res, next) => {
-  const userId = req.currentUserId;
+  const userId = req.UserId;
   const cartId = req.params.id;
   const ProductId = req.body.ProductId;
 

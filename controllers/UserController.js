@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const { checkPassword } = require("../helpers/bcrypt")
 const { createToken } = require("../helpers/jwt")
-const { customError } = require("../helpers/errorModel")
+const  customError  = require("../helpers/errorModel")
 
 let regParams
 let datum
@@ -96,7 +96,6 @@ class UserController {
         })
         .catch(err => {
             console.log("ERROR LOGIN FROM USER-CONTROLLER");
-            console.log(err,'ERRRRRRRRRRORRRRRRRRRRRRRRRRRRR');
             
             // console.log(err.message);
             // take err.code, err.message

@@ -4,6 +4,4 @@ function customError(code, message) {
     return err
 }
 
-module.exports = {
-    customError
-}
+module.exports = customError

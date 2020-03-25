@@ -8,8 +8,8 @@ cartRoute.use(authentication)
 
 cartRoute.get("/", CartController.showAll)
 cartRoute.post("/", CartController.createCart)
-cartRoute.patch("/add/:cartId", CartController.add2Cart)
-cartRoute.patch("/remove/:cartId", CartController.removeFromCart)
-// cartRoute.delete("/", CartController.deleteCart)
+cartRoute.patch("/add/:cartId", CartController.addQty)
+cartRoute.patch("/remove/:cartId", CartController.reduceQty)
+cartRoute.delete("/:cartId", CartController.deleteCart)
 
 module.exports = cartRoute

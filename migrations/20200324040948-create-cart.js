@@ -14,11 +14,8 @@ module.exports = {
       ProductId: {
         type: Sequelize.INTEGER
       },
-      totalQty: {
+      total_qty: {
         type: Sequelize.INTEGER
-      },
-      totalPrice: {
-        type: Sequelize.FLOAT
       },
       status: {
         type: Sequelize.ENUM,

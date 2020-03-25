@@ -1,7 +1,6 @@
-
 const { Sequelize } = require('../models');
 
-module.exports = function(err, req, res, next) {
+function errorHandler(err, req, res, next) {
     // console.log(err instanceof Sequelize.ValidationError);
     console.log("MASUK ERROR ");
     console.log(err);
@@ -25,3 +24,4 @@ module.exports = function(err, req, res, next) {
         })
     }
 }
+module.exports = errorHandler

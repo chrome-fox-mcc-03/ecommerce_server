@@ -5,8 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   Cart.init({
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER,
-    totalQty: DataTypes.INTEGER,
-    totalPrice: DataTypes.FLOAT,
+    total_qty: DataTypes.INTEGER,
     status: {
       type: DataTypes.ENUM,
       values: ['pending', 'checkout'],

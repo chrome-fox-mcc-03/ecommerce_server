@@ -29,7 +29,7 @@ class CartProductController {
       .then(response => {
         addedItem.price = response.price
         
-        if (response.stock <= quantity) {
+        if (response.stock >= quantity) {
           addedItem.name = response.name
           return CartProduct.create({
             ProductId, quantity, CartId

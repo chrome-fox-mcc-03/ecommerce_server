@@ -7,7 +7,7 @@ const { UserController, CartController, ProductController, CartProductController
 const authentication = require('../middlewares/authentication');
 const authorization = require('../middlewares/authorization');
 const adminAuth = require('../middlewares/adminAuth.js');
-
+  
 router.get('/', (req, res, next) => res.send("403 Forbidden"));
 router.post('/login', UserController.login);
 router.post('/register', UserController.register);

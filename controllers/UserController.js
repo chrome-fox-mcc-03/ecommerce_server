@@ -21,7 +21,7 @@ class UserController {
             }
 
             const token = generateToken(payload)
-            res.status(200).json({ token, fullname: response.fullname })
+            res.status(200).json({ token, fullname: response.fullname, email: response.email, createdAt: response.createdAt })
           }
           else {
             next({
@@ -55,13 +55,14 @@ class UserController {
           fullname: response.fullname,
           isAdmin: response.isAdmin
         }
+        
         token = generateToken(userData);
         return Cart.create({
           UserId: response.id
         })
       })
       .then(_ => {
-        res.status(201).json({token, fullname: userData.fullname})
+        res.status(201).json({token, fullname: userData.fullname, email: response.email, createdAt: response.createdAt})
       })
       .catch(err => {
         next(err)

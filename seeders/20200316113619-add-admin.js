@@ -13,7 +13,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        email: "notAdmin@admin.com",
+        email: "ace@ace.com",
         password: hashPassword('qweqwe'),
         fullname: "Not Andreas Anggara",
         isAdmin: false,

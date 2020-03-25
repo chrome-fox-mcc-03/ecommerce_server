@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const ControllerUser = require('./../controllers/controllerUser')
-const authenticationAdmin = require('../middlewares/authenticationAdmin')
+// const authenticationAdmin = require('../middlewares/authenticationAdmin')
 const userRoutes = require('./user')
 const productRoutes = require('./product')
 const customerRoutes = require('./customer')
@@ -13,7 +13,7 @@ router.use('/cartProducts', cartProductRoutes)
 
 router.post('/register', ControllerUser.register)
 router.post('/login', ControllerUser.login)
-router.use(authenticationAdmin)
+// router.use(authenticationAdmin)
 router.use('/users', userRoutes)
 router.use('/products', productRoutes)
 

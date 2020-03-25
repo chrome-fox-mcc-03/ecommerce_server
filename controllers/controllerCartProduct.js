@@ -18,7 +18,8 @@ class ControllerCartProduct {
 	}
 
 	static addCartProduct (req, res, next) {
-		const { CartId, ProductId, quantity } = req.body
+		let { CartId, ProductId, quantity } = req.body
+		quantity = Number(quantity)
 		const CustomerId = req.decoded.id
 		Cart.findByPk(CartId)
 			.then(result => {
@@ -34,12 +35,32 @@ class ControllerCartProduct {
 						}
 						throw error
 					} else {
-						return CartProduct.create({
-							CartId,
-							quantity,
-							ProductId
+						return CartProduct.findAll({
+							where: {
+								CartId,
+								ProductId
+							}
 						})
 					}
+				}
+			})
+			.then(result => {
+				if (result.length > 0) {
+					const newQuantity = quantity + Number(result[0].quantity)
+					return CartProduct.update({
+						quantity: newQuantity
+					}, {
+						where: {
+							id: result[0].id
+						},
+						returning: true
+					})
+				} else {
+					return CartProduct.create({
+						CartId,
+						quantity,
+						ProductId
+					})
 				}
 			})
 			.then(result => {

@@ -14,10 +14,12 @@ class CartItemController {
         })
             .then((result) => {
                 if(result){
+                    let totalQuantity = Number((result.dataValues.quantity) + req.body.quantity)
+                    // console.log('totalquantity',totalQuantity)
                     return CartItem.update({
                         ProductId: req.body.product.id,
                         CartId: Number(req.headers.cartid),
-                        quantity: (Number(result.dataValues.quantity) += Number(req.body.quantity)),
+                        quantity: totalQuantity,
                         isPaid: false
                     }, {
                         where: {

@@ -1,9 +1,15 @@
-const { User } = require('../models')
+const { User, Cart } = require('../models')
 const { comparePassword } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwtoken')
 class UserController {
     static register(req, res, next) {
-        const { email, password, role } = req.body
+        let role =''
+        if(req.params.email){
+            role = 'customer'
+        } else {
+            role = 'admin'
+        }
+        const { email, password } = req.body
         
         User.create({
             email,
@@ -22,10 +28,9 @@ class UserController {
         });
     }
 
+
     static login(req, res, next){
         const { email } = req.body
-        // console.log(email);
-        
         User.findOne({
             where: {
                 email
@@ -34,7 +39,6 @@ class UserController {
         .then((userFound) => {
             if(userFound){
                 const password = req.body.password
-                
                 const payload = {
                     id: userFound.id,
                     email: userFound.email
@@ -43,6 +47,7 @@ class UserController {
                 const checkPassValidity = comparePassword(password, userFound.password)
                 
                 if(checkPassValidity){
+
                     const access_token = signToken(payload)
                     req.headers.access_token = access_token
 

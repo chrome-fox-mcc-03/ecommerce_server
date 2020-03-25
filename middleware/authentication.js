@@ -6,9 +6,11 @@ function authentication(req, res, next){
     try {
         
         const access_token = req.headers.access_token
-        
+        console.log(access_token)
         const decoded = jwt.verify(access_token, process.env.SECRET)
-        
+        req.user = decoded
+        console.log(req.user)
+
         if (decoded) {
             
             User.findOne({

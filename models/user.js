@@ -46,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
     hooks : {
       beforeCreate : (user) => {
         user.password = hashPassword(user.password)
-        user.role = 'admin'
       }
     },
     sequelize
@@ -54,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     // associations can be defined here
+    User.hasOne(models.Cart)
   };
   return User;
 };

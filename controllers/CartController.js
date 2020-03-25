@@ -8,7 +8,6 @@ class CartController {
         Cart.findAll({
             where: {
                 UserId: req.decoded.id,
-                isPaid: false,
                 quantity: {
                     [gt]: 0
                 }

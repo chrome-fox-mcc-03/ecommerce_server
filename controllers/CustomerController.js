@@ -128,15 +128,15 @@ class CustomerController {
         })
       })
       .then(result => {
-        console.log(result)
+        // console.log(result)
         let cartItems = []
         result.forEach(item => {
           let cartItem = {
             name: item.Product.name,
             quantity: item.quantity,
             seller: item.Product.User.email.split('@')[0],
-            stock: item.Product.stock,
-            price: item.Product.price
+            stock: Number(item.Product.stock),
+            price: Number(item.Product.price)
           }
           cartItems.push(cartItem)
         })
@@ -150,7 +150,56 @@ class CustomerController {
       })
   }
   static appendToCart(req, res, next) {
-    res.status(200).json('append item to cart')
+    // res.status(200).json('append item to cart')
+    const { itemId, amount } = req.body;
+    const token = req.headers.token;
+    const customer = getPayload(token);
+    let CartId
+
+    if (itemId && amount) {
+      Cart.findOne({
+        where: {
+          CustomerId: customer.id
+        }
+      })
+        .then(result => {
+          CartId = result.id
+          return Product.findOne({
+            where: {
+              id: itemId
+            }
+          })
+        })
+        .then(result => {
+          if (result) {
+            if (result.stock >= amount) {
+              return CartProducts.create({
+                CartId,
+                ProductId: itemId,
+                quantity: amount
+              })
+            } else {
+              throw appError(400, 'insufficient product stock')
+            }
+          } else {
+            throw appError(404, 'itemid not found')
+          }
+        })
+        .then(_ => {
+          res.status(201).json({
+            message: 'added to cart',
+            itemId,
+            amount
+          })
+        })
+        .catch(err => {
+          console.log(err)
+          next(err)
+        })
+    } else {
+      next(appError(400, 'itemid & amount required'))
+    }
+
   }
   static removeFromCart(req, res, next) {
     res.status(200).json('remove item from cart')

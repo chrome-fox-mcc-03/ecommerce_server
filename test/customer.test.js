@@ -8,7 +8,10 @@ const appPayload = require('../helpers/appPayload')
 afterAll((done) => {
     queryInterface.bulkDelete("Customers", {})
         .then(_ => {
-            done();
+          return queryInterface.bulkDelete("CartProducts", {})
+        })
+        .then(_ => {
+          done();
         })
         .catch(err => {
             done(err);
@@ -96,7 +99,6 @@ describe('customer route', () => {
           .post("/customer/register")
           .send(duplicate)
           .end((err, res) => {
-            console.log(res.body.errors)
             expect(err).toBeNull()
             expect(res.status).toBe(400)
             expect(res.body).toHaveProperty('message', 'bad request')
@@ -321,7 +323,183 @@ describe('customer route', () => {
       })
     })
   })
-  // describe('customer add item to cart', () => {})
+  describe('customer add item to cart', () => {
+    describe('customer add item to cart error', () => {
+      test('invalid user token', (done) => {
+        let invalidToken = {...customer2}
+        invalidToken.token = 'not valid token'
+        let validItem = {
+          amount: 1,
+          itemId: 1
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(validItem)
+          .set({
+            token: invalidToken.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'invalid token')
+            done()
+          })
+      })
+      test('user token nonexist', (done) => {
+        let validUser = {...customer2}
+        let validItem = {
+          amount: 1,
+          itemId: 1
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(validItem)
+          .set({
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'token not found')
+            done()
+          })
+      })
+      test('item id nonexist', (done) => {
+        let validUser = {...customer2}
+        let noItemId = {
+          amount: 1
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(noItemId)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'itemid & amount required')
+            done()
+          })
+      })
+      test('quantity nonexist', (done) => {
+        let validUser = {...customer2}
+        let noQty = {
+          itemId: 1
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(noQty)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'itemid & amount required')
+            done()
+          })
+      })
+      test('item id invalid', (done) => {
+        let validUser = {...customer2}
+        let invalidItemId = {
+          itemId: 99999,
+          amount: 1
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(invalidItemId)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(404)
+            expect(res.body).toHaveProperty('error', 'itemid not found')
+            done()
+          })
+      })
+      test('quantity null', (done) => {
+        let validUser = {...customer2}
+        let invalidQuantity = {
+          itemId: 1,
+          amount: null
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(invalidQuantity)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'itemid & amount required')
+            done()
+          })
+      })
+      test('quantity invalid', (done) => {
+        let validUser = {...customer2}
+        let invalidQuantity = {
+          itemId: 1,
+          amount: 'not a number'
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(invalidQuantity)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'insufficient product stock')
+            done()
+          })
+      })
+      test('quantity greater than item stock', (done) => {
+        let validUser = {...customer2}
+        let stockInsufficient = {
+          itemId: 1,
+          amount: 10000
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(stockInsufficient)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(400)
+            expect(res.body).toHaveProperty('error', 'insufficient product stock')
+            done()
+          })
+      })
+    })
+    describe('customer add item to cart success', () => {
+      test('valid user token, valid item id, and stock > quantity', (done) => {
+        let validUser = {...customer2}
+        let addedItem = {
+          itemId: 1,
+          amount: 1
+        }
+        request(app)
+          .post("/customer/cart")
+          .send(addedItem)
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            expect(res.status).toBe(201)
+            expect(res.body).toHaveProperty('message', 'added to cart')
+            expect(res.body).toHaveProperty('itemId', addedItem.itemId)
+            expect(res.body).toHaveProperty('amount', addedItem.amount)
+            done()
+          })
+      })
+    })
+  })
   describe('customer fetch cart', () => {
     describe('customer fetch error', () => {
       test('user token nonexist', (done) => {

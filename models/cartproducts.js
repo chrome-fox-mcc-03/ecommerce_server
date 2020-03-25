@@ -14,15 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: 'quantyty is required'
+          msg: 'quantity is required'
         },
         notEmpty: {
           args: true,
           msg: 'quantity is required'
         },
-        isNum: {
+        isInt: {
           args: true,
-          msg: 'quantity must be number'
+          msg: 'quantity must be integer'
         },
         min: {
           args: '0',

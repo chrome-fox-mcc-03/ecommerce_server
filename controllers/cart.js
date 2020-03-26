@@ -36,22 +36,26 @@ class CartController {
         let { ProductId, totalPrice }  = req.body
         Cart.findOne({
             where: {
-                ProductId
+                UserId,
+                ProductId,
+                status: false
             },
             include: [ Product ]
         })
-            .then(cart => {                
-                if(cart) {
+            .then(cart => {                                
+                if(cart) {                    
                 quantityItem = cart.quantity                   
                 return Cart.update({
                     quantity: quantityItem + 1,
                     totalPrice: (quantityItem + 1) * cart.Product.price
                 }, {
                     where: {
-                        ProductId
+                        UserId,
+                        ProductId,
+                        status: false
                     }
                 })
-                } else {
+                } else {                    
                 return Cart.create({
                         quantity: 1,
                         totalPrice,
@@ -60,7 +64,7 @@ class CartController {
                     })
                 }
             })
-            .then(cart => {
+            .then(cart => {                
                 res.status(201).json(cart)
             })
             .catch(err => {

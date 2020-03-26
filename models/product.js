@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     }, 
     stock: DataTypes.INTEGER,
+    category: DataTypes.STRING,
     UserId: DataTypes.INTEGER
   }, { sequelize,
     hooks: {

@@ -1,8 +1,10 @@
 const { validateToken } = require('../helpers/jwt');
 const { User } = require('../models')
 
-module.exports = (req,res, next) => {
+module.exports = (req, res, next) => {
     let token = req.headers.token;
+    // console.log(req.params.id);
+    
     if(!token) {
         next({
             status: 401,
@@ -28,7 +30,6 @@ module.exports = (req,res, next) => {
                 next()
             })
             .catch(error => {
-                
                 res.status(401).json(`this email haven't been signed up`)
             })
         }

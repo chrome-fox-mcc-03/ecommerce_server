@@ -23,8 +23,8 @@ class UserController {
         })
         .then((result) => {
             if(result) {
-                let {id} = result
-                let passwordDb = result.password
+                let {id} = result.dataValues
+                let passwordDb = result.dataValues.password
                 let compared = comparePassword(password,passwordDb)
                 if(compared){
                     let token = getToken({email,id})

@@ -7,7 +7,7 @@ module.exports = {
         User.findOne({
             where: {
                 id: decoded.id,
-                email:decoded.email
+                email: decoded.email
             }
         })
         .then((result) => {

@@ -1,6 +1,6 @@
 const routers = require('express').Router()
 const UserController = require('../controllers/userController')
-const ProductController = require('../controllers/cartController')
+const ProductController = require('../controllers/productController')
 const CartController = require('../controllers/cartController')
 const {authorization} = require('../middlewares/authorization')
 const {authentication} = require('../middlewares/authentication')

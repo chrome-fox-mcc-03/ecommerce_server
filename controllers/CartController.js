@@ -140,7 +140,7 @@ class CartController {
         })
             .then((response) => {
                 res.status(200).json({
-                    message: ['Cart successfully deleted']
+                    message: 'Cart successfully deleted'
                 })
             })
             .catch((err) => {

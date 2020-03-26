@@ -643,7 +643,7 @@
 
 * **URL**
 
-  /cart
+  /carts
 
 * **Method:**
 
@@ -697,7 +697,7 @@
 
 * **URL**
 
-  /cart/addCart
+  /carts/addCart
 
 * **Method:**
 
@@ -709,6 +709,11 @@
 
   token
 
+* **Data Params**
+
+  `quantity=[integer]`
+  
+  `ItemId=[integer]` 
 
 * **Success Response:**
 
@@ -753,7 +758,7 @@
 
 * **URL**
 
-  /cart/checkout
+  /carts/checkout
 
 * **Method:**
 
@@ -815,7 +820,7 @@
 
 * **URL**
 
-  /cart/history
+  /carts/history
 
 * **Method:**
 

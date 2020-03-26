@@ -71,6 +71,7 @@ module.exports =
 
     static register (req, res, next) {
       const { username, email, password } = req.body
+      console.log(username, email, password   )
       return sequelize.transaction(transaction => {
         return User
           .create(

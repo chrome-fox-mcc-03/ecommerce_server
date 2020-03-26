@@ -438,7 +438,7 @@
 
   None
 
-**Customer Register**
+**Customer Login**
 ----
   Request customer token for registered credentials
 
@@ -490,6 +490,406 @@
   Email not registered or wrong email & password combination
   * **Code:** 404 NOT FOUND <br />
     **Content:** `{ error : "wrong email/password" }`  
+
+* **Notes:**
+
+  None
+
+**Customer Fetch Shop Product**
+----
+  Request list of product from database
+
+* **URL**
+
+  /customer/shop
+
+* **Method:**
+  
+  GET
+  
+*  **URL Params**
+
+   `None`
+
+   **Required:**
+ 
+   ``
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+
+  `None`
+
+  **Required:**
+
+  `None`
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `{ token: "a_customer_token" }`
+
+* **Success Response:**
+  
+  Array of product items `{id, name, image_url, price, stock}`
+
+  * **Code:** 200 <br />
+    **Content:** `{ id: 1, name: "product_name", image_url: "http://foo.bar/image.jpg", price: "1000", stock:"10" }`
+ 
+* **Error Response:**
+
+  Customer did not include token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "token not found" }`  
+
+  Customer using invalid token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "invalid token" }`  
+
+* **Notes:**
+
+  None
+
+**Customer Add Product to Cart**
+----
+  Customer add some amount of product, greater than zero and less/equal to product stock, to the current customer
+
+* **URL**
+
+  /customer/cart
+
+* **Method:**
+  
+  POST
+  
+*  **URL Params**
+
+   `None`
+
+   **Required:**
+ 
+   `None`
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+
+  itemId is id of chosen product  
+  amount is quantity of the product  
+  `{ itemId, amount }`
+
+  **Required:**
+
+  `itemId={integer}`  
+  `amount={integer}`
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `{ token: "a_customer_token" }`
+
+* **Success Response:**
+  
+  Object of success cart `{ message, itemId, cartItemId, amount }`
+
+  * **Code:** 200 <br />
+    **Content:** `{ message: "added to cart", itemId: 1, cartItemId: 1, amount: 10 }`
+ 
+* **Error Response:**
+
+  Customer did not include token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "token not found" }`  
+
+  Customer using invalid token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "invalid token" }`  
+
+  Request did not include itemId and/or amount, or include with invalid value
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "itemid & amount required" }`  
+
+  itemId included did not belongs to any of the products
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "itemid not found" }`  
+
+  amount requested is greater than current product stock
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "insufficient product stock" }`  
+
+* **Notes:**
+
+  None
+
+**Customer Fetch Cart**
+----
+  Request list of product from cart database
+
+* **URL**
+
+  /customer/cart
+
+* **Method:**
+  
+  GET
+  
+*  **URL Params**
+
+   `None`
+
+   **Required:**
+ 
+   ``
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+
+  `None`
+
+  **Required:**
+
+  `None`
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `{ token: "a_customer_token" }`
+
+* **Success Response:**
+  
+  Array of cart items `{id, name, image_url, price, stock, quantity}`
+
+  * **Code:** 200 <br />
+    **Content:** `{ id: 1, name: "product_name", image_url: "http://foo.bar/image.jpg", price: "1000", stock:"10", quantity: "9" }`
+ 
+* **Error Response:**
+
+  Customer did not include token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "token not found" }`  
+
+  Customer using invalid token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "invalid token" }`  
+
+* **Notes:**
+
+  None
+
+**Customer Update Cart Item**
+----
+  Request information update for an item in cart database. Customer can only update quantity.
+
+* **URL**
+
+  /customer/cart/:id
+
+* **Method:**
+  
+  PATCH
+  
+*  **URL Params**
+
+   `id` as id of requested cart item
+
+   **Required:**
+ 
+   `id={integer}`
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+
+  itemId is id of chosen product  
+  amount is quantity of the product  
+  `{ itemId, amount }`
+
+  **Required:**
+
+  `itemId={integer}`  
+  `amount={integer}`
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `{ token: "a_customer_token" }`
+
+* **Success Response:**
+  
+  Message from server `{message}`
+
+  * **Code:** 200 <br />
+    **Content:** `{ message: "product qty updated" }`
+ 
+* **Error Response:**
+
+  Customer did not include token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "token not found" }`  
+
+  Customer using invalid token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "invalid token" }`  
+
+  Customer not include cart item id on url params
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "cart item id required" }`  
+
+  Customer editing cart item owned by other customer
+  * **Code:** 401 NOT AUTHORIZED <br />
+    **Content:** `{ error : "not authorized for cart item id" }` 
+
+* **Notes:**
+
+  None
+
+**Customer Delete Cart Item**
+----
+  Request to delete an item from cart with id as key.
+
+* **URL**
+
+  /customer/cart/:id
+
+* **Method:**
+  
+  DELETE
+  
+*  **URL Params**
+
+   `id` as id of requested cart item
+
+   **Required:**
+ 
+   `id={integer}`
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+ 
+  `None`
+
+  **Required:**
+
+  `None` 
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `{ token: "a_customer_token" }`
+
+* **Success Response:**
+  
+  Message from server `{message}`
+
+  * **Code:** 200 <br />
+    **Content:** `{ message: "item deleted" }`
+ 
+* **Error Response:**
+
+  Customer did not include token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "token not found" }`  
+
+  Customer using invalid token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "invalid token" }`  
+
+  Customer not include cart item id on url params
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "cart item id required" }`  
+
+  Customer removing cart item owned by other customer
+  * **Code:** 401 NOT AUTHORIZED <br />
+    **Content:** `{ error : "not authorized for cart item id" }` 
+
+* **Notes:**
+
+  None
+
+**Customer Clear Cart**
+----
+  Request to delete all items on customer cart.
+
+* **URL**
+
+  /customer/cart/all
+
+* **Method:**
+  
+  DELETE
+  
+*  **URL Params**
+
+   `None`
+
+   **Required:**
+ 
+   `None`
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+ 
+  `None`
+
+  **Required:**
+
+  `None` 
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `{ token: "a_customer_token" }`
+
+* **Success Response:**
+  
+  Message from server `{message}`
+
+  * **Code:** 200 <br />
+    **Content:** `{ message: "cart cleared successfully" }`
+ 
+* **Error Response:**
+
+  Customer did not include token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "token not found" }`  
+
+  Customer using invalid token
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "invalid token" }`  
 
 * **Notes:**
 

@@ -6,7 +6,8 @@ class Controller {
     Cart.findAll({
       where: {
         UserId: id
-      }
+      },
+      include: ['Product']
     })
       .then(carts => {
         res.status(200).json(carts)

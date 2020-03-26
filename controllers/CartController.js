@@ -1,4 +1,4 @@
-const { Cart, User } = require("../models");
+const { Cart, User, Product } = require("../models");
 
 class CartController {
   static findAll(req, res, next) {
@@ -13,7 +13,8 @@ class CartController {
           return Cart.findAll({
             where: {
               UserId: found.id
-            }
+            },
+            include: [Product]
           });
         } else {
           next({

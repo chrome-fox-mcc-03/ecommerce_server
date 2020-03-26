@@ -10,6 +10,7 @@ function authentication(req, res, next) {
     } else {
         try {
             let user = jwt.verify(token);
+            console.log(user, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             User.findByPk(user.id)
                 .then((result) => {
                     if (result) {
@@ -20,7 +21,7 @@ function authentication(req, res, next) {
                         throw new CustomError(401, invalid);
                     }
                 }).catch((err) => {
-                    throw new CustomError(401, invalid);
+                    next (new CustomError(401, invalid));
                 });
         } catch (error) {
             next(error);

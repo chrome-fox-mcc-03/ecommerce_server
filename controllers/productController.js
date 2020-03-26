@@ -40,7 +40,6 @@ class Controller {
     }
 
     static create(req, res, next) {
-        console.log(req.body, "<<<<<<<<<<<<<<<<<<<<<<");
         Product.create({
             name: req.body.name,
             img_url: req.body.img_url,

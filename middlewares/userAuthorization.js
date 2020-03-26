@@ -1,19 +1,19 @@
-const { User } = require('../models');
-const notFound = "User Not Found!";
+const { Cart } = require('../models');
+const notFound = "Cart Not Found!";
 const unAuthorize = "You are unauthorize!";
 const CustomError = require('../helpers/customError');
 
 function authorization(req, res, next) {
     let userId = req.userId;
-
-    User.findOne({
+    let param = req.params.id;
+    Cart.findOne({
         where: {
-            id: userId
+            id: param
         }
     })
         .then((result) => {
             if (result) {
-                if (result.role == true) {
+                if (result.UserId == userId) {
                     next();
                 } else {
                     throw new CustomError(401, unAuthorize)

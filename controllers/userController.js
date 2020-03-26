@@ -38,8 +38,7 @@ class UserController {
         User.create({
             email,
             password,
-            name,
-            role
+            name
         })
             .then((result) => {
                 let payload = {

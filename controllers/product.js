@@ -15,15 +15,15 @@ module.exports = {
       .catch(next)
   },
   findAllProduct(req, res, next) {
-    const { filter } = req.params
-
+    let result = []
     Product.findAll({
       include: [Type],
       order: [['id', 'ASC']]
     })
       .then(data => {
+        data.forEach(el => el.stock > 0 ? result.push(el) : '')
         res.status(200).json({
-          data
+          data: result
         })
       })
       .catch(next)

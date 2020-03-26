@@ -75,7 +75,7 @@ module.exports = {
     Cart.findAll({
       where: { UserId, status: true },
       include: [Product],
-      order: [['id', 'ASC']]
+      order: [['id', 'DESC']]
     })
       .then(data => {
         res.status(200).json({
@@ -95,7 +95,7 @@ module.exports = {
       .then(data => {
         return sequelize.transaction(t => {
           data.forEach(el => {
-            if (el.Product.stock > el.amount) {
+            if (el.Product.stock >= el.amount) {
               promises.push(
                 Cart.update(
                   { status: true },

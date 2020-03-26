@@ -94,6 +94,14 @@ class ProductController {
       })
       .catch(next)
   }
+
+  static getAll (req, res, next) {
+    Product.findAll()
+      .then(products => {
+        res.status(200).json(products)
+      })
+      .catch(next)
+  }
 }
 
 module.exports = ProductController

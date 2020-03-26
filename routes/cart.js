@@ -11,5 +11,6 @@ router.get('/', CartController.findAll);
 router.patch('/increase/:cartId', customerAuth, CartController.increase);
 router.patch('/decrease/:cartId', customerAuth, CartController.decrease);
 router.delete('/:cartId', customerAuth, CartController.delete);
+router.post('/checkout', CartController.checkout);
 
 module.exports = router;

@@ -142,6 +142,42 @@ class CartController {
                 next(err)
             })
     }
+
+    static checkout(req, res, next) {
+        // let ProductIds = [];
+        // Cart.findAll({
+        //     where: {
+        //         UserId: req.currentUserId
+        //     },
+        //     include: [Product]
+        // })
+        //     .then(carts => {
+        //         for (let i = 0; i < carts.length; i++) {
+        //             ProductIds.push(carts[i].Product.id)
+        //         }
+        //         for (let i = 0; i < ProductIds.length; i++) {
+                    
+        //         }
+        //         console.log(ProductIds);
+        //         res.status(200).json(carts)
+        //     })
+            // .catch(err => {
+            //     next(err)
+            // })
+        // Cart.findOne({
+        //     where: {
+        //         UserId: req.currentUserId,
+        //         ProductId: req.body.ProductId
+        //     },
+        //     include: [Product]
+        // })
+        //     .then(cart => {
+        //         res.status(200).json(cart)
+        //     })
+        //     .catch(err => {
+        //         next(err)
+        //     })
+    }
 }
 
 module.exports = CartController

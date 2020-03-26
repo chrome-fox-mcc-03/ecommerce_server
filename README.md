@@ -9,8 +9,18 @@ Products endpoints:
 - `DELETE /products/:id`
 
 User admin endpoints:
-- `POST/users/register`
-- `POST/users/login`
+- `POST /users/register`
+- `POST /users/login`
+
+User Customer endpoints:
+- `POST /customers/register`
+- `POST /customers/login`
+
+Carts endpoints:
+- `GET /carts`
+- `POST /carts`
+- `PUT /carts/:id`
+- `DELETE /carts/:id`
 
 ------
 
@@ -478,5 +488,384 @@ User admin endpoints:
 }
 ~~~~
 
+------
+
+**Register User Customer**
+
+------
+
+- URL
+
+  `/customers/register`
+
+- Method:
+  `POST`
+
+- Request Body:
+  
+  + name: string
+  + email: string
+  + password: string
+  
+- Success Response:
+
+​      **Code:** 201
+~~~~json
+{
+    "id": 2,
+    "name": "admin",
+    "email": "admin@mail.com",
+  }
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+   **Code:** 400
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Custom Validation Error"
+  ]
+}
+~~~~
+
+------
+
+**Login User Customer**
+
+------
+
+- URL
+
+  `/customers/login`
+
+- Method:
+  `POST`
+  
+- Request Body:
+
+  + email: string
+  + password: string
+  
+- Success Response:
+
+​      **Code:** 200
+~~~~json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTU4NDcyMDQwNn0.B9P8bSYrAP_GlposyMz8FF5NnFhG2iu1xbf4iOyTYyA",
+  "name":
+  "customer a"
+}
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+   **Code:** 400
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Email/Password is wrong"
+  ]
+}
+~~~~
+
+------
+
+**Get Carts**
+
+------
+- URL
+
+  `/carts`
+
+- Method:
+  `GET`
+  
+- Request Headers:  
+  
+  + token: string 
+
+- Success Response:
+
+​      **Code:** 200
+~~~~json
+[ {
+    "id": 22,
+    "CartId": 18,
+    "ProductId": 4,
+    "quantity": 8,
+    "isPaid": false,
+    "createdAt": "2020-03-25T15:09:59.722Z",
+    "updatedAt": "2020-03-26T07:51:39.233Z",
+    "Product": {
+      "id": 4,
+      "name": "Durian Frozen",
+      "image_url": "https://i.imgur.com/5dAvg23.jpg",
+      "price": 85000,
+      "stock": 10,
+      "category": "Other",
+      "description": "harga tertera per pack, isi kurang lebih isi 10 atau 1 kg",
+      "createdAt": "2020-03-24T14:55:21.747Z",
+      "updatedAt": "2020-03-24T14:55:21.747Z"
+    },
+    "Cart": {
+      "id": 18,
+      "UserId": 6,
+      "createdAt": "2020-03-25T15:05:39.514Z",
+      "updatedAt": "2020-03-25T15:05:39.514Z"
+    }
+  }]
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+------
+
+**Add Cart**
+
+------
+
+- URL
+
+  `/carts`
+
+- Method:
+  `POST`
+  
+- Request Body:
+  
+  + quantity: string
+  + ProductIdl: string
+  + isPaid: boolean
+  
+- Request Headers:
+  
+  + token: string
+  
+- Success Response:
+
+​      **Code:** 201
+~~~~json
+{
+  "id": 30,
+  "CartId": 21,
+  "ProductId": 3,
+  "quantity": 9,
+  "isPaid": false,
+  "createdAt": "2020-03-26T07:19:21.117Z",
+  "updatedAt": "2020-03-26T08:27:40.357Z"
+}
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+   **Code:** 400
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Custom Validation Error"
+  ]
+}
+~~~~
+
+   **Code:** 403
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Forbidden"
+  ]
+}
+~~~~
+
+------
+
+**Update  Cart**
+
+------
+
+- URL
+
+  `/carts/:id`
+
+- Method:
+  `PUT`
+  
+- Request Body:
+  
+  + quantity: integer
+  + isPaid: boolean
 
 
+- Request Headers:  
+  + token: string
+
+
+- Success Response:
+
+​      **Code:** 201
+~~~~json
+{
+  "id": 22,
+  "CartId": 18,
+  "ProductId": 4,
+  "quantity": 5,
+  "isPaid": false,
+  "createdAt": "2020-03-25T15:09:59.722Z",
+  "updatedAt": "2020-03-26T08:31:19.309Z"
+}
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+   **Code:** 400
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Custom Validation Error"
+  ]
+}
+~~~~
+
+   **Code:** 403
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Forbidden"
+  ]
+}
+~~~~
+OR
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Unauthorized"
+  ]
+}
+~~~~
+
+
+------
+
+**Delete Cart**
+
+------
+
+- URL
+
+  `/carts/:id`
+
+- Method:
+  `DELETE`
+  
+- Request Headers:  
+  
+  + token: string
+
+
+- Success Response:
+
+​      **Code:** 201
+~~~~json
+1
+~~~~
+
+- Error Response:
+
+  **Code:** 500
+
+~~~~json
+{
+  "message": "internal server error",
+  "errors": [
+    "internal server error"
+  ]
+}
+~~~~
+
+​    **Code:** 403
+
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Forbidden"
+  ]
+}
+~~~~
+   OR
+~~~~json
+{
+  "message": "Bad Request",
+  "errors": [
+    "Unauthorized"
+  ]
+}
+~~~~

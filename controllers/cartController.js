@@ -110,7 +110,7 @@ class controller {
                 res.status(200).json(result)
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 
@@ -134,7 +134,7 @@ class controller {
                 res.status(200).json(result)
             })
             .catch(err => {
-                res.status(400).json(err)
+                next(err)
             })
     }
 

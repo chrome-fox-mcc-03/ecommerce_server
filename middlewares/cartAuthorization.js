@@ -2,7 +2,6 @@ const { Cart, CartItem } = require('../models/index');
 
 module.exports = (req, res, next) => {
     let userId = req.decoded.id
-    // console.log(req.decoded)
     let CartItemId = req.params.id
     console.log(CartItemId, 'cartitem id')
     let error = {

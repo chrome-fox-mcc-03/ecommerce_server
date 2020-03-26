@@ -22,10 +22,7 @@ class UserController {
             res.status(201).json({ token });
         })
         .catch(error => {            
-            next({
-                status: 400,
-                message: `somone has signed up using this email`
-            });
+            next(error);
         })
     }
 

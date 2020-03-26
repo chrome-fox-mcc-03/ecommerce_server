@@ -1,5 +1,11 @@
 # ecommerce_server
 
+## Deployment
+
+- Heroku (server) : https://tcg-ecommerce-cms.herokuapp.com
+- Firebase (CMS client) : https://tcg-ecommerce-cms.firebaseapp.com
+- Firebase (Customer client) : https://tcg-ecommerce.firebaseapp.com
+
 ## APIARY documentation
 
 https://ecommercecmsserver.docs.apiary.io/
@@ -18,6 +24,3 @@ Seed the data in the seeders folder first in order to inject admin to the server
 - email : bbb@gmail.com
 - password : bbb
 
-## Heroku
-
-https://dry-sea-66434.herokuapp.com/

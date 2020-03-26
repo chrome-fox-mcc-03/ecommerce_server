@@ -814,7 +814,7 @@
   ```
 
 ---
-*findCart*
+*history*
 ----
   Returns all items in user's shopping cart that has been paid 
 

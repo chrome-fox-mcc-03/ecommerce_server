@@ -57,6 +57,24 @@ module.exports =
       })
     }
 
+    static edit(req, res, next) {
+      const CartId = req.currentCart
+      const ItemId = req.params.itemId
+      const { quantity } = req.body
+      CartItem.update({
+        quantity
+      },
+      {
+        where: {
+          CartId,
+          ItemId,
+          isPaid: false
+        }
+      })
+        .then(() => res.status(200).json({ message: 'Edit cart successful' }))
+        .catch(next)
+    }
+
     static checkout (req, res, next) {
       const CartId = req.currentCart
       return sequelize.transaction(transaction => {
@@ -109,6 +127,20 @@ module.exports =
         ]
       })
       .then(cart => res.status(200).json({ cart }))
+      .catch(next)
+    }
+
+    static delete (req, res, next) {
+      const CartId = req.currentCart
+      const ItemId = req.params.itemId
+      CartItem.destroy({
+        where: { 
+          CartId, 
+          ItemId, 
+          isPaid: false 
+        }
+      })
+      .then(() => res.status(200).json({ message: 'Delete cart successful' }))
       .catch(next)
     }
   }

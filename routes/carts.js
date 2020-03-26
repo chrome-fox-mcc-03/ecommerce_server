@@ -12,4 +12,8 @@ router.patch('/checkout', CartController.checkout)
 
 router.get('/history', CartController.history)
 
+router.patch('/:itemId/edit', CartController.edit)
+
+router.delete('/:itemId/delete', CartController.delete)
+
 module.exports = router

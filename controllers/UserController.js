@@ -57,11 +57,13 @@ class UserController {
         }
         
         token = generateToken(userData);
+
         return Cart.create({
           UserId: response.id
         })
       })
-      .then(_ => {
+      .then(response => {
+        console.log(userData)
         res.status(201).json({token, fullname: userData.fullname, email: response.email, createdAt: response.createdAt})
       })
       .catch(err => {

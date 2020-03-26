@@ -48,7 +48,8 @@ describe('Routes User', function() {
                 .end(function(err, res) {
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty("message", "Bad Request")
-                    expect(res.body).toHaveProperty('errors', expect.any(Array))
+                    expect(res.body).toHaveProperty('errors', ["Email Must Not Nulled"])
+                    expect(res.status).toBe(400)
                     done()
                 })
 
@@ -66,7 +67,7 @@ describe('Routes User', function() {
                     // console.log(res)
                     expect(err).toBe(null)
                     expect(res.body).toHaveProperty("Access_Token", expect.any(String))
-                    expect(res.body).toHaveProperty('Email', expect.any(String))
+                    expect(res.body).toHaveProperty('Email', "testing@mail.com")
                     done()
                 })
         });
@@ -82,7 +83,41 @@ describe('Routes User', function() {
                 .send(loginwithoutemail)
                 .end(function(err, res) {
                     expect(err).toBe(null)
-                    expect(res.body).toHaveProperty("message", expect.any(String))
+                    expect(res.body).toHaveProperty("message", "WHERE parameter \"Email\" has invalid \"undefined\" value")
+                    expect(res.status).toBe(400)
+                    done()
+                })
+        });
+        
+    });
+
+    describe('Error Login', () => {
+        test('Should Error Code 400 missing password value', (done) => {
+            let loginwithoutpass = {...data}
+            delete loginwithoutpass.Password
+            request(app)
+                .post('/user/login')
+                .send(loginwithoutpass)
+                .end(function(err, res) {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty("message", "Illegal arguments: undefined, string")
+                    expect(res.status).toBe(400)
+                    done()
+                })
+        });
+        
+    });
+
+    describe('Error Login', () => {
+        test('Should Error Code 400 wrong email value', (done) => {
+            let loginwrongpass = {...data}
+            loginwrongpass.Password = 'ehhe'
+            request(app)
+                .post('/user/login')
+                .send(loginwrongpass)
+                .end(function(err, res) {
+                    expect(err).toBe(null)
+                    expect(res.body).toHaveProperty("message", "Wrong Email / Password")
                     expect(res.status).toBe(400)
                     done()
                 })

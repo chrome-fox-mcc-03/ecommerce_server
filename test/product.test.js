@@ -38,10 +38,10 @@ describe('Product Routes', () => {
                     .send(data)
                     .end(function(err, res) {
                         expect(err).toBe(null)
-                        expect(res.body).toHaveProperty("Name", expect.any(String))
-                        expect(res.body).toHaveProperty("Price", expect.any(Number))
-                        expect(res.body).toHaveProperty("Stock", expect.any(Number))
-                        expect(res.body).toHaveProperty("Image_Url", expect.any(String))
+                        expect(res.body).toHaveProperty("Name", data.Name)
+                        expect(res.body).toHaveProperty("Price", 1000)
+                        expect(res.body).toHaveProperty("Stock", 100)
+                        expect(res.body).toHaveProperty("Image_Url", data.Image_Url)
 
                         done()
                     })
@@ -59,7 +59,8 @@ describe('Product Routes', () => {
             .send(itemTest)
             .end(function(err, res) {
                 expect(err).toBe(null)
-                expect(res.body).toHaveProperty('message', expect.any(String))
+                expect(res.body).toHaveProperty('message', "Bad Request")
+                expect(res.body).toHaveProperty('errors', ["Please Fill The Item Name"])
                 done()
             })            
         });
@@ -84,17 +85,17 @@ describe('Product Routes', () => {
         });
     });
 
-    describe('Product Update Error test', () => {
-        test('Update Errors', (done) => {
-            let updateErrors = {...data}
-            delete updateErrors.Name
+    describe('Product Update test', () => {
+        test('Update Without Name', (done) => {
+            let updateNoName = {...data}
+            delete updateNoName.Name
             request(app)
             .put('/products/update/10')
             .set("Access_Token", Access_Token)
-            .send(updateErrors)
+            .send(updateNoName)
             .end(function(err, res) {
                 expect(err).toBe(null)
-                expect(res.body).toHaveProperty('message', expect.any(String))
+                expect(res.body).toHaveProperty('message', "Berhasil Update")
                 done()
             })
             
@@ -108,7 +109,7 @@ describe('Product Routes', () => {
             .set('Access_Token', Access_Token)
             .end(function(err, res) {
                 expect(err).toBe(null)
-                expect(res.body).toHaveProperty('message', expect.any(String))
+                expect(res.body).toHaveProperty('message', "Berhasil Delete")
                 done()
             })
             
@@ -116,14 +117,14 @@ describe('Product Routes', () => {
         
     });
 
-    describe('Product Delete Error Test', () => {
-        test('Delete Test Error', (done) => {
+    describe('Product Delete Number Not Exist Test', () => {
+        test('Delete Test Number Not Exist', (done) => {
             request(app)
             .delete('/products/delete/10000')
             .set('Access_Token', Access_Token)
             .end(function(err, res) {
                 expect(err).toBe(null)
-                expect(res.body).toHaveProperty("message", expect.any(String))
+                expect(res.body).toHaveProperty("message", "Berhasil Delete")
                 done()
             })
         });

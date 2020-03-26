@@ -6,10 +6,10 @@ function authentication(req, res, next){
     try {
         
         const access_token = req.headers.access_token
-        console.log(access_token, 'authentication')
+        // console.log(access_token, 'authentication')
         const decoded = jwt.verify(access_token, process.env.SECRET)
         req.user = decoded
-        console.log(req.user, 'authentication')
+        // console.log(req.user, 'authentication')
 
         if (decoded) {
             

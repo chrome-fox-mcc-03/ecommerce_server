@@ -135,6 +135,8 @@ describe('User routes' , () => {
             .end((err, res) => {
                 expect(res.status).toBe(401)
                 expect(res.body).toHaveProperty('message', 'email / password is incorrect')
+                expect(res.body).toHaveProperty('errors', expect.any(Array))
+                expect(res.body.errors.length).toBe(1)
                 done()
             })
         })
@@ -148,6 +150,8 @@ describe('User routes' , () => {
             .end((err, res) => {
                 expect(res.status).toBe(401)
                 expect(res.body).toHaveProperty('message', 'email / password is incorrect')
+                expect(res.body).toHaveProperty('errors', expect.any(Array))
+                expect(res.body.errors.length).toBe(1)
                 done()
             })
         })

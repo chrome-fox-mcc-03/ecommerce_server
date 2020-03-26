@@ -29,24 +29,190 @@ beforeAll((done) => {
         .then(result => {
             user2.id = result.id;
             user2.access_token = getToken(appPayload(result));
+            return queryInterface.bulkInsert('Products', [
+                {
+                    name: 'product test 01',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '13',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 02',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '15',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 03',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '17',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 04',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '19',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 05',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 06',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 07',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 08',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 09',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 10',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 11',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 12',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 13',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 14',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 15',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 16',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 17',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 18',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 19',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 20',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                },
+                {
+                    name: 'product test 21',
+                    image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+                    price: '1000',
+                    stock: '10',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                }
+            ], {});
+        })
+        .then(_ => {
             done()
         })
         .catch(err => {
             done(err)
         })
-    done()
 })
 
 afterAll((done) => {
     queryInterface.bulkDelete("Users", {})
         .then(_ => {
-            done();
+            return queryInterface.bulkDelete("Products", {})
         })
-        .catch(err => {
-            done(err);
-        })
-
-    queryInterface.bulkDelete("Products", {})
         .then(_ => {
             done();
         })
@@ -371,7 +537,6 @@ describe('product route', () => {
                         expect(err).toBeNull();
                         expect(res.status).toBe(201);
                         expect(res.body).toHaveProperty('id', expect.any(Number));
-                        expect(res.body).toHaveProperty('UserId', user1.id);
                         expect(res.body).toHaveProperty('name', product1.name);
                         expect(res.body).toHaveProperty('price', product1.price);
                         expect(res.body).toHaveProperty('image_url', 'https://via.placeholder.com/150');
@@ -392,7 +557,6 @@ describe('product route', () => {
                         expect(err).toBeNull();
                         expect(res.status).toBe(201);
                         expect(res.body).toHaveProperty('id', expect.any(Number));
-                        expect(res.body).toHaveProperty('UserId', user1.id);
                         expect(res.body).toHaveProperty('name', copyOfProduct1.name);
                         expect(res.body).toHaveProperty('price', copyOfProduct1.price);
                         expect(res.body).toHaveProperty('image_url', copyOfProduct1.image_url);
@@ -675,7 +839,6 @@ describe('product route', () => {
         })
         describe('user update product success', () => {
             test('valid user valid item id, status 200', (done) => {
-                // 404, "item not found"
                 let validItem = {...product1}
                 let validUser = {...user1}
                 request(app)
@@ -767,7 +930,6 @@ describe('product route', () => {
                         expect(err).toBeNull()
                         expect(res.status).toBe(200);
                         expect(res.body).toHaveProperty('id', product1.id);
-                        expect(res.body).toHaveProperty('UserId', user1.id);
                         expect(res.body).toHaveProperty('name', product1.name);
                         expect(res.body).toHaveProperty('price', product1.price);
                         expect(res.body).toHaveProperty('image_url', product1.image_url);

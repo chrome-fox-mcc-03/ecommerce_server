@@ -8,7 +8,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '13',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -17,7 +16,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '15',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -26,7 +24,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '17',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -35,7 +32,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '19',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -44,7 +40,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -53,7 +48,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -62,7 +56,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -71,7 +64,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -80,7 +72,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -89,7 +80,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -98,7 +88,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -107,7 +96,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -116,7 +104,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -125,7 +112,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -134,7 +120,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -143,7 +128,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -152,7 +136,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -161,7 +144,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -170,7 +152,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -179,7 +160,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -188,7 +168,6 @@ module.exports = {
         image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
         price: '1000',
         stock: '10',
-        UserId: '1',
         createdAt: new Date(),
         updatedAt: new Date()
       }

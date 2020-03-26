@@ -4,7 +4,7 @@ const { sequelize } = require('../models');
 const { queryInterface } = sequelize;
 
 let data = {
-    email: "test01@mail.com",
+    email: "test99@mail.com",
     password: "123456",
 }
 
@@ -29,7 +29,7 @@ describe('user route', () => {
                     .send(data)
                     .end((err, res) => {
                         expect(err).toBeNull();
-                        expect(res.body).toHaveProperty('email', "test01@mail.com");
+                        expect(res.body).toHaveProperty('email', data.email);
                         expect(res.body).toHaveProperty('id', expect.any(Number));
                         expect(res.body).toHaveProperty('access_token', expect.any(String));
                         expect(res.status).toBe(201);

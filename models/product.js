@@ -69,24 +69,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
-    UserId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   }, {
     sequelize,
-    modelName: "Product",
-    hooks: {
-      beforeValidate: (product, options) => {
-        if (!product.image_url) {
-          product.image_url = 'https://via.placeholder.com/150';
-        }
-      },
-    },
+    modelName: "Product"
   });
   Product.associate = function(models) {
     // associations can be defined here
-    Product.belongsTo(models.User);
     Product.hasMany(models.CartProducts);
   };
   return Product;

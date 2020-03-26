@@ -16,6 +16,7 @@ module.exports = function(req, res, next) {
         })
         .then(result => {
           if (result) {
+            req.customer = payload
             next()
           } else {
             next(appError(400, 'invalid token'))

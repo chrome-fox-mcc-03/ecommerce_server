@@ -105,8 +105,7 @@ class CustomerController {
           stock: {[gt]: 0}
         },
         limit: size,
-        offset: offset,
-        include: [ User ]
+        offset: offset
       })
       .then(result => {
         let products = []
@@ -116,8 +115,7 @@ class CustomerController {
             name: item.name,
             price: item.price,
             stock: item.stock,
-            image_url: item.image_url,
-            seller: item.User.email.split('@')[0]
+            image_url: item.image_url
           }
           products.push(product)
         })
@@ -129,11 +127,9 @@ class CustomerController {
   }
   static cart(req, res, next) {
     // res.status(200).json('cart')
-    const token = req.headers.token
-    const { id } = getPayload(token)
     Cart.findOne({
       where: {
-        CustomerId: id
+        CustomerId: req.customer.id
       }
     })
       .then(result => {
@@ -145,8 +141,7 @@ class CustomerController {
           },
           include: [
             { 
-              model: Product,
-              include: [ User ]
+              model: Product
             }
           ]
         })
@@ -160,7 +155,6 @@ class CustomerController {
             itemId: item.Product.id,
             name: item.Product.name,
             quantity: item.quantity,
-            seller: item.Product.User.email.split('@')[0],
             stock: Number(item.Product.stock),
             price: Number(item.Product.price),
             image_url: item.Product.image_url
@@ -180,15 +174,13 @@ class CustomerController {
     // res.status(200).json('append item to cart')
     let { itemId, amount } = req.body;
     amount = Number(amount)
-    const token = req.headers.token;
-    const customer = getPayload(token);
     let CartId
     let productItem
 
     if (itemId && amount) {
       Cart.findOne({
         where: {
-          CustomerId: customer.id
+          CustomerId: req.customer.id
         }
       })
         .then(result => {
@@ -297,7 +289,7 @@ class CustomerController {
       include: [Product]
     })
       .then(result => {
-        if (result.Product.stock > amount) {
+        if (result.Product.stock >= amount) {
           return CartProducts.update({
               quantity: amount
             }, {
@@ -320,11 +312,9 @@ class CustomerController {
   }
   static clearCustomerCart(req, res, next) {
     // res.status(200).json("oke")
-    const { token } = req.headers
-    const customer = getPayload(token)
     Cart.findOne({
       where: {
-        CustomerId: customer.id
+        CustomerId: req.customer.id
       }
     })
       .then(result => {
@@ -349,13 +339,11 @@ class CustomerController {
       })
   }
   static checkoutCustomerCart(req, res, next) {
-    const { token } = req.headers;
-    const customer = getPayload(token);
     let cartItems = []
 
     Cart.findOne({
       where: {
-        CustomerId: customer.id
+        CustomerId: req.customer.id
       }
     })
       .then(result => {

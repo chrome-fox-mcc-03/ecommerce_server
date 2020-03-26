@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const { sequelize, Customer, Cart } = require('../models');
+const { sequelize, Customer, Cart, Product } = require('../models');
 const { queryInterface } = sequelize;
 const { getToken } = require('../helpers/jwt')
 const appPayload = require('../helpers/appPayload')
@@ -11,7 +11,10 @@ afterAll((done) => {
           return queryInterface.bulkDelete("CartProducts", {})
         })
         .then(_ => {
-          done();
+          return queryInterface.bulkDelete("Products", {})
+        })
+        .then(_ => {
+          done()
         })
         .catch(err => {
             done(err);
@@ -28,6 +31,12 @@ let customer2 = {
   name: "not test 02"
 }
 let cartItem = {}
+let product1 = {
+  name: 'customer.test.product.item.01',
+  price: 1000,
+  stock: 10,
+  image_url: 'http://www.google.com'
+}
 
 beforeAll(done => {
   Customer
@@ -41,6 +50,182 @@ beforeAll(done => {
       })
     })
     .then(_ => {
+      return queryInterface.bulkInsert('Products', [
+          {
+              name: 'product test 01',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '13',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 02',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '15',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 03',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '17',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 04',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '19',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 05',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 06',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 07',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 08',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 09',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 10',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 11',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 12',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 13',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 14',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 15',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 16',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 17',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 18',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 19',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 20',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          },
+          {
+              name: 'product test 21',
+              image_url: "https://api.adorable.io/avatars/125/test01@mail.com.png",
+              price: '1000',
+              stock: '10',
+              createdAt: new Date(),
+              updatedAt: new Date()
+          }
+      ], {});
+    })
+    .then(_ => {
+      return Product.create(product1)
+    })
+    .then(result => {
+      product1.id = result.id
       done()
     })
     .catch(err => done(err))
@@ -319,7 +504,6 @@ describe('customer route', () => {
             expect(res.status).toBe(200)
             expect(res.body).toHaveProperty('products', expect.any(Array))
             expect(res.body.products.length).toBe(20)
-            expect(res.body.products[0]).toHaveProperty('seller', expect.any(String))
             done()
           })
       })
@@ -461,7 +645,7 @@ describe('customer route', () => {
       test('quantity greater than item stock', (done) => {
         let validUser = {...customer2}
         let stockInsufficient = {
-          itemId: 1,
+          itemId: product1.id,
           amount: 10000
         }
         request(app)
@@ -482,7 +666,7 @@ describe('customer route', () => {
       test('valid user token, valid item id, and stock > quantity', (done) => {
         let validUser = {...customer2}
         let addedItem = {
-          itemId: 1,
+          itemId: product1.id,
           amount: 1
         }
         request(app)
@@ -549,7 +733,6 @@ describe('customer route', () => {
             if (res.body.cartItems.length > 0) {
               expect(res.body.cartItems[0]).toHaveProperty('name', expect.any(String))
               expect(res.body.cartItems[0]).toHaveProperty('quantity', expect.any(Number))
-              expect(res.body.cartItems[0]).toHaveProperty('seller', expect.any(String))
               expect(res.body.cartItems[0]).toHaveProperty('stock', expect.any(Number))
               expect(res.body.cartItems[0]).toHaveProperty('price', expect.any(Number))
             }

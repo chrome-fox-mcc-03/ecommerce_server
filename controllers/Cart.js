@@ -18,7 +18,8 @@ class Controller {
   }
 
   static create (req, res, next) {
-    const { quantity, UserId, ProductId } = req.body
+    const { quantity, ProductId } = req.body
+    const UserId = req.user.id
     let data
     Cart.findOne({
       where: {

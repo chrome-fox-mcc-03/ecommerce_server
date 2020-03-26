@@ -46,7 +46,7 @@ class ProductController {
 
     static findOne(req, res, next) {
         const { id } = req.params
-        Product.findByPk(id)
+        Product.findByPk(id, {include: [Category]})
             .then(result => {
                 if (result) {
                     res.status(200).json({ product: result })

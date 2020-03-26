@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }, { sequelize })
   Transaction.associate = function (models) {
     // associations can be defined here
-
+    Transaction.belongsTo(models.User)
+    Transaction.hasMany(models.TransactionDetail)
   };
   return Transaction;
 };

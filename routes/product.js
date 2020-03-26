@@ -1,9 +1,7 @@
 const router = require("express").Router();
 const { ProductController } = require("../controllers");
-const { authentification } = require("../middlewares/authentification");
 const { authorization } = require("../middlewares/authorization");
 
-router.use(authentification);
 router.get("/", ProductController.findAll);
 router.post("/", authorization, ProductController.createNewProduct);
 router.get("/:id", ProductController.viewDetail);

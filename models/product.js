@@ -3,7 +3,9 @@ module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model;
 
   class Product extends Model {
-    static associate(models) {}
+    static associate(models) {
+      Product.hasMany(models.Cart);
+    }
   }
 
   Product.init(

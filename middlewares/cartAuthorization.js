@@ -2,7 +2,9 @@ const { Cart, CartItem } = require('../models/index');
 
 module.exports = (req, res, next) => {
     let userId = req.decoded.id
+    // console.log(req.decoded)
     let CartItemId = req.params.id
+    console.log(CartItemId, 'cartitem id')
     let error = {
         name: 'cartAuthorization',
         status: 403,
@@ -10,21 +12,26 @@ module.exports = (req, res, next) => {
                 message: 'Unauthorized'
             }
     }
-    CartItem.findOne({ 
-        include: [ Cart ]
-    }, {
+    CartItem.findOne({
         where: {
             id: CartItemId
         }
     })
         .then(result => {
-            if (result.Cart.UserId === userId) {
+            return Cart.findOne({
+                    where: {
+                        id: result.CartId
+                    }
+                    })
+        })
+        .then( cartResult => {
+            if (cartResult.UserId === userId) {
                 next()
             } else {
                 next(error)
             }
         })
-        .catch(err => {
-           next(error)
+        .catch( err => {
+            next(error)
         })
 }

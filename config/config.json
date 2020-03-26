@@ -2,7 +2,7 @@
   "development": {
     "username": "xavierthufail",
     "password": "",
-    "database": "fancytodos",
+    "database": "db_ecommerce_cms_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

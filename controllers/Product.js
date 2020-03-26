@@ -2,17 +2,19 @@ const { Product } = require('../models/index')
 
 class Controller {
     static findAll (req, res, next) {
-        const { id } = req.user
         Product.findAll({
             where: {
-                AdminId: id
+                AdminId: 1
             },
             order: [['id', 'ASC']]
         })
             .then(products => {
                 res.status(200).json(products)
             })
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
     }
 
     static create(req, res, next) {

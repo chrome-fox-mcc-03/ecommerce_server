@@ -40,7 +40,10 @@ class Controller{
                 const access_token = getToken({ id, name, email })
                 res.status(201).json({ id, name, role, access_token })
             })
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
     }
 
     static login(req, res, next) {
@@ -64,7 +67,10 @@ class Controller{
                     })
                 }
             })
-            .catch(err => next(err))
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
     }
 }
 

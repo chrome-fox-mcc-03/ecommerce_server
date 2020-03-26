@@ -19,14 +19,17 @@ module.exports = function (req, res, next) {
                 .then(response => {
                     if (response) {
                         next()
+                        return null
                     } else {
-                        next({
+                        throw ({
                             status: 401,
                             message: 'Please Login First!'
                         })
                     }
                 })
-                .catch(next)
+                .catch(err => {
+                    throw err
+                })
         } catch (error) {
             next(error)
         }

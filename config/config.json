@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "ace",
-    "password": "ace",
+    "username": "user",
+    "password": "user",
     "database": "db_ecommerce_cms",
     "host": "127.0.0.1",
     "dialect": "postgres",

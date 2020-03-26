@@ -13,6 +13,7 @@ module.exports = function (req, res, next) {
         })
             .then((found)=>{
                 if(found){
+                    'masuk found'
                     next()
                 } else {
                     let err = {

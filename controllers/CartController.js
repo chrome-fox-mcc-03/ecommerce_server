@@ -2,16 +2,28 @@ const { Cart, CartItem } = require('../models')
 
 class CartController {
     static createCart(req, res, next) {
-        console.log('masuk route add to cart')
-        Cart.create({
-            UserId: req.user.id
+        Cart.findOne({
+            where: {
+                UserId: req.user.id
+            }
         })
-            .then((cartCreated) => {
-                // console.log(cartCreated)
-                // req.cart.id = cartCreated.dataValues.id
-                res.status(200).json({
-                    cartId: cartCreated.dataValues.id
-                })
+            .then((cartFound) => {
+                if(cartFound){
+                    // console.log(cartFound, 'cart already found')
+                    res.status(200).json({
+                        cartId: cartFound.dataValues.id
+                    })
+                } else {
+                    console.log('create new cart')
+                    return Cart.create({
+                        UserId: req.user.id
+                    })
+                }
+            }) .then((cartCreated) => {
+                    // console.log(cartCreated)
+                    res.status(201).json({
+                        cartId: cartCreated.dataValues.id
+                    })
             }).catch((err) => {
                 next({err})
             });

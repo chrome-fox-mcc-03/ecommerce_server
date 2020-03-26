@@ -12,10 +12,10 @@ module.exports = (req, res, next) => {
 		next(error)
 	}
 
-	let { id, email, role } = payload;
+	let { id, email } = payload;
 
 	User.findOne({
-		where: { id, email, role }
+		where: { id, email }
 	})
 		.then(result => {
 			if (result) {
@@ -23,9 +23,11 @@ module.exports = (req, res, next) => {
 				next();
 			} else {
 				next({
-					name: 'Invalid User'
+					name: 'JsonWebTokenError'
 				})
 			}
+
+			return null
 		})
 		.catch(next)
 }

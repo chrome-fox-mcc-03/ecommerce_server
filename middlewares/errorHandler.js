@@ -35,7 +35,9 @@ module.exports = (err, req, res, next) => {
 		
 	} else {
 		// res.status(err.status || 500).json(err || 'Internal Server Error');
-		console.log(err);
-		res.status(err.status || 500).json(err);
+		res.status(err.status || 500).json({
+			message: err.name,
+			errors: [err.message]
+		} || { message: 'Internal Server Error' });
 	}
 }

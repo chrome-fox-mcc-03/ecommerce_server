@@ -18,7 +18,6 @@ module.exports = (req, res, next) => {
             }
         })
         .then(result => {
-            console.log(result)
             if(result){
                 req.decoded = {
                     id: decoded.id

@@ -73,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
     });
   User.associate = function(models) {
     User.belongsTo(models.Store, { foreignKey: 'store_id' })
+    User.hasOne(models.Cart, { foreignKey: 'user_id' })
   };
   return User;
 };

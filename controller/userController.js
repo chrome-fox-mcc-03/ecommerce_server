@@ -17,6 +17,7 @@ class Controller {
             store_id: null,
             role: req.body.role
         }
+        console.log(data)
         const storeData = {
             name: req.body.store_name
         }
@@ -33,6 +34,12 @@ class Controller {
             })
         }
         if(data.role === 'Admin') {
+            if(!storeData.name) {
+                throw ({
+                    status: 400,
+                    msg: 'Please choose the store.'
+                })
+            }
             Store.findOne({
                 where: {
                     name: storeData.name
@@ -46,20 +53,12 @@ class Controller {
                     })
                 } 
                 else {
-                    return Store.create(storeData)
+                    return User.findOne({
+                        where: {
+                            email: data.email
+                        }
+                    })
                 }
-            })
-            .then(result => {
-                newStore.id = result.id
-                data.store_id = result.id
-                newStore.name = result.name
-            })
-            .then(id => {
-                return User.findOne({
-                    where: {
-                        email: data.email
-                    }
-                })
             })
             .then(result => {
                 if(result){
@@ -69,8 +68,16 @@ class Controller {
                     })
                 }
                 else {
-                    return User.create(data)
+                    return Store.create(storeData)
                 }
+            })
+            .then(result => {
+                newStore.id = result.id
+                data.store_id = result.id
+                newStore.name = result.name
+            })
+            .then(id => {
+                return User.create(data)
             })
             .then(result => {
                 const newUser = {
@@ -82,8 +89,25 @@ class Controller {
                 }
                 res.status(201).json(newUser)
             })
-            .catch(next)
-        } else {
+            .catch(err=> {
+                if (err.errors) {
+                    Store.destroy({where: {
+                        id: data.store_id
+                    }})
+                    .then(_ =>{
+                        next(err)
+                    })
+                } else {
+                    next(err)
+                }
+            })
+        } else if (data.role === 'Staff') {
+            if(!req.body.store_exist) {
+                throw ({
+                    status: 400,
+                    msg: 'Please choose the store.'
+                })
+            }
             Store.findOne({
                 where: {
                     name: req.body.store_exist
@@ -123,6 +147,33 @@ class Controller {
                 res.status(201).json(newUser)
             })
             .catch(next)
+        } else {
+            User.findOne({
+                where: {
+                    email: data.email
+                }
+            })
+            .then(result => {
+                if(result){
+                    throw ({
+                        status: 400,
+                        msg: 'Email already been used.'
+                    })
+                }
+                else {
+                    return User.create(data)
+                }
+            })
+            .then(result => {
+                const newUser = {
+                    id: result.id,
+                    name: result.name,
+                    email: result.email,
+                    password: result.password
+                }
+                res.status(201).json(newUser)
+            })
+            .catch(next)
         }
     }
 
@@ -155,7 +206,7 @@ class Controller {
                     throw({
                         status: 400,
                         msg: 'Wrong email/password'
-                })
+                    })
                 }
                 else {
                     dataToThrow.id = result.id
@@ -181,6 +232,42 @@ class Controller {
                 img_url: dataToThrow.img_url,
                 store_id: dataToThrow.store_id
             })
+        })
+        .catch(next)
+    }
+
+    static loginCustomer(req, res, next){
+        const data = {
+            email: req.body.email,
+            password: req.body.password
+        }
+        User.findOne({
+            where: {
+                email: data.email,
+                role: 'Customer'
+            }
+        })
+        .then(result => {
+            if(!result){
+                throw({
+                    status: 400,
+                    msg: 'Wrong email/password'
+                })
+            }
+            else {
+                if(!verifyPassword(data.password, result.password)){
+                    throw({
+                        status: 400,
+                        msg: 'Wrong email/password'
+                    })
+                }
+                else {
+                    const token = jwt.sign({
+                        id: result.id
+                    }, process.env.SECRET_KEY)
+                    res.status(201).json({token})
+                }
+            }
         })
         .catch(next)
     }

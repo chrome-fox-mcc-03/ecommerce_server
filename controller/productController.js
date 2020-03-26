@@ -1,6 +1,6 @@
 "use strict"
 
-const { Product } = require('../models/index')
+const { Product, Store } = require('../models/index')
 
 class Controller {
     static createProduct(req, res, next){
@@ -90,8 +90,7 @@ class Controller {
         .catch(next)
     }
 
-    static getProductById(req, res, next) {
-        console.log(req.params.id)
+    static getProductById (req, res, next) {
         Product.findOne({
             where: {
                 id: req.params.id
@@ -103,6 +102,33 @@ class Controller {
             }
         })
         .catch(next => console.log(next))
+    }
+
+    static findHighlighted (req, res, next) {
+        Product.findAll ({
+            where: {
+                highlighted: true
+            },
+            include: {
+                model: Store
+            }
+        })
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(next)
+    }
+
+    static findAllProduct (req, res, next) {
+        Product.findAll({
+            include: {
+                model: Store
+            }
+        })
+        .then(result => {
+            res.status(200).json(result)
+        })
+        .catch(next)
     }
 }
 

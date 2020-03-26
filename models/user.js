@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       validate : {
         len : {
-          args : [5, 20],
+          args : [5, 99],
           msg : 'minimum password length is 5 characters'
         },
         notEmpty : {

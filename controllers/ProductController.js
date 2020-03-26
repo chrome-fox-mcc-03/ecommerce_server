@@ -46,6 +46,9 @@ class ProductController {
     static getAll(req, res, next) {
         console.log('--- PRODUCT CONTROLLER: SEE ALL PRODUCTS ---');
         Product.findAll({
+            order: [
+                ['name', 'ASC']
+            ],
             attributes: { exclude: ['CartId', 'UserId'] }
         })
             .then(response => {

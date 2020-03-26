@@ -24,6 +24,9 @@ class CartController {
                     UserId: req.decoded.id,
                     checked_out: false
                 },
+                order: [
+                    ['updatedAt', 'DESC']
+                ],
                 include: ['Product', 'User']
             })
             .then(response => {
@@ -48,6 +51,9 @@ class CartController {
                     UserId: req.decoded.id,
                     checked_out: true
                 },
+                order: [
+                    ['updatedAt', 'DESC']
+                ],
                 include: ['Product', 'User']
             })
             .then(response => {
@@ -153,6 +159,7 @@ class CartController {
             }
         })
         .then(response => {
+            console.log("ONE LEFT!");
             console.log(response);
             if (response.dataValues.total_qty === 1) {
                 return Cart.destroy({
@@ -161,6 +168,7 @@ class CartController {
                     }
                 })
             } else {
+                console.log("NAH! STILL HAVE SOME SUPPLY!");
                 return Cart.update({
                     total_qty: sequelize.literal('total_qty - 1')
                 }, {
@@ -246,9 +254,11 @@ class CartController {
                 }
             })
             .then(response1 => {
+                console.log("HELLO! THING IS");
+                console.log(response1);
                 qtyInStock = response1.dataValues.stock
 
-                if(stock >= qtyToCheckOut) {
+                if(qtyInStock >= qtyToCheckOut) {
                     return Product.increment({
                         stock: -qtyToCheckOut
                     }, {
@@ -264,10 +274,10 @@ class CartController {
         })
         .then(response1 => {
             console.log("PRODUCT STOCK UPDATED");
-            console.log(response1[0]);
-            thing = response1[0]
+            console.log(response1);
+            thing = response1
             let payload = [
-                {product: response1[0]},
+                {product: response1},
                 {cart: cart},
                 {message: "CHECKOUT & UPDATE SUCCESS"}
             ]
@@ -279,36 +289,40 @@ class CartController {
     }
 
 
-    // static massCheckout(req, res, next) {
-    //     console.log("CHECKING OUT CART EN MASSE \n");
-    //     let qtyToCheckOut
-    //     let thing
-    //     let cart
-    //     let newQty
-    //     let carts
-    //     let products
-    //     let cart
-    //     let product
-    //     let promiseCarts = []
-    //     let promiseProducts = []
+    /* static massCheckout(req, res, next) {
+        console.log("CHECKING OUT CART EN MASSE \n");
+        let qtyToCheckOut
+        let thing
+        let cart
+        let newQty
+        let carts
+        let products
+        let cart
+        let product
+        let promiseCarts = []
+        let promiseProducts = []
 
-    //     Cart.findAll({
-    //         where: {
-    //             UserId: req.decoded.id,
-    //             checked_out: false
-    //         },
-    //         include: ['Product', 'User']
-    //     })
-    //     .then(response => {
-    //         console.log("RETRIEVED ALL CARTS");
-    //         carts = response
+        Cart.findAll({
+            where: {
+                UserId: req.decoded.id,
+                checked_out: false
+            },
+            include: ['Product', 'User']
+        })
+        .then(response => {
+            console.log("RETRIEVED ALL CARTS");
+            carts = response
 
-    //         carts.forEach(cart => {
+            carts.forEach(cart => {
+                Cart.update({
+                    checked_out: true
+                })
+            })
 
-    //         })
 
-
-    //     })
+        }) 
+        
+        */
         
 
 

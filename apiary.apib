@@ -3,7 +3,7 @@ HOST: https://still-plains-85177.herokuapp.com
 
 # E-Commerce Server
 
-E-Commerce Server is an API for Admin to CRUD products
+E-Commerce Server is an API for Admin to CRUD products and Customers to add product to their own cart then checkout.
 
 # Group Admin
 
@@ -20,7 +20,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Response 200 (application/json)
 
         {
-            "access_token": <generated token>
+            "token": <generated token>
         }
         
 + Response 400 (application/json)
@@ -45,7 +45,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Request
     + Headers
     
-            access_token: <generated token>
+            token: <generated token>
 
 + Response 200 (application/json)
 
@@ -80,7 +80,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Response 201 (application/json)
 
         {
-            "access_token": <generated token>
+            "token": <generated token>
         }
         
 + Response 400 (application/json)
@@ -111,7 +111,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Response 200 (application/json)
 
         {
-            "access_token": <generated token>
+            "token": <generated token>
         }
         
 + Response 400 (application/json)
@@ -138,7 +138,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Request (application/json)
     + Headers
         
-            access_token: <generated token>
+            token: <generated token>
             
     + Body
     
@@ -180,7 +180,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Request
     + Headers
     
-            access_token: <generated token>
+            token: <generated token>
 
 + Response 200 (application/json)
 
@@ -225,7 +225,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Request (application/json)
     + Headers
         
-            access_token: <generated token>
+            token: <generated token>
             
     + Body
     
@@ -279,7 +279,7 @@ E-Commerce Server is an API for Admin to CRUD products
 + Request (application/json)
     + Headers
         
-            access_token: <generated token>
+            token: <generated token>
             
 + Response 200 (application/json)
 
@@ -293,6 +293,192 @@ E-Commerce Server is an API for Admin to CRUD products
                 "message" : "Bad Request",
                 "errors" : ["Product not found"]
             }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }
+            
+# Group Carts
+## Add Product and Read Cart [/carts]
+### Add Product to Cart [POST]
+
++ Request (application/json)
+    + Headers
+        
+            token: <generated token>
+            
+    + Body
+    
+            {
+                "ProductId" : 1
+            }
+
++ Response 200 (application/json)
+
+            {
+                "message" : "Cart successfully updated"
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "message" : "Bad Request",
+                "errors" : ["You reached stock limit"]
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }
+            
+### Read Cart [GET]
+
++ Request
+    + Headers
+    
+            token: <generated token>
+
++ Response 200 (application/json)
+
+            {
+                "data": [
+                    {
+                        "id": 40,
+                        "UserId": 2,
+                        "ProductId": 4,
+                        "quantity": 1,
+                        "totalPrice": 1000000,
+                        "isPaid": true,
+                        "createdAt": "2020-03-26T08:02:25.036Z",
+                        "updatedAt": "2020-03-26T08:02:38.982Z",
+                        "Product": {
+                            "id": 4,
+                            "name": "Samsung",
+                            "image_url": "https://images.pexels.com/photos/214487/pexels-photo-214487.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                            "price": 1000000,
+                            "stock": 5,
+                            "category": "electronic",
+                            "createdAt": "2020-03-24T16:16:13.962Z",
+                            "updatedAt": "2020-03-26T08:03:14.837Z"
+                        }
+                    },
+                    {
+                        "id": 41,
+                        "UserId": 2,
+                        "ProductId": 2,
+                        "quantity": 1,
+                        "totalPrice": 100000,
+                        "isPaid": true,
+                        "createdAt": "2020-03-26T08:02:27.357Z",
+                        "updatedAt": "2020-03-26T08:02:38.983Z",
+                        "Product": {
+                            "id": 2,
+                            "name": "T-shirt",
+                            "image_url": "https://images.pexels.com/photos/1484808/pexels-photo-1484808.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                            "price": 100000,
+                            "stock": 3,
+                            "category": "fashion",
+                            "createdAt": "2020-03-24T16:13:06.907Z",
+                            "updatedAt": "2020-03-26T08:03:14.838Z"
+                        }
+                    },
+                ]
+            }
+
+
++ Response 500 (application/json)
+
+        {
+            "message": "Internal Server Error"
+        } 
+
+## Update and Delete Cart [/carts/{id}]
+
+### Update [PUT]
+
++ Parameters 
+    + id (number) - ID of the Product in the form of an integer
+
+
++ Request (application/json)
+    + Headers
+        
+            token: <generated token>
+
++ Response 200 (application/json)
+
+            {
+                "message" : "Cart successfully updated"
+            }
+            
++ Response 400 (application/json)
+
+            {
+                "message" : "Bad Request",
+                "errors" : ["Cart not found"]
+            }
+            
+            or
+            
+            {
+                "message" : "Bad Request",
+                "errors" : ["Product not found"]
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }
+            
+            
+### Delete [DELETE]
+
+
++ Parameters 
+    + id (number) - ID of the Product in the form of an integer
+
+
++ Request (application/json)
+    + Headers
+        
+            token: <generated token>
+            
++ Response 200 (application/json)
+
+        {
+            "message" : "Cart successfully deleted"
+        }
+
++ Response 400 (application/json)
+
+            {
+                "message" : "Bad Request",
+                "errors" : ["Cart not found"]
+            }
+            
++ Response 500 (application/json)
+
+            {
+                "message" : "Internal Server Error"
+            }
+            
+## Checkout Cart [/carts/checkout]
+### Checkout [GET]
+
++ Request (application/json)
+    + Headers
+        
+            token: <generated token>
+            
++ Response 200 (application/json)
+
+        {
+            "message" : "Checkout Success"
+        }
             
 + Response 500 (application/json)
 

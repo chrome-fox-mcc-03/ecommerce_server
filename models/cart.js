@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         validate: {
           min: {
-            args: 0,
+            args: '1',
             msg: "Must Have At Least 1"
           }
           

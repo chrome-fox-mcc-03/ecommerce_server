@@ -1,6 +1,6 @@
 module.exports = function(err, req, res, next) {
-
     if(err.name) {
+        console.log(err.name)
         let message;
         let errors;
         let status;

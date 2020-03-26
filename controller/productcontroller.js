@@ -98,6 +98,7 @@ class Controller {
             include: ['Product', 'User']
         })
             .then(function(result) {
+                console.log("MASUK KE DALEM CART")
                 res.status(200).json(result)
             })
             .catch(function(err) {
@@ -107,7 +108,7 @@ class Controller {
 
     static addCart(req, res, next) {
         let data = req.body
-        console.log(data)
+        data.UserId = req.authenticated.id
         Cart.findOne({
             where: {
                 ProductId : data.ProductId,
@@ -117,7 +118,11 @@ class Controller {
             .then(function(result) {
                 if(result) {
                     data.Quantity = Number(data.Quantity)+ Number(result.Quantity)
-                    return Cart.update(data, {
+                    return Cart.update({
+                        UserId: data.UserId,
+                        ProductId: data.ProductId,
+                        Quantity: data.Quantity
+                    }, {
                         where: {
                             ProductId: data.ProductId,
                             UserId: data.UserId
@@ -126,17 +131,23 @@ class Controller {
                 }
                 else {
                     //data dijabarin
-                    return Cart.create(data)
+                    return Cart.create({
+                        UserId: req.authenticated.id,
+                        ProductId: data.ProductId,
+                        Quantity: data.Quantity
+                    })
                 }
                 
             })
             .then(function(result) {
                 res.status(201).json(result)
             })
+            .catch(function(err) {
+                next(err)
+            })
     }
     
     static updateCart(req, res, next) {
-        console.log('MASUKKKK UPDATE CART')
         let UpdateId = req.params.id
         Cart.update({
             UserId: req.body.UserId,
@@ -158,7 +169,6 @@ class Controller {
     static deleteCart(req, res, next) {
         console.log('MASUKKKK DELETE')
         let DeleteId = req.params.id
-        console.log(`THIS IS ${DeleteId}`)
         Cart.destroy({
             where: {
                 id: DeleteId
@@ -183,7 +193,6 @@ class Controller {
         })
             .then(function(result) {
                 data = result
-                //promise all
                 //data untuk isi cart nya
                 let promises = []
                 //PROMISE ALL START
@@ -287,18 +296,21 @@ class Controller {
                 res.status(201).json(ordercreate)
             })
             .catch(function(err) {
-                console.log(err)
                 next(err)
             })
     }
     
     static getOrder(req, res, next) {
+        let data = req.authenticated.id
+        console.log(data)
         Order.findAll({
             where: {
                 UserId: req.authenticated.id
-            }
+            },
+            include: ['Product', 'User']
         })
             .then(function(result) {
+                console.log(`this is ${result}`)
                 res.status(200).json(result)
             })
             .catch(function(err) {

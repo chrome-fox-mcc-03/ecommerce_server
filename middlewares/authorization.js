@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     .then(response => {
       if(response) {
         if(response.UserId === req.decoded.id) {
-          console.log('masuk authorization');
+          console.log('berhasil authorization');
           next()
           return null
         }

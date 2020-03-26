@@ -184,6 +184,21 @@ class CartProductController {
       })
   }
 
+  static payall(req, res, next) {
+    let { listId } = req.body
+    listId = listId.split(',')
+    CartProduct.update({
+      isPaid: true}, { where: { id: listId }})
+      .then(response => {
+        console.log('berhasil pay all');
+        res.status(200).json({
+          msg: 'Paid all item in cart'
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
 
 
 }

@@ -19,6 +19,7 @@ router.get('/products/:id', ProductController.findOne);
 router.use(authorization)
 router.post('/products/:id', CartProductController.addToCart) // Add item to User's cart
 router.get('/carts', CartProductController.findPerUser) // Find item(s) in User's cart
+router.put('/carts/payall', CartProductController.payall) // Pay all item in User's cart
 router.delete('/carts/:id', CartProductController.delete) // Delete item(s) in User's cart
 router.put('/carts/:id', CartProductController.pay) // Pay the item in User's cart
 

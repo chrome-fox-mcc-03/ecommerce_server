@@ -5,6 +5,7 @@ const { ProductController } = require('../controllers/ProductController')
 const { CartController } = require('../controllers/CartController')
 const { CartItemController } = require('../controllers/CartItemController')
 const authentication = require('../middleware/authentication')
+const authorization = require('../middleware/authorization')
 
 //test connect
 router.get('/', (req, res) => {
@@ -31,11 +32,11 @@ router.delete('/product/:id', ProductController.deleteProduct) //delete product
 
 //cart route
 router.post('/cart', CartController.createCart)
-router.delete('/cart', CartController.removeCart)
-router.get('/cartitem', CartItemController.fetchCart)
-router.post('/addtocart', CartItemController.addToCart)
-router.delete('/cartitem/:id', CartItemController.removeOneItem)
-router.delete('/cartitem', CartItemController.removeAll)
+router.delete('/cart', authorization, CartController.removeCart)
+router.get('/cartitem', authorization, CartItemController.fetchCart)
+router.post('/addtocart', authorization, CartItemController.addToCart)
+router.delete('/cartitem/:id', authorization, CartItemController.removeOneItem)
+router.delete('/cartitem', authorization, CartItemController.removeAll)
 
 
 

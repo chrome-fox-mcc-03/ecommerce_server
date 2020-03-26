@@ -6,6 +6,7 @@ class CartController {
       where: {
         UserId: req.decoded.id
       },
+      order: [['createdAt', 'DESC']],
       include: [User, CartProduct]
     })
       .then(response => {
@@ -23,6 +24,12 @@ class CartController {
       }
     })
       .then(_ => {
+        return Cart.create({
+          UserId: req.decoded.id
+        })
+      })
+      .then(response => {
+        req.decoded.CartId = response.id
         res.status(200).json('Paid')
       })
       .catch(next)

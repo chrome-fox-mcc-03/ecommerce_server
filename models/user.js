@@ -54,8 +54,7 @@ module.exports = (sequelize, DataTypes) => {
           text: 'Thanks For Registering on H8 Shop!!'
         }
         email.sendMail(body, (error, info) => {
-          if(error) console.log(error);
-          else console.log(info);
+          if(error) throw new Error(error)
         })
       }
     },

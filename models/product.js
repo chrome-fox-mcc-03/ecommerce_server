@@ -79,6 +79,7 @@ module.exports = (sequelize, DataTypes) => {
   
   Product.associate = function(models) {
     // associations can be defined here
+    Product.hasMany(models.Cart)
   };
   return Product;
 };

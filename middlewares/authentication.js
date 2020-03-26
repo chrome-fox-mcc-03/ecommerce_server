@@ -14,6 +14,7 @@ function authentication(req, res, next) {
             .then(result => {
                 if(result){
                     req.UserEmail = result.email
+                    req.decoded = decoded
                     next()
                 } else {                    
                     next({

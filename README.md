@@ -360,3 +360,137 @@
 * **Notes:**
 
   None
+
+**Customer Register**
+----
+  Register a new credential as customer
+
+* **URL**
+
+  /customer/register
+
+* **Method:**
+  
+  POST
+  
+*  **URL Params**
+
+   `None`
+
+   **Required:**
+ 
+   ``
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+
+  `{email, password, name, avaurl}`
+
+  **Required:**
+
+  `email = {string}, password = {string}`
+
+   **Optional:**
+ 
+   `name = {string}, avaurl = {string}`
+
+* **Headers**
+
+  `None`
+
+* **Success Response:**
+  
+  Registered customer object `{id, email, avaurl, token, name}`
+
+  * **Code:** 200 <br />
+    **Content:** `{id: 1, name: "cust_name", token: "cust_token", email: "foo@bar.mail", avaurl: "http://foo.bar/image.jpg"}`
+ 
+* **Error Response:**
+
+  Email not included in request or empty
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ errors : ["email is required"] }`  
+
+  Invalid email format
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ errors : ["invalid email format"] }`  
+
+  Email already registered
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ errors : ["email must be unique"] }`  
+
+  Password not included in request or empty
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ errors : ["password is required"] }`  
+
+  Password length is too short
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ errors : ["required minimum password length is 6 characters"] }`  
+
+  Invalid avatar url format
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ errors : ["invalid url format"] }`  
+
+* **Notes:**
+
+  None
+
+**Customer Register**
+----
+  Request customer token for registered credentials
+
+* **URL**
+
+  /customer/login
+
+* **Method:**
+  
+  POST
+  
+*  **URL Params**
+
+   `None`
+
+   **Required:**
+ 
+   ``
+
+   **Optional:**
+ 
+   ``
+
+* **Data Params**
+
+  `{email, password}`
+
+  **Required:**
+
+  `email = {string}, password = {string}`
+
+   **Optional:**
+ 
+   `None`
+
+* **Headers**
+
+  `None`
+
+* **Success Response:**
+  
+  Registered customer object `{id, email, avaurl, token, name}`
+
+  * **Code:** 200 <br />
+    **Content:** `{id: 1, name: "cust_name", token: "cust_token", email: "foo@bar.mail", avaurl: "http://foo.bar/image.jpg"}`
+ 
+* **Error Response:**
+
+  Email not registered or wrong email & password combination
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "wrong email/password" }`  
+
+* **Notes:**
+
+  None

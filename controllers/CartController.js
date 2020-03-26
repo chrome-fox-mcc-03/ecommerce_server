@@ -6,6 +6,7 @@ const {
 } = require('../models')
 const { customError }  = require("../helpers/errorModel")
 let inputParams
+let cart
 let itemId
 let UserId
 let ProductId
@@ -66,6 +67,13 @@ class CartController {
         UserId = req.decoded.id
         itemId = req.body.ProductId
 
+        inputParams = {
+            UserId: UserId,
+            ProductId: itemId,
+            total_qty: 1,
+            checked_out: false
+        }
+
         Cart.findOne({
                 where: {
                     UserId: UserId,
@@ -75,28 +83,36 @@ class CartController {
             })
             .then(response => {
                 console.log("CART IS");
+                
                 // console.log(response.dataValues);
                 if (response) {
-                    console.log("HAVE CART!");
-                    let disthrow =  new customError(400, "ACTIVE CART EXISTED. TRY TO UPDATE INSTEAD.")
-                    // next({status: 400, message: "CART EXISTED. TRY TO UPDATE INSTEAD."})
-                    next(disthrow)
+                    cart = response.dataValues
+                    console.log("HAVE CART ALREADY!");
+                    // let disthrow =  new customError(400, "ACTIVE CART EXISTED. TRY TO UPDATE INSTEAD.")
+                    // // next({status: 400, message: "CART EXISTED. TRY TO UPDATE INSTEAD."})
+                    // next(disthrow)
+
+                    return Cart.update({
+                        total_qty: sequelize.literal('total_qty + 1')
+                    }, {
+                        where: {
+                            id: cart.id
+                        },
+                        include: ['Product', 'User'],
+                        returning: true
+                    })
+
                 } else {
                     console.log("NOT YET! LET'S CREATE NEW ONE");
-                    Cart.create({
-                            UserId: UserId,
-                            ProductId: itemId,
-                            total_qty: 1,
-                            checked_out: false
-                        })
-                        .then(response1 => {
-                            console.log("HELLO NEW CART")
-                            res.status(201).json(response1)
-                        })
-                        .catch(err => {
-                            next(err)
-                        })
+                    return Cart.create(inputParams)
                 }
+            })
+            .then(response => {
+                console.log("ADDED ITEM TO CART")
+                res.status(201).json(response)
+            })
+            .catch(err => {
+                next(err)
             })
     }
 

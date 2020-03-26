@@ -4,6 +4,7 @@ const cartRouter = require('./cart');
 const productRouter = require('./product');
 const errorHandler = require('../middlewares/errorHandler');
 
+router.get('/', (req, res) => res.send('Server is running'))
 router.post('/admin/login', userController.adminLogin);
 router.post('/admin/register', userController.adminRegister);
 router.post('/customer/login', userController.customerLogin);

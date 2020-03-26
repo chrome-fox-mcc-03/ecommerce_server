@@ -16,7 +16,8 @@ class Controller {
                     id: user.id,
                     email: user.email
                 }
-                // let token = createToken(payload)
+                let token = createToken(payload)
+                payload.token = token
                 // console.log(token)
                 return res.status(201).json(payload)
             })

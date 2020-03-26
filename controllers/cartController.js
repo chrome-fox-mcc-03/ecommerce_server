@@ -44,6 +44,7 @@ class CartController {
   }
 
   static display(req, res, next) {
+    
     Cart.findAll({
       where: {
         UserId: req.currentUserid
@@ -52,6 +53,7 @@ class CartController {
       include: [Product]
     })
       .then((cart) => {
+        console.log('masuk sini ga sih?');
         res.status(200).json(cart)
       })
       .catch(next)

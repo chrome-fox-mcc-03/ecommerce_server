@@ -35,6 +35,13 @@ function errorHandler(err, req, res, next) {
       errors: [err.name]
     }
   }
+  else if(err.name === 'Not authenticated') {
+    status = 400;
+    errName = {
+      message: 'Not authenticated',
+      errors: [err.name]
+    }
+  }
   
   res.status(status).json(errName)
 }

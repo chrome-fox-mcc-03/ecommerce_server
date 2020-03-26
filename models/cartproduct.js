@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         isInt: {
           args: true,
           msg: 'quantity must be in integer format'
+        },
+        min: {
+          args: [1],
+          msg: 'quantity minimum is 1'
         }
       }
     },

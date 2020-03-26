@@ -35,6 +35,7 @@ class ProductController {
     }
 
     static create ( req, res, next) {
+        console.log(req.body);
         let newProduct = {
             name : req.body.name, 
             image_url : req.body.image_url,
@@ -50,6 +51,7 @@ class ProductController {
                 })
             })
             .catch((err)=> {
+                console.log(err);
                 next(err)
             })   
     }

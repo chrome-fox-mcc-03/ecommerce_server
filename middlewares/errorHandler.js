@@ -34,6 +34,15 @@ module.exports = function (err, req, res, next) {
             }
             res.status(status).json(message)
         break ;
+        case 'MulterError' :
+            errors = [err.message]
+            status = 400 ;
+            message = {
+                message : 'Bad Request',
+                errors : errors
+            }
+            res.status(status).json(message)
+        break;
         default :
             res.status(status).json(message)
         break ;

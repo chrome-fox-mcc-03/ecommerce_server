@@ -3,7 +3,7 @@ const { Cart } = require('../models')
 function authorization(req, res, next) {
   Cart.findOne({
     where: {
-      id: req.params.id,
+      id: req.params.cartId,
       UserId: req.currentUserid
     }
   })

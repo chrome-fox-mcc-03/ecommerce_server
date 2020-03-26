@@ -53,7 +53,6 @@ class CartController {
       include: [Product]
     })
       .then((cart) => {
-        console.log('masuk sini ga sih?');
         res.status(200).json(cart)
       })
       .catch(next)
@@ -90,7 +89,7 @@ class CartController {
   }
 
   static delete(req, res, next) {
-    let id = req.params.cardId
+    let id = req.params.cartId
     let deletedCart;
     Cart.findByPk(id)
     .then((cart) => {

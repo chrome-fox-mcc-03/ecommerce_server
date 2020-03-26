@@ -760,4 +760,24 @@ describe('customer route', () => {
       })
     })
   })
+  describe('customer clear cart', () => {
+    describe('customer clear cart error', () => {})
+    describe('customer clear cart success', () => {
+      test('valid user, clear cart success', (done) => {
+        let validUser = {...customer2}
+        request(app)
+          .delete("/customer/cart/all")
+          .set({
+            token: validUser.token
+          })
+          .end((err, res) => {
+            expect(err).toBeNull()
+            // expect(res.body).toBe(expect.any(Array))
+            expect(res.status).toBe(200)
+            expect(res.body).toHaveProperty('message', 'cart cleared successfully')
+            done()
+          })
+      })
+    })
+  })
 })

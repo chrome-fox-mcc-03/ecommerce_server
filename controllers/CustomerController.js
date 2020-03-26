@@ -63,6 +63,30 @@ class CustomerController {
       })
       .catch(next)
   }
+  static checkToken(req, res, next) {
+    const { token } = req.headers;
+    const customer = getPayload(token)
+    Customer.findOne({
+      where: {
+        email: customer.email
+      }
+    })
+      .then(result => {
+        let payload = {
+          email: result.email,
+          id: result.id,
+          name: result.name,
+          avaurl: result.avaurl
+        }
+        payload.token = getToken(appPayload(result))
+        res.status(200).json({
+          user: payload
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
   static shop(req, res, next) {
     // res.status(200).json('shop')
     // /shop/?page=1&size=20
@@ -138,7 +162,8 @@ class CustomerController {
             quantity: item.quantity,
             seller: item.Product.User.email.split('@')[0],
             stock: Number(item.Product.stock),
-            price: Number(item.Product.price)
+            price: Number(item.Product.price),
+            image_url: item.Product.image_url
           }
           cartItems.push(cartItem)
         })
@@ -272,8 +297,6 @@ class CustomerController {
       include: [Product]
     })
       .then(result => {
-        console.log(result.Product.stock)
-        console.log(amount)
         if (result.Product.stock > amount) {
           return CartProducts.update({
               quantity: amount
@@ -289,6 +312,73 @@ class CustomerController {
       .then(_ => {
         res.status(200).json({
           message: 'product qty updated'
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+  static clearCustomerCart(req, res, next) {
+    // res.status(200).json("oke")
+    const { token } = req.headers
+    const customer = getPayload(token)
+    Cart.findOne({
+      where: {
+        CustomerId: customer.id
+      }
+    })
+      .then(result => {
+        if (result) {
+          const CartId = result.id;
+          return CartProducts.destroy({
+            where: {
+              CartId
+            }
+          })
+        } else {
+          throw appError(404, 'cart not found')
+        }
+      })
+      .then(_ => {
+        res.status(200).json({
+          message: 'cart cleared successfully'
+        })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+  static checkoutCustomerCart(req, res, next) {
+    const { token } = req.headers;
+    const customer = getPayload(token);
+    let cartItems = []
+
+    Cart.findOne({
+      where: {
+        CustomerId: customer.id
+      }
+    })
+      .then(result => {
+        if (result) {
+          const CartId = result.id;
+          return CartProducts.findAll({
+            where: {
+              CartId
+            }
+          })
+        } else {
+          throw appError(404, 'cart not found')
+        }
+      })
+      .then(result => {
+        result.forEach(item => {
+          cartItems.push({
+            ProductId: item.ProductId,
+            quantity: item.quantity
+          })
+        })
+        res.status(200).json({
+          message: "not implemented yet"
         })
       })
       .catch(err => {

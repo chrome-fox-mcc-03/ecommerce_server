@@ -35,14 +35,12 @@ class CustomerController {
       email: req.body.email,
       password: req.body.password
     }
-    console.log(payload)
     User.findOne({
       where: {
         email: payload.email
       }
     })
       .then(customer => {
-        console.log('MASUK PAK EKO')
         if (customer) {
           let statusLogin = checkPassword(payload.password, customer.password)
           if (statusLogin) {
@@ -80,7 +78,6 @@ class CustomerController {
   }
 
   static getCartCustomer (req, res, next) {
-    console.log('MASUK GET CART CUSTOMER')
     const id = req.currentUserId
     let cartId
     let productsCus
@@ -156,7 +153,6 @@ class CustomerController {
   }
 
   static updateQuantity (req, res, next) {
-    console.log('MASUK UPDATE QUANTITY')
     let productId = req.params.productId
     let cartId = +req.body.cartId
     let quantity = +req.body.quantity
@@ -166,7 +162,6 @@ class CustomerController {
       quantity : quantity,
       isCheckout : false
     }
-    console.log(payload, 'INI PAYLOAD')
     CartProduct.update(payload, {
       where: {
         ProductId: productId,
@@ -175,7 +170,6 @@ class CustomerController {
       returning : true
     })
       .then( data => {
-        console.log('BERHASIL UPDATE')
         res.status(200).json(data[1][0])
       })
       .catch(next)
@@ -198,7 +192,6 @@ class CustomerController {
   }
 
   static checkout(req, res, next) {
-    console.log('MASUK CONTROLLER CHECKOUT')
     const cartId = req.body.cartId
     const cart = req.body.cart;
     const UserId = req.currentUserId;
@@ -213,7 +206,6 @@ class CustomerController {
       });
       return Promise.all(promises).then(products => {
         const updatePromises = [];
-        console.log(products, 'INI NIH SI PRODUCTS NYA CART')
         products.forEach((el, index) => {
           const data = {
             name: el.name,
@@ -231,7 +223,6 @@ class CustomerController {
         });
 
         return Promise.all(updatePromises).then(products => {
-          console.log(products, 'INI NIH YANG KEDUA')
           const cartPromises = [];
           cart.forEach(el => {
             const data = {

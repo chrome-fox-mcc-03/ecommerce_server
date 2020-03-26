@@ -5,12 +5,13 @@ const authentaction = require('../middleware/authentication')
 const authorized =require('../middleware/authorized')
 
 
-router.use(authentaction)
 router.get('/product',Controller.productFindAll)
 router.get('/product/:id',Controller.productfindOne)
 
-router.post('/product',authorized,Controller.productAdd)
-router.delete('/product/:id',authorized,Controller.productDelete)
-router.patch('/product/:id',authorized,Controller.productEdit)
+// router.use(authentaction)
+router.post('/product',authentaction,authorized,Controller.productAdd)
+router.delete('/product/:id',authentaction,authorized,Controller.productDelete)
+router.patch('/product/:id',authentaction,authorized,Controller.productEdit)
+router.post('/product/rate',authentaction,Controller.addRate)
 
 module.exports = router

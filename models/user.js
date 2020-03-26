@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends sequelize.Sequelize.Model{
     static associate(models) {
       User.belongsTo(models.Role)
+      User.belongsToMany(models.Production,{through : models.Cart})
     }
   }
 
@@ -35,6 +36,12 @@ module.exports = (sequelize, DataTypes) => {
           msg : "Please insert Password"
         }
       }
+    },
+    picture: {
+      type: DataTypes.STRING
+    },
+    RoleId: {
+      type: DataTypes.INTEGER
     }
   },{
     sequelize,

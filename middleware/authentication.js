@@ -4,7 +4,7 @@ const { User } = require('../models')
 module.exports = async (req,res,next) => {
   try {
     const payload = decode(req.headers.token)
-    console.log(payload)
+    req.CurrentId = payload.payload.id
     req.RoleId = payload.payload.RoleId
     const result = await User.findOne({
       where : {
@@ -12,6 +12,7 @@ module.exports = async (req,res,next) => {
       }
     })
     if(result) {
+      console.log(result)
       next()
     }else{
       throw{

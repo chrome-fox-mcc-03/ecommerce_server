@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Production.belongsToMany(models.User,{through : models.Cart})
       Production.belongsTo(models.Category)
+      Production.hasMany(models.rating)
     }
   }
 
@@ -80,6 +81,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     CategoryId : {
       type : DataTypes.INTEGER
+    },
+    ratingId: {
+      type: DataTypes.INTEGER
     }
   },{sequelize})
   return Production;

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.82% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>8/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.82% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>8/24</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -89,37 +89,41 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-yes">19x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">module.exports = (err,req,res,next) =&gt; {
   console.log(err)
@@ -127,31 +131,33 @@
     status : 500,
     message : 'Internal Serval Error'
   }
-  if(err.name == "SequelizeValidationError") {
-    let arr = []
-    err.errors.forEach(el =&gt; {
-      arr.push(el.message)
+  <span class="missing-if-branch" title="if path not taken" >I</span>if(err.name == "SequelizeValidationError") {
+    let arr = <span class="cstat-no" title="statement not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >    err.errors.forEach(<span class="fstat-no" title="function not covered" >el</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      arr.push(el.message)</span>
     })
-    obj.message = arr
-    obj.status = 400
-    res.status(obj.status).json(obj)
+<span class="cstat-no" title="statement not covered" >    obj.message = arr</span>
+<span class="cstat-no" title="statement not covered" >    obj.status = 400</span>
+<span class="cstat-no" title="statement not covered" >    res.status(obj.status).json(obj)</span>
   }
-  else if(err.name === 'costume') {
-    obj.status = err.status
-    obj.message = err.message
-    res.status(obj.status).json(obj)
+  else <span class="missing-if-branch" title="if path not taken" >I</span>if(err.name === 'costume') {
+<span class="cstat-no" title="statement not covered" >    obj.status = err.status</span>
+<span class="cstat-no" title="statement not covered" >    obj.message = err.message</span>
+<span class="cstat-no" title="statement not covered" >    console.log(obj)</span>
+<span class="cstat-no" title="statement not covered" >    res.status(obj.status).json(obj)</span>
   }
-  else <span class="missing-if-branch" title="else path not taken" >E</span>if(err.name == 'SequelizeUniqueConstraintError') {
-    obj.status = 400
-    obj.message = 'Email already registerd'
-    res.status(obj.status).json(obj)
+  else <span class="missing-if-branch" title="if path not taken" >I</span>if(err.name == 'SequelizeUniqueConstraintError') {
+<span class="cstat-no" title="statement not covered" >    obj.status = 400</span>
+<span class="cstat-no" title="statement not covered" >    obj.message = 'Email already registerd'</span>
+<span class="cstat-no" title="statement not covered" >    res.status(obj.status).json(obj)</span>
   }
-  else <span class="cstat-no" title="statement not covered" >if(err.name =='JsonWebTokenError'){</span>
+  else <span class="missing-if-branch" title="if path not taken" >I</span>if(err.name =='JsonWebTokenError'){
 <span class="cstat-no" title="statement not covered" >    obj.status = 401</span>
 <span class="cstat-no" title="statement not covered" >    obj.message = 'Please login first as admin'</span>
+<span class="cstat-no" title="statement not covered" >    res.status(obj.status).json(obj)</span>
   }
   else{
-<span class="cstat-no" title="statement not covered" >    res.status(obj.status).json(obj)</span>
+    res.status(obj.status).json(obj)
   }
 }</pre></td></tr></table></pre>
 
@@ -160,7 +166,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Mar 18 2020 14:38:10 GMT+0700 (GMT+07:00)
+                at Thu Mar 26 2020 15:43:59 GMT+0700 (GMT+07:00)
             </div>
         </div>
         <script src="../../prettify.js"></script>

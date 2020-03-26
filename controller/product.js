@@ -1,11 +1,9 @@
-const { Production } = require('../models')
+const { Production, Category, rating } = require('../models')
 
 class ControllerProduction {
   static async productAdd (req,res,next) { 
     try {
       const { name, price, description, url, stock, CategoryId } = req.body
-      console.log(price)
-      console.log(stock)
       const data = await Production.create({
         name,
         price,
@@ -15,6 +13,9 @@ class ControllerProduction {
         CategoryId
       })
       if(data) {
+        const ratingAdd = await rating.create({
+          ProductionId: data.id
+        })
         res.status(201).json({
           message : "add success",
           id : data.id
@@ -88,19 +89,18 @@ class ControllerProduction {
   }
   static async productFindAll (req,res,next) {
     try {
-      const data = await Production.findAll({
-      })
+      const data = await Production.findAll({include: [Category, rating]})
       res.status(200).json(data)
     } catch (error) {
       next(error)
     }
   }
-  static async productfindOneCategory(req,res,next) {
-    const { CategoryId } = req.body
+  static async productfindAllCategory(req,res,next) {
+    const { id } = req.params
     try {
       const data = await Production.findAll({
         where : {
-          CategoryId
+          CategoryId: id
         }
       })
       if(data) {
@@ -110,6 +110,39 @@ class ControllerProduction {
       next(error)
     }
   }
+  static async addRate(req,res,next) {
+    try {
+      const { rate, id } = req.body
+      const data = await rating.findOne({
+        where: {
+          ProductionId: id
+        }
+      })
+      if(data.rate === null) {
+        const result = await rating.update({
+          rate,
+          hit: 1
+        },
+        {where: {
+          ProductionId: id
+        },returning: true})
+        res.status(200).json(result[1])
+      }else {
+        const final = await rating.increment({
+          'rate': rate,
+          'hit': 1
+        },
+        {
+          where: {
+            ProductionId: id
+          }
+        })
+      }
+    } catch (error) {
+      next(error)
+    }
+  }
+
 }
 
 module.exports = ControllerProduction

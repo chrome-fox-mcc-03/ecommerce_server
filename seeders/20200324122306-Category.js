@@ -12,13 +12,28 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-   return queryInterface.bulkInsert('Users', [{
-      email: 'admin@gmail.com',
-      password: '123456',
-      RoleId: 1,
+   return queryInterface.bulkInsert('Categories', [
+     {
+      name: 'Costume',
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {});
+    },
+    {
+      name: 'Gundam',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: 'Figure',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      name: 'Merchandise',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    ], {});
   },
 
   down: (queryInterface, Sequelize) => {
@@ -29,6 +44,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-   return queryInterface.bulkDelete('Users', null, {});
+   return queryInterface.bulkDelete('Categories', null, {});
   }
 };

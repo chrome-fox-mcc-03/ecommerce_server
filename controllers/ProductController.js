@@ -16,10 +16,18 @@ class ProductController {
             })
         })
         .catch((err) => {
-            res.status(401).json({
-                err
-            })
+            next(err)
         })
+    }
+
+    static findOneProduct(req, res, next) {
+        console.log(req.params, 'dari controller')
+        Product.findByPk(req.params.id)
+            .then((data) => {
+                res.status(200).json(data)
+            }).catch((err) => {
+                next(err)
+            });
     }
     
     static fetchProduct(req, res, next){
@@ -29,9 +37,7 @@ class ProductController {
                     result
                 })
             }).catch((err) => {
-                res.status(500).json({
-                    err
-                })
+                next(err)
             });
     }
 
@@ -53,9 +59,7 @@ class ProductController {
                 result
             })
         }).catch((err) => {
-            res.status(401).json({
-                err
-            })
+            next(err)
         });
     }
 
@@ -69,9 +73,7 @@ class ProductController {
                 result
             })
         }).catch((err) => {
-            res.status(500).json({
-                err
-            })
+            next(err)
         });
     }
 }

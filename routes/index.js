@@ -22,6 +22,7 @@ router.post('/login', UserController.login)
 
 //product route
 router.get('/product', ProductController.fetchProduct) // fetch product
+router.get('/product/:id', ProductController.findOneProduct)
 
 router.use(authentication)
 router.post('/product', ProductController.addProduct) // add new product

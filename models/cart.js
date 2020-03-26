@@ -2,7 +2,20 @@
 module.exports = (sequelize, DataTypes) => {
   class Cart extends sequelize.Sequelize.Model{}
   Cart.init({
-    UserId: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: 'User Id cannot be null'
+        },
+        isNumeric: {
+          args: true,
+          msg: 'User Id should be number'
+        }
+      }
+    }
   },{
     sequelize
   })

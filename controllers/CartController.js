@@ -10,6 +10,7 @@ let cart
 let itemId
 let UserId
 let ProductId
+let qtyInStock
 let item
 
 class CartController {
@@ -143,22 +144,46 @@ class CartController {
 
 
     static reduceQty(req, res, next) {
-        console.log(">>> CONTROLLERS: ADD ITEM TO CART \n");
-        Cart.update({
-                total_qty: sequelize.literal('total_qty - 1')
-            }, {
-                where: {
-                    id: req.params.cartId
-                },
-                include: ['Product', 'User'],
-                returning: true
-            })
-            .then(response => {
-                console.log("CART UPDATED: QTY MINUS");
-                let updated = response[1][0]
-                res.status(201).json({
-                    updated
+        console.log(">>> CONTROLLERS: REMOVE ONE ITEM FROM CART \n");
+
+        // CHECK IF CART QTY IS ONE. IF SO, JUST DELETE CART
+        Cart.findOne({
+            where: {
+                id: req.params.cartId
+            }
+        })
+        .then(response => {
+            console.log(response);
+            if (response.dataValues.total_qty === 1) {
+                return Cart.destroy({
+                    where: {
+                        id: req.params.cartId
+                    }
                 })
+            } else {
+                return Cart.update({
+                    total_qty: sequelize.literal('total_qty - 1')
+                }, {
+                    where: {
+                        id: req.params.cartId
+                    },
+                    include: ['Product', 'User'],
+                    returning: true
+                })
+            }
+        })
+        // Cart.update({
+        //         total_qty: sequelize.literal('total_qty - 1')
+        //     }, {
+        //         where: {
+        //             id: req.params.cartId
+        //         },
+        //         include: ['Product', 'User'],
+        //         returning: true
+        //     })
+            .then(response1 => {
+                console.log("CART UPDATED: QTY REDUCED");
+                res.status(201).json(response1)
             })
             .catch(err => {
                 console.log("ERROR ADDING QTY");
@@ -213,14 +238,29 @@ class CartController {
             cart = response[1][0].dataValues
             qtyToCheckOut = Number(cart.total_qty)
             itemId = cart.ProductId
-            return Product.increment({
-                stock: -qtyToCheckOut
-            }, {
+
+            console.log("CHECK IF STOCK SUFFICIENT");
+            Product.findOne({
                 where: {
                     id: itemId
-                },
-                returning: true
+                }
             })
+            .then(response1 => {
+                qtyInStock = response1.dataValues.stock
+
+                if(stock >= qtyToCheckOut) {
+                    return Product.increment({
+                        stock: -qtyToCheckOut
+                    }, {
+                        where: {
+                            id: itemId
+                        },
+                        returning: true
+                    })
+                } else {
+                    next((new customError(400, "INSUFFICIENT STOCK")))
+                }
+            }) 
         })
         .then(response1 => {
             console.log("PRODUCT STOCK UPDATED");
@@ -237,6 +277,86 @@ class CartController {
             next(err)
         })
     }
+
+
+    // static massCheckout(req, res, next) {
+    //     console.log("CHECKING OUT CART EN MASSE \n");
+    //     let qtyToCheckOut
+    //     let thing
+    //     let cart
+    //     let newQty
+    //     let carts
+    //     let products
+    //     let cart
+    //     let product
+    //     let promiseCarts = []
+    //     let promiseProducts = []
+
+    //     Cart.findAll({
+    //         where: {
+    //             UserId: req.decoded.id,
+    //             checked_out: false
+    //         },
+    //         include: ['Product', 'User']
+    //     })
+    //     .then(response => {
+    //         console.log("RETRIEVED ALL CARTS");
+    //         carts = response
+
+    //         carts.forEach(cart => {
+
+    //         })
+
+
+    //     })
+        
+
+
+
+
+
+
+
+
+    //     Cart.update({
+    //         checked_out: true
+    //     }, {
+    //         where: {
+    //             id: req.params.cartId
+    //         },
+    //         include: ['Product', 'User'],
+    //         returning: true
+    //     })
+    //     .then(response => {
+    //         console.log("CART CHECKEDOUT. NOW UPDATING STOCK");
+    //         // console.log(response[1][0].dataValues)
+    //         cart = response[1][0].dataValues
+    //         qtyToCheckOut = Number(cart.total_qty)
+    //         itemId = cart.ProductId
+    //         return Product.increment({
+    //             stock: -qtyToCheckOut
+    //         }, {
+    //             where: {
+    //                 id: itemId
+    //             },
+    //             returning: true
+    //         })
+    //     })
+    //     .then(response1 => {
+    //         console.log("PRODUCT STOCK UPDATED");
+    //         console.log(response1[0]);
+    //         thing = response1[0]
+    //         let payload = [
+    //             {product: response1[0]},
+    //             {cart: cart},
+    //             {message: "CHECKOUT & UPDATE SUCCESS"}
+    //         ]
+    //         res.status(201).json({data: payload})
+    //     })
+    //     .catch(err => {
+    //         next(err)
+    //     })
+    // }
 
 }
 

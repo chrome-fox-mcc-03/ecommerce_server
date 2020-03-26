@@ -37,7 +37,8 @@ class CartProductController {
     CartProduct.findOne({
         where: {
           CartId,
-          ProductId
+          ProductId,
+          isPaid: false
         }
       })
       .then(response => {
@@ -60,7 +61,7 @@ class CartProductController {
                     }
                   })
                   .then(response => {
-                    res.status(200).json('selesai tambah ke cart yg sudah ada')
+                    res.status(200).json('Added item(s) to cart')
                   })
                   .catch(err => {
                     next(err)
@@ -138,12 +139,15 @@ class CartProductController {
 
   static pay(req, res, next) {
     const CartId = +req.params.id
+    const product = {};
     CartProduct.findOne({
         where: {
           id: CartId
         }
       })
       .then(response => {
+        product.id = response.ProductId
+        product.quantity = response.quantity
         if (response) {
           if (!response.isPaid) {
             return CartProduct.update({
@@ -165,6 +169,10 @@ class CartProductController {
             msg: "Product not found"
           })
         }
+      })
+      .then(_ => {
+        console.log(product);
+        return Product.decrement('stock', { by: product.quantity, where: { id: product.id }})
       })
       .then(_ => {
         res.status(200).json({

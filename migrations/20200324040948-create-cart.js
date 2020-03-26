@@ -17,10 +17,9 @@ module.exports = {
       total_qty: {
         type: Sequelize.INTEGER
       },
-      status: {
-        type: Sequelize.ENUM,
-        values: ['pending', 'checkout'],
-        defaultValue: 'pending'
+      checked_out: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,

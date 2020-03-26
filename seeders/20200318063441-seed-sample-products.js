@@ -1,9 +1,9 @@
-'use strict';
+'use strict'; 
 let sampleProducts = [
   {
     name: "Nissin Cup Noodle Chicken Flavor",
     category: "food",
-    image_url: "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg",
+    image_url: "https://media.timeout.com/images/105183116/630/472/image.jpg",
     price: 10000,
     stock: 5000,
     createdAt: new Date(),
@@ -21,7 +21,7 @@ let sampleProducts = [
   {
     name: "Panadol Cold & Flu Tablet Strip",
     category: "medicine",
-    image_url: "https://img.okezone.com/content/2020/01/27/481/2159096/cegah-peredaran-obat-ilegal-rempah-dan-jamu-tradisional-bisa-jadi-solusi-gYQvd8AErO.jpg",
+    image_url: "https://timesofoman.com/uploads/images/2019/11/10/1074475.jpg",
     price: 15000,
     stock: 5000,
     createdAt: new Date(),

@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const { checkPassword } = require("../helpers/bcrypt")
 const { createToken } = require("../helpers/jwt")
-const  customError  = require("../helpers/errorModel")
+const { customError }  = require("../helpers/errorModel")
 
 let regParams
 let datum
@@ -75,7 +75,6 @@ class UserController {
                     payloadParams = {
                         id: response[0].id,
                         email: req.body.email,
-                        password: req.body.password,
                         role: response[0].role
                     }
     

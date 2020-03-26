@@ -4,7 +4,7 @@ const {
     User,
     sequelize
 } = require('../models')
-let customError = require("../helpers/errorModel")
+const { customError }  = require("../helpers/errorModel")
 let inputParams
 let itemId
 let UserId
@@ -13,19 +13,44 @@ let item
 
 class CartController {
 
-    static showAll(req, res, next) {
+    static showAllCarts(req, res, next) {
         console.log("SHOWING ALL CARTS");
         console.log("WHO'S USER");
         console.log(req.decoded.id);
         Cart.findAll({
                 where: {
-                    UserId: req.decoded.id
+                    UserId: req.decoded.id,
+                    checked_out: false
                 },
                 include: ['Product', 'User']
             })
             .then(response => {
                 console.log("CARTS RETRIEVED");
                 // console.log(response);
+                res.status(200).json({
+                    response
+                })
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+
+    static showTxnLog(req, res, next) {
+        console.log("SHOWING ALL CARTS");
+        console.log("WHO'S USER");
+        console.log(req.decoded.id);
+        Cart.findAll({
+                where: {
+                    UserId: req.decoded.id,
+                    checked_out: true
+                },
+                include: ['Product', 'User']
+            })
+            .then(response => {
+                console.log("TXS RETRIEVED");
+                console.log(response);
                 res.status(200).json({
                     response
                 })
@@ -44,23 +69,25 @@ class CartController {
         Cart.findOne({
                 where: {
                     UserId: UserId,
-                    ProductId: itemId
+                    ProductId: itemId,
+                    checked_out: false
                 }
             })
             .then(response => {
                 console.log("CART IS");
-                console.log(response);
+                // console.log(response.dataValues);
                 if (response) {
                     console.log("HAVE CART!");
+                    let disthrow =  new customError(400, "ACTIVE CART EXISTED. TRY TO UPDATE INSTEAD.")
                     // next({status: 400, message: "CART EXISTED. TRY TO UPDATE INSTEAD."})
-                    throw new customError(400, "CART EXISTED. TRY TO UPDATE INSTEAD.")
+                    next(disthrow)
                 } else {
                     console.log("NOT YET! LET'S CREATE NEW ONE");
                     Cart.create({
                             UserId: UserId,
                             ProductId: itemId,
                             total_qty: 1,
-                            status: "pending"
+                            checked_out: false
                         })
                         .then(response1 => {
                             console.log("HELLO NEW CART")
@@ -82,11 +109,12 @@ class CartController {
                 where: {
                     id: req.params.cartId
                 },
+                include: ['Product', 'User'],
                 returning: true
             })
             .then(response => {
                 console.log("CART UPDATED: QTY ADD");
-                let updated = response[0]
+                let updated = response[1][0]
                 res.status(201).json({
                     updated
                 })
@@ -106,11 +134,12 @@ class CartController {
                 where: {
                     id: req.params.cartId
                 },
+                include: ['Product', 'User'],
                 returning: true
             })
             .then(response => {
                 console.log("CART UPDATED: QTY MINUS");
-                let updated = response[0]
+                let updated = response[1][0]
                 res.status(201).json({
                     updated
                 })
@@ -142,6 +171,55 @@ class CartController {
                     throw new customError(404, "ENTRY NOT FOUND")
                 }
             })
+    }
+
+
+    static checkout(req, res, next) {
+        console.log("CHECKING OUT CART");
+        console.log("ID to checkout is");
+        console.log(req.params.cartId);
+        let qtyToCheckOut
+        let thing
+        let cart
+        let newQty
+        Cart.update({
+            checked_out: true
+        }, {
+            where: {
+                id: req.params.cartId
+            },
+            include: ['Product', 'User'],
+            returning: true
+        })
+        .then(response => {
+            console.log("CART CHECKEDOUT. NOW UPDATING STOCK");
+            // console.log(response[1][0].dataValues)
+            cart = response[1][0].dataValues
+            qtyToCheckOut = Number(cart.total_qty)
+            itemId = cart.ProductId
+            return Product.increment({
+                stock: -qtyToCheckOut
+            }, {
+                where: {
+                    id: itemId
+                },
+                returning: true
+            })
+        })
+        .then(response1 => {
+            console.log("PRODUCT STOCK UPDATED");
+            console.log(response1[0]);
+            thing = response1[0]
+            let payload = [
+                {product: response1[0]},
+                {cart: cart},
+                {message: "CHECKOUT & UPDATE SUCCESS"}
+            ]
+            res.status(201).json({data: payload})
+        })
+        .catch(err => {
+            next(err)
+        })
     }
 
 }

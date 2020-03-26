@@ -6,10 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER,
     total_qty: DataTypes.INTEGER,
-    status: {
-      type: DataTypes.ENUM,
-      values: ['pending', 'checkout'],
-      defaultValue: 'pending'
+    checked_out: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     sequelize,

@@ -1,5 +1,5 @@
 const { Product } = require('../models')
-const  customError  = require("../helpers/errorModel")
+const { customError }  = require("../helpers/errorModel")
 const defaultPic = require("../helpers/defaultPic")
 let inputParams
 let pic

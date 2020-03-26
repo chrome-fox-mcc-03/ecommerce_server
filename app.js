@@ -12,6 +12,7 @@ app.use(express.json())
 
 
 app.use(router)
+app.use(express.static(__dirname + '/static'))
 app.use(errorHandler)
 
 module.exports = app

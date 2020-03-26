@@ -1,11 +1,16 @@
 # ecommerce_server
-# heroku name: https://maxhamz-ecommerce.herokuapp.com/
+### heroku: https://maxhamz-ecommerce.herokuapp.com/
+### firebase customer: https://maxhamz-ecommerce-customer.firebaseapp.com
+### firebase cms: https://maxhamz-ecommerce-cms.firebaseapp.com
 -----------
 
-**Create Task**
+ **PRODUCTS ROUTE**
 ----
 
-  Create new task.
+**Create Product**
+----
+
+  Create new product.
 
 * **URL**
 
@@ -48,49 +53,49 @@
   * **Code:** 400 VALIDATION ERROR <br />
     **Content:** <br>
     `{
-    "message": [
+    "errors": [
         "NAME REQUIRED"
     ]
     }`
     <br>
     **OR**
     `{
-    "message": [
+    "errors": [
         "CATEGORY REQUIRED"
     ]
     }`
     <br>
     **OR**
     `{
-    "message": [
+    "errors": [
         "CATEGORY REQUIRED"
     ]
     }`
     <br>
     **OR**
     `{
-    "message": [
+    "errors": [
         "PRICE MUST BE NUMERIC"
     ]
     }`
     <br>
     **OR**
     `{
-    "message": [
+    "errors": [
         "PRICE MUST BE NON-NEGATIVE"
     ]
     }`
     <br>
     **OR**
     `{
-    "message": [
+    "errors": [
         "STOCK MUST BE NUMERIC"
     ]
     }`
     <br>
     **OR**
     `{
-    "message": [
+    "errors": [
         "STOCK MUST BE NON-NEGATIVE"
     ]
     }`
@@ -98,29 +103,11 @@
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** <br>
-    `RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
-    at ServerResponse.writeHead (_http_server.js:248:11)
-    at ServerResponse._implicitHeader (_http_server.js:239:8)
-    at write_ (_http_outgoing.js:650:9)
-    at ServerResponse.end (_http_outgoing.js:760:5)
-    at ServerResponse.send (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:221:10)
-    at ServerResponse.json (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:267:15)
-    at errorHandler (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/errorHandling.js:47:30)
-    at Layer.handle_error (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:71:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:315:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at authenticate (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/authenticate.js:37:10)
-    at Layer.handle [as handle_request] (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:317:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)`
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
     <br>
 
 <hr>
@@ -192,29 +179,11 @@
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** 
     <br>
-    `RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
-    at ServerResponse.writeHead (_http_server.js:248:11)
-    at ServerResponse._implicitHeader (_http_server.js:239:8)
-    at write_ (_http_outgoing.js:650:9)
-    at ServerResponse.end (_http_outgoing.js:760:5)
-    at ServerResponse.send (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:221:10)
-    at ServerResponse.json (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:267:15)
-    at errorHandler (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/errorHandling.js:47:30)
-    at Layer.handle_error (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:71:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:315:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at authenticate (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/authenticate.js:37:10)
-    at Layer.handle [as handle_request] (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:317:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)`
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
 
 <br>
 
@@ -289,7 +258,7 @@
 <br>
 
 
-**Update Todo**
+**Update Product**
 ----
 
   Update product info by Id.
@@ -332,7 +301,7 @@
             "updatedAt": "2020-03-02T08:01:15.475Z"
         }
     ],
-    "error": "Entry updated"
+    "message": "Entry updated"
     }`
 
 * **Error Responses:**
@@ -355,36 +324,18 @@
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** <BR>
-    `RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
-    at ServerResponse.writeHead (_http_server.js:248:11)
-    at ServerResponse._implicitHeader (_http_server.js:239:8)
-    at write_ (_http_outgoing.js:650:9)
-    at ServerResponse.end (_http_outgoing.js:760:5)
-    at ServerResponse.send (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:221:10)
-    at ServerResponse.json (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:267:15)
-    at errorHandler (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/errorHandling.js:47:30)
-    at Layer.handle_error (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:71:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:315:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at authenticate (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/authenticate.js:37:10)
-    at Layer.handle [as handle_request] (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:317:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)`
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
     <br>
 
 <hr>
 <br>
 
 
-**Delete Task**
+**Delete Product**
 ----
 
   Delete product by Id.
@@ -408,7 +359,7 @@
   * **Code:** 200 <br />
     **Content:** `{
     "data": 1,
-    "message": "Delete success for ID 3"
+    "errors": "Delete success for ID 3"
     }`
 
 * **Error Responses:**
@@ -431,29 +382,11 @@
 
   * **Code:** 500 INTERNAL SERVER ERROR <br />
     **Content:** <BR>
-    `RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
-    at ServerResponse.writeHead (_http_server.js:248:11)
-    at ServerResponse._implicitHeader (_http_server.js:239:8)
-    at write_ (_http_outgoing.js:650:9)
-    at ServerResponse.end (_http_outgoing.js:760:5)
-    at ServerResponse.send (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:221:10)
-    at ServerResponse.json (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/response.js:267:15)
-    at errorHandler (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/errorHandling.js:47:30)
-    at Layer.handle_error (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:71:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:315:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:635:15
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:260:14)
-    at authenticate (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/middlewares/authenticate.js:37:10)
-    at Layer.handle [as handle_request] (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:317:13)
-    at /home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:284:7
-    at Function.process_params (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:335:12)
-    at next (/home/sandboxadmin/PROJECTS/HACKTIV8/PHASE2/todo-server/node_modules/express/lib/router/index.js:275:10)`
+   `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
     <br>
 
 <hr>
@@ -467,7 +400,7 @@
 <HR>
 
 
-**USER**
+ **USERS ROUTE**
 -----
 
 **Register**
@@ -516,21 +449,21 @@
   * **Code:** 400 BAD REQUEST<br />
     **Content:**<br>
     `{
-    "error": [
+    "errors": [
         "EMAIL MUST BE UNIQUE"
     ]
     }`
     <br>
     **OR**
     `{
-    "error": [
+    "errors": [
         "INVALID EMAIL FORMAT"
     ]
     }`
     <br>
     **OR**
     `{
-    "error": [
+    "errors": [
         "PASSWORD MUST BETWEEN 6-16 CHARACTERS"
     ]
     }`
@@ -578,14 +511,454 @@
   * **Code:** 400 WRONG EMAIL/PASSWORD<br />
     **Content:**<br>
     `{
-    "error": "WRONG EMAIL/PASSWORD"
+    "errors": "WRONG EMAIL/PASSWORD"
     }`
     <br>
 
   * **Code:** 500 INTERNAL SERVER ERROR<br />
     **Content:**<br>
-    `Cannot POST /users/signin1`
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
 
 <br>
 
 <hr>
+<HR>
+
+ **CARTS ROUTE**
+----
+
+*Create Cart**
+----
+
+  Create new cart.
+
+* **URL**
+
+  /carts
+
+* **Method:**
+
+  `POST`
+
+* **URL Params**
+  None
+
+* **Body/Form Params**<br>
+  **Required**
+
+  - `UserId` : integer
+  - `ProductId` : integer
+  - `total_qty` :  integer
+  - `checked_out` : boolean (defaults to `false`)
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**<br>
+    `{
+      "id": 26,
+      "UserId": 4,
+      "ProductId": 5,
+      "total_qty": 1,
+      "checked_out": false,
+      "updatedAt": "2020-03-26T15:25:13.160Z",
+      "createdAt": "2020-03-26T15:25:13.160Z"
+    }`
+    <br><br>
+
+
+* **Error Responses:**
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** <br>
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
+    <br>
+
+<hr>
+<br>
+
+**Read Carts**
+----
+
+  Returns a list of all carts corresponding to a `UserId`
+
+* **URL**
+
+  /carts
+
+* **Method:**
+
+  `GET`
+
+* **URL Params**
+  None
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:**
+    <br>
+    `{
+    "data": [
+      {
+        "id": 26,
+        "UserId": 4,
+        "ProductId": 5,
+        "total_qty": 3,
+        "checked_out": false,
+        "updatedAt": "2020-03-26T15:25:13.160Z",
+        "createdAt": "2020-03-26T15:25:13.160Z"
+      },
+      {
+        "id": 27,
+        "UserId": 4,
+        "ProductId": 2,
+        "total_qty": 3,
+        "checked_out": false,
+        "updatedAt": "2020-03-26T15:25:13.160Z",
+        "createdAt": "2020-03-26T15:25:13.160Z"
+      }
+    ],
+    "message": "Here are the complete list"
+    }`
+
+* **Error Responses:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    <br>
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
+
+<br>
+
+<hr>
+<br>
+
+**Read Transactions Log**
+----
+
+  Returns a list of all completed transactions corresponding to a `UserId`
+
+* **URL**
+
+  /carts/add/:cartId
+
+* **Method:**
+
+  `PATCH`
+
+* **URL Params**
+  `cartId`: integer
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**
+    <br>
+    `{
+      "updated": {
+        "id": 26,
+        "UserId": 4,
+        "ProductId": 5,
+        "total_qty": 2,
+        "checked_out": false,
+        "createdAt": "2020-03-26T15:25:13.160Z",
+        "updatedAt": "2020-03-26T15:39:17.100Z"
+      }
+    }`
+
+* **Error Responses:**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    <br>
+    `{
+    "errors": [
+        "INTERNAL SERVER ERROR"
+      ]
+    }`
+
+<br>
+
+<hr>
+<br>
+
+**Add To Cart**
+----
+
+  Increment `total_qty` inside of a `Cart` by 1, corresponding to a `ProductId`
+  and `UserId`. Creates new cart if there haven't been an active cart of that
+  `ProductId` with `total_qty` of 1
+
+* **URL**
+
+  /carts/add/:cartId
+
+* **Method:**
+
+  `PATCH`
+
+* **URL Params**
+  `cartId`: integer
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**
+    <br>
+    `{
+      "updated": {
+        "id": 26,
+        "UserId": 4,
+        "ProductId": 5,
+        "total_qty": 3,
+        "checked_out": false,
+        "createdAt": "2020-03-26T15:25:13.160Z",
+        "updatedAt": "2020-03-26T15:47:32.350Z"
+      }
+    }`
+
+* **Error Responses:**
+
+  * **Code:** 404 ENTRY NOT FOUND <br />
+    **Content:** 
+    <br>
+    `{
+      "errors": [
+        "ENTRY NOT FOUND"
+      ]
+    }`
+
+<br>
+
+<hr>
+<br>
+
+**Remove From Cart**
+----
+
+  Decrement `total_qty` inside of a `Cart` by 1, corresponding to a `ProductId`
+  and `UserId`. Deletes cart if there is only one quantity left in cart.
+
+* **URL**
+
+  /carts/remove/:cartId
+
+* **Method:**
+
+  `PATCH`
+
+* **URL Params**
+  `cartId`: integer
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**
+    <br>
+    `{
+      "updated": {
+        "id": 26,
+        "UserId": 4,
+        "ProductId": 5,
+        "total_qty": 3,
+        "checked_out": false,
+        "createdAt": "2020-03-26T15:25:13.160Z",
+        "updatedAt": "2020-03-26T15:47:32.350Z"
+      }
+    }`
+
+* **Error Responses:**
+
+  * **Code:** 404 ENTRY NOT FOUND <br />
+    **Content:** 
+    <br>
+    `{
+      "errors": [
+        "ENTRY NOT FOUND"
+      ]
+    }`
+
+<br>
+
+<hr>
+<br>
+
+**Delete Cart**
+----
+
+  Deletes corresponding cart
+
+* **URL**
+
+  /carts/:cartId
+
+* **Method:**
+
+  `DELETE`
+
+* **URL Params**
+  `cartId`: integer
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**
+    <br>
+    `{
+      "data": 1,
+      "message": "Delete Success"
+    }`
+
+* **Error Responses:**
+
+  * **Code:** 404 ENTRY NOT FOUND <br />
+    **Content:** 
+    <br>
+    `{
+      "errors": [
+        "ENTRY NOT FOUND"
+      ]
+    }`
+
+<br>
+
+<hr>
+<br>
+
+**Checkout Cart**
+----
+
+  Checks out a cart by marking `checked_out` as `true`, and decreasing
+  `Product`'s `stock` by `total_qty` in `Cart` instance
+
+* **URL**
+
+  /checkout/:cartId
+
+* **Method:**
+
+  `PATCH`
+
+* **URL Params**
+  `cartId`: integer
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**
+    <br>
+    `**Delete Cart**
+----
+
+  Deletes corresponding cart
+
+* **URL**
+
+  /carts/:cartId
+
+* **Method:**
+
+  `DELETE`
+
+* **URL Params**
+  `cartId`: integer
+
+* **Data Params**<br>
+  None
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:**
+    <br>
+    `{
+      "data": 1,
+      "message": "Delete Success"
+    }`
+
+* **Error Responses:**
+
+  * **Code:** 404 ENTRY NOT FOUND <br />
+    **Content:** 
+    <br>
+    `{
+    "data": [
+        {},
+        {
+            "cart": {
+                "id": 27,
+                "UserId": 4,
+                "ProductId": 2,
+                "total_qty": 1,
+                "checked_out": true,
+                "createdAt": "2020-03-26T15:48:16.780Z",
+                "updatedAt": "2020-03-26T16:20:39.548Z"
+            }
+        },
+        {
+            "message": "CHECKOUT & UPDATE SUCCESS"
+        }
+    ]
+  }`
+
+<br>
+
+<hr>
+<br>
+`
+
+* **Error Responses:**
+
+  * **Code:** 404 ENTRY NOT FOUND <br />
+    **Content:** 
+    <br>
+    `{
+      "errors": [
+        "ENTRY NOT FOUND"
+      ]
+    }`
+  
+  * **Code:** 400 INSUFFICIENT STOCK <br />
+    **Content:** 
+    <br>
+    `{
+      "errors": [
+        "INSUFFICIENT STOCK"
+      ]
+    }`
+
+<br>
+
+<hr>
+<br>
+

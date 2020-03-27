@@ -177,7 +177,7 @@
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 201 <br />
     **Content:** `{"id": 1, "name": "One Piece Vol 1" "genre":"action", "price": 10000, "stock": 1}`
  
 * **Error Response:**

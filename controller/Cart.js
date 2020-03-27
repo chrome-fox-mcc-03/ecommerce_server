@@ -36,7 +36,6 @@ class ControllerCart {
   static async addToCart(req,res,next) {
     try {
       const {idProduct, stock} = req.body
-      console.log(idProduct)
       const data = await Cart.findOne({
         where:
         {
@@ -51,9 +50,10 @@ class ControllerCart {
       })
       if(data) {
           const add = await Cart.increment('Stock', {
+          by: 1,
           where: {
             id: data.id
-          }
+          },
         })
         if(add) {
           res.status(200).json({
@@ -63,7 +63,6 @@ class ControllerCart {
           console.log('masok sini')
         }
       }else{
-        console.log('masokk sini aowkdoawkdok')
         const addcart = await Cart.create({
           ProductionId: idProduct,
           Stock: stock,

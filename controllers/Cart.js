@@ -81,7 +81,7 @@ class Controller {
   }
 
   static update (req, res, next) {
-    const { quantity, ProductId } = req.body
+    const { quantity, ProductId, purchase } = req.body
     const idUpdate = req.params.id
     let plus
     let updateCart
@@ -92,7 +92,7 @@ class Controller {
     })
       .then(data => {
         plus = data.quantity - quantity
-        return Cart.update({ quantity }, {
+        return Cart.update({ quantity, purchase }, {
           where: {
             id: idUpdate
           },

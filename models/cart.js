@@ -5,9 +5,15 @@ module.exports = (sequelize, DataTypes) => {
   Cart.init({
     quantity: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER,
-    ProductId: DataTypes.INTEGER
+    ProductId: DataTypes.INTEGER,
+    purchase: DataTypes.BOOLEAN
   }, {
     sequelize,
+    hooks: {
+      beforeCreate (cart) {
+        cart.purchase = false
+      }
+    }, 
     modelName: 'Cart'
   })
   Cart.associate = function(models) {

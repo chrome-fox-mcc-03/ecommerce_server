@@ -1,7 +1,5 @@
-const {
-  CartProduct,
-  Product
-} = require('../models/index')
+const { CartProduct, Product } = require('../models/index')
+const { Op, QueryInterface } = require('sequelize')
 
 class CartProductController {
 
@@ -183,19 +181,49 @@ class CartProductController {
       })
   }
 
+  // static payall(req, res, next) {
+  //   let { listId } = req.body
+  //   listId = listId.split(',')
+  //   CartProduct.update({
+  //     isPaid: true}, { where: { id: listId }, returning: true })
+  //     .then(response => {
+  //       res.status(200).json({
+  //         msg: 'Paid all item in cart'
+  //       })
+  //     })
+  //     .catch(err => {
+  //       next(err)
+  //     })
+  // }
+
   static payall(req, res, next) {
-    let { listId } = req.body
-    listId = listId.split(',')
-    CartProduct.update({
-      isPaid: true}, { where: { id: listId }, returning: true })
-      .then(response => {
-        res.status(200).json({
-          msg: 'Paid all item in cart'
+    let listId = req.body.listId.split(',')
+    console.log(listId)
+    CartProduct.findAll({
+      where: { id: listId },
+      attributes: { include: ['id'] }
+    })
+    
+    .then(response => {
+      response.map(el => {
+        Product.decrement('stock', {
+          by: el.quantity,
+          where : {
+            id: el.ProductId
+          }
         })
       })
-      .catch(err => {
-        next(err)
-      })
+    })
+    
+    .then(_ => { return CartProduct.update({ isPaid: true }, { where: { id: listId }, returning: true })})
+    
+    .then(response => {
+      res.status(200).json('All items paid')
+    })
+    .catch(err => {
+      console.log(err)
+      next(err)
+    })
   }
 
 

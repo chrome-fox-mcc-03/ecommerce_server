@@ -322,3 +322,244 @@ Show all products
     }
     ```  
 
+## **Create**
+Add a cart
+
+* **URL**
+
+    _/carts_
+
+* **Method**
+
+  `POST`
+
+* **Headers**
+  **Required**
+
+  `token`
+
+* **Data Body**
+
+  `quantity=[integer]`<br>
+  `totalPrice=[integer]` <br>
+  `UserId=[integer]`<br>
+  `ProductId=[integer]`
+
+* **Success Response**
+  * **Code:** 201
+  * **Content:**
+    ```javascript
+    {
+    "status": false,
+    "id": 10,
+    "quantity": 1,
+    "totalPrice": 158000,
+    "UserId": 6,
+    "ProductId": 9,
+    "updatedAt": "2020-03-27T04:46:49.688Z",
+    "createdAt": "2020-03-27T04:46:49.688Z"
+    }
+    ````
+    OR
+
+* **Error Response:**
+  * **Code:** 400
+  * **Content:** 
+    ```javascript
+    {
+      "error": [ 'product cannot be empty' ] 
+    }
+    ```
+
+## **DELETE**
+Delete a cart
+
+* **URL**
+
+    _/carts_
+
+* **Method**
+
+  `DELETE`
+
+* **Headers**
+  **Required**
+
+  `token`
+
+* **Data Params**
+
+  `id=[integer]`
+
+* **Success Response**
+  * **Code:** 200
+  * **Content:**
+    ```javascript
+    {
+    "status": 1,
+    "msg": "success deleted cart"
+    }
+    ````
+    OR
+
+* **Error Response:**
+  * **Code:** 400
+  * **Content:** 
+    ```javascript
+    {
+      "error": "Internal Server Error"
+    }
+    ```
+
+## **Update**
+Edit a cart
+
+* **URL**
+
+    _/carts_
+
+* **Method**
+
+  `PUT`
+
+* **Headers**
+  **Required**
+
+  `token`
+
+* **Data Params**
+
+  `id=[integer]`
+
+* **Data Body**
+
+  `quantity=[integer]`
+
+* **Success Response**
+  * **Code:** 201
+  * **Content:**
+    ```javascript
+    {
+    "status": [1],
+    "msg": "success updated cart"
+    }
+    ````
+    OR
+
+* **Error Response:**
+  * **Code:** 400
+  * **Content:** 
+    ```javascript
+    {
+      "error": [ 'quantity cannot be negative' ] 
+    }
+    ```
+
+
+## **Checkout**
+Proceed to payment
+
+* **URL**
+
+    _/checkout_
+
+* **Method**
+
+  `PUT`
+
+* **Headers**
+  **Required**
+
+  `token`
+
+* **Data Body**
+
+  `id=[integer]`<br>
+  `ProductId=[integer]`<br>
+  `quantity=[integer]`<br>
+  `status=[string]`<br>
+  `stock=[integer]`
+
+* **Success Response**
+  * **Code:** 200
+  * **Content:**
+    ```javascript
+    {
+    "result": [1],
+    "msg": "transaction success"
+    }
+    ````
+    OR
+
+* **Error Response:**
+  * **Code:** 401
+  * **Content:** 
+    ```javascript
+    {
+      "error": "You are not authorized"
+    }
+    ```
+
+## **Find All**
+Show all carts
+
+* **URL**
+
+    _/carts_
+
+* **Method**
+
+  `GET`
+
+* **Headers**
+  **Required**
+
+  `token`
+
+* **Data Body**
+
+    None
+
+* **Success Response**
+  * **Code:** 200
+  * **Content:**
+    ```javascript
+    [
+      {
+          "id": 5,
+          "name": "Rich Dad Poor Dad : What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not!",
+          "ProductId": 4,
+          "quantity": 2,
+          "totalPrice": 308000,
+          "image_url": "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/6126/9781612680194.jpg",
+          "status": false,
+          "price": 154000,
+          "stock": 33,
+          "updatedAt": "2020-03-27T02:09:29.167Z"
+      },
+      {
+          "id": 4,
+          "name": "Thinking, Fast and Slow",
+          "ProductId": 3,
+          "quantity": 2,
+          "totalPrice": 414000,
+          "image_url": "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1410/9780141033570.jpg",
+          "status": false,
+          "price": 207000,
+          "stock": 69,
+          "updatedAt": "2020-03-27T02:09:35.449Z"
+      }
+    ]
+    ````
+    OR
+
+* **Error Response:**
+  * **Code:** 404
+  * **Content:** 
+    ```javascript
+    {
+      "error": "Please login first"
+    }
+    ```  
+
+

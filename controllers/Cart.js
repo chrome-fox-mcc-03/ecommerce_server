@@ -83,7 +83,7 @@ class Controller {
   static update (req, res, next) {
     const { quantity, ProductId, purchase } = req.body
     const idUpdate = req.params.id
-    let plus
+    let change = {}
     let updateCart
     Cart.findOne({
       where: {
@@ -91,7 +91,13 @@ class Controller {
       }
     })
       .then(data => {
-        plus = data.quantity - quantity
+        if (data.quantity > quantity) {
+          change.total = data.quantity - quantity
+          change.data = 'increment'
+        } else {
+          change.total = quantity - data.quantity
+          change.data = 'decrement'
+        }
         return Cart.update({ quantity, purchase }, {
           where: {
             id: idUpdate
@@ -102,12 +108,21 @@ class Controller {
       })
       .then(cart => {
         updateCart = cart[1][0]
-        return Product.increment('stock', {
-          where: {
-            id: updateCart.ProductId
-          },
-          by: plus
-        })
+        if (change.data == 'increment') {
+          return Product.increment('stock', {
+            where: {
+              id: updateCart.ProductId
+            },
+            by: change.total
+          })
+        } else {
+          return Product.decrement('stock', {
+            where: {
+              id: updateCart.ProductId
+            },
+            by: change.total
+          })
+        }
       })
       .then(_ => {
         return Cart.findOne({

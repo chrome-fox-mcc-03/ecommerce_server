@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { User } = require('../models')
+const { User, Cart } = require('../models')
 
 
 function authentication(req, res, next){
@@ -8,7 +8,6 @@ function authentication(req, res, next){
         const access_token = req.headers.access_token
         // console.log(access_token, 'authentication')
         const decoded = jwt.verify(access_token, process.env.SECRET)
-        req.user = decoded
         // console.log(req.user, 'authentication')
 
         if (decoded) {
@@ -20,11 +19,33 @@ function authentication(req, res, next){
             })
             .then((userFound) => {
                 if(userFound){
-                    next()
+                    return Cart.findOne({
+                        where: {
+                            UserId : userFound.dataValues.id
+                        }
+                    })
                 }else {
                     const error = {
                         status : 401,
                         name : 'UserNotFound',
+                        message : 'access denied'
+                    }
+                    throw error
+                }
+            })
+            .then((result) => {
+                if(result){
+                    console.log(result)
+                    req.user = {
+                        UserId : result.dataValues.UserId,
+                        cartid: result.dataValues.id
+                    }
+                    next()
+                }else{
+                    // console.log('Cart gak ada')
+                    const error = {
+                        status : 401,
+                        name : 'CartNotFound',
                         message : 'access denied'
                     }
                     throw error

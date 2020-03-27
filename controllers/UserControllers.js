@@ -17,12 +17,16 @@ class UserController {
             role
         })
             .then((userCreated) => {
-                res.status(201).json({
-                    "email" : userCreated.email,
-                    "id" : userCreated.id,
-                    "role" : userCreated.role
+                return Cart.create({
+                    UserId: userCreated.id
                 })
-            }).catch((err) => {
+            })
+            .then((result) => {
+                res.status(201).json({
+                    result
+                })
+            })
+            .catch((err) => {
                 next(err)
             });
     }

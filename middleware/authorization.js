@@ -2,9 +2,8 @@ const { Cart } = require('../models')
 
 function authorization (req, res, next) {
     console.log('masuk authorization')
-    const UserId = req.user.id
-    const CartId = Number(req.headers.cartid)
-    console.log(UserId, CartId)
+    const UserId = req.user.UserId
+    const CartId = Number(req.user.cartid)
 
     Cart.findOne({
         where: {

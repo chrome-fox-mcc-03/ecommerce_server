@@ -4,7 +4,7 @@ class CartItemController {
     static addToCart(req, res, next) {
         console.log('masuk add to cart')
         console.log(req.body.product.id, 'product id')
-        console.log(Number(req.headers.cartid), 'cart id')
+        console.log(Number(req.user.cartid), 'cart id')
         console.log(req.body.quantity, 'qty')
         
         CartItem.findOne({
@@ -18,7 +18,7 @@ class CartItemController {
                     // console.log('totalquantity',totalQuantity)
                     return CartItem.update({
                         ProductId: req.body.product.id,
-                        CartId: Number(req.headers.cartid),
+                        CartId: Number(req.user.cartid),
                         quantity: totalQuantity,
                         isPaid: false
                     }, {
@@ -29,7 +29,7 @@ class CartItemController {
                 } else {
                     return CartItem.create({
                         ProductId: req.body.product.id,
-                        CartId: Number(req.headers.cartid),
+                        CartId: Number(req.user.cartid),
                         quantity: req.body.quantity,
                         isPaid: false
                     })
@@ -50,7 +50,7 @@ class CartItemController {
         console.log('masuk fetch cart')
         CartItem.findAll({
             where: {
-                CartId: Number(req.headers.cartid)
+                CartId: Number(req.user.cartid)
             },
             include: [Cart, Product]
         })
@@ -68,7 +68,7 @@ class CartItemController {
         CartItem.destroy({
             where: {
                 ProductId: req.params.id,
-                CartId: Number(req.headers.cartid)
+                CartId: Number(req.user.cartid)
             }
         })
             .then((result) => {
@@ -84,7 +84,7 @@ class CartItemController {
         console.log('remove all item')
         CartItem.destroy({
             where: {
-                CartId: Number(req.headers.cartid)
+                CartId: Number(req.user.cartid)
             }
         })
             .then((result) => {

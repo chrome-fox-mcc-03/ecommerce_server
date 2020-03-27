@@ -25,13 +25,13 @@ router.post('/login', UserController.login)
 router.get('/product', ProductController.fetchProduct) // fetch product
 router.get('/product/:id', ProductController.findOneProduct)
 
+router.post('/cart', CartController.createCart)
 router.use(authentication)
 router.post('/product', ProductController.addProduct) // add new product
 router.put('/product/:id', ProductController.editProduct) // edit product
 router.delete('/product/:id', ProductController.deleteProduct) //delete product
 
 //cart route
-router.post('/cart', CartController.createCart)
 router.delete('/cart', authorization, CartController.removeCart)
 router.get('/cartitem', authorization, CartItemController.fetchCart)
 router.post('/addtocart', authorization, CartItemController.addToCart)

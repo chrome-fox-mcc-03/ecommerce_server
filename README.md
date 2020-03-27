@@ -1,7 +1,7 @@
 # ecommerce_server_cms
 
 ## Login
-<details open>
+<details close>
 <summary> Login into website </summary>
 
 * **URL**
@@ -37,7 +37,7 @@
 </details>
 
 ## Register
-<details open>
+<details close>
 <summary>Register into website </summary>
 
 * **URL**
@@ -92,7 +92,7 @@
 </details>
 
 ## Add Product
-<details open>
+<details close>
 <summary>Adding product to website</summary>
 
 * **URL**
@@ -152,7 +152,7 @@
 </details>
 
 ## Edit Product
-<details open>
+<details close>
 <summary>Edit Product on Website</summary>
 
 * **URL**
@@ -243,7 +243,7 @@
 </details>
 
 ## Delete Product
-<details open>
+<details close>
 
 <summary>Delete Product on Website</summary>
 
@@ -272,6 +272,97 @@
   * **Code:** 200 <br />
     **Content:** 
     `{ message: "Successfully delete product(s)" }`
+ 
+* **Error Response:**
+
+  * **Code:** 403 NOT AUTHORIZED <br />
+    **Content:** `{ error : "You're not authorized to perform this action!" }`
+
+    OR
+  
+  * **Code:** 403 NOT AUTHORIZED <br />
+    **Content:** `{ error : "Authentication failed! Please re-login" }`
+
+    OR
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Product not found!" }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+<br /><br />
+
+</details>
+
+## Login as Customer
+<details close>
+<summary> Login into website </summary>
+
+* **URL**
+
+  `https://tookuu-marketplace.firebaseapp.com/login`
+
+* **Method:**
+
+  `POST`
+
+* **Data Params**
+  
+  **Required:**
+
+  `{
+      email: mail@mail.com,
+      password: 123456
+  }`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    `{ token: < token > }`
+ 
+* **Error Response:**
+  * **Code** 400 BAD REQUEST <br />
+    **Content** `{ error: Email / Password invalid! }`
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal server error" }`
+<br /><br />
+</details>
+
+## Add Product(s) to Cart
+<details close>
+
+<summary>Add product(s) to your cart</summary>
+
+* **URL**
+
+  `/products/:id`
+
+* **Method:**
+
+  `POST`
+
+* **Headers Params**
+  
+  **Required:** 
+  
+  `id=[integer]`
+
+* **Headers Params**
+  
+  **Required:** 
+  
+  ` { token: < token > } `
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    `{ message: "Added item(s) to cart" }`
  
 * **Error Response:**
 

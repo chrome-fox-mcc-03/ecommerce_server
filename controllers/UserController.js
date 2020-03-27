@@ -63,8 +63,7 @@ class UserController {
         })
       })
       .then(response => {
-        console.log(userData)
-        res.status(201).json({token, fullname: userData.fullname, email: response.email, createdAt: response.createdAt})
+        res.status(201).json({ token, fullname: userData.fullname, email: response.email, createdAt: response.createdAt})
       })
       .catch(err => {
         next(err)

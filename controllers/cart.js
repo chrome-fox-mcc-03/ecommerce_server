@@ -194,7 +194,7 @@ class CartController {
 
 	static getHistory (req, res, next) {
 		const UserId = req.decoded.id
-		console.log(`masuk ga sih?`);
+
 		Cart.findAll({
 			where: {
 				isPaid: true,
@@ -203,13 +203,11 @@ class CartController {
 			include: [ Product ]
 		})
 			.then(carts => {
-				console.log(carts);
 				res.status(200).json({
 					carts
 				})
 			})
 			.catch(err => {
-				console.log(err);
 				next(err)
 			})
 	}

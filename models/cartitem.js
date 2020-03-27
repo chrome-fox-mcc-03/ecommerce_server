@@ -4,8 +4,26 @@ module.exports = (sequelize, DataTypes) => {
   class CartItem extends Model { }
   CartItem.init({
     quantity: DataTypes.INTEGER,
-    ProductId: DataTypes.INTEGER,
-    CartId: DataTypes.INTEGER
+    ProductId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'product id cannot be empty'
+        }
+      }
+    },
+    CartId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'category id cannot be empty'
+        }
+      }
+    }
   }, { sequelize })
 
   CartItem.associate = function (models) {

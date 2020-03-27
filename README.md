@@ -542,3 +542,266 @@
     **Content:** `{ error : "Internal Server Error" }`
 
 
+**4. CART ITEM**
+**FIND ALL**
+
+* **URL**
+
+    _/cartitems_
+
+* **Method :**
+
+    `GET`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Success Response :**
+
+  * **Code:** 200 <br />
+    **Content :** `[
+    {
+      "id": 58,
+      "quantity": 2,
+      "ProductId": 9,
+      "CartId": 5,
+      "createdAt": "2020-03-27T01:02:10.779Z",
+      "updatedAt": "2020-03-27T01:18:11.992Z",
+      "Product": {
+        "id": 9,
+        "name": "Hijub",
+        "img_url": "https://i.imgur.com/gkc1KqH.jpg",
+        "price": 20000,
+        "stock": -2,
+        "CategoryId": 4,
+        "createdAt": "2020-03-22T05:21:09.764Z",
+        "updatedAt": "2020-03-22T05:48:31.193Z"
+      }
+    },
+    {
+      "id": 59,
+      "quantity": 3,
+      "ProductId": 11,
+      "CartId": 5,
+      "createdAt": "2020-03-27T01:02:16.175Z",
+      "updatedAt": "2020-03-27T01:43:36.099Z",
+      "Product": {
+        "id": 11,
+        "name": "Belom Mande",
+        "img_url": "https://i.imgur.com/TgHOozA.jpg",
+        "price": 12000,
+        "stock": 188,
+        "CategoryId": 4,
+        "createdAt": "2020-03-22T07:43:38.164Z",
+        "updatedAt": "2020-03-25T04:06:11.273Z"
+      }
+    }
+  ]
+        `
+
+* **Error Response :**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+**FIND ONE**
+
+* **URL**
+
+    _/cartitems/:id_
+
+* **Method :**
+
+    `GET`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Success Response :**
+
+  * **Code:** 200 <br />
+    **Content :** `{
+    "id": 58,
+    "quantity": 2,
+    "ProductId": 9,
+    "CartId": 5,
+    "createdAt": "2020-03-27T01:02:10.779Z",
+    "updatedAt": "2020-03-27T01:18:11.992Z"
+  }`
+
+* **Error Response :**
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+**CREATE**
+
+* **URL**
+
+    _/cartitems_
+
+* **Method :**
+
+    `POST`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Data Params**
+
+  `{ 
+      "quantity": 100,
+      "ProductId": 6,
+      "CartId": 6
+    }`
+
+* **Success Response :**
+
+  * **Code:** 201 <br />
+    **Content :** `
+    {
+    "id": 62,
+    "quantity": 100,
+    "ProductId": 6,
+    "CartId": 6,
+    "createdAt": "2020-03-27T02:09:18.927Z",
+    "updatedAt": "2020-03-27T02:09:18.927Z",
+    "Product": {
+      "id": 6,
+      "name": "Ambarawa Outer Ocean",
+      "img_url": "https://i.imgur.com/bs7L9Qr.jpg",
+      "price": 315000,
+      "stock": 10,
+      "CategoryId": 5,
+      "createdAt": "2020-03-22T03:45:53.055Z",
+      "updatedAt": "2020-03-22T05:48:02.841Z"
+    }
+  }
+}`
+
+* **Error Response :**
+
+  * **Code:** 400 <br />
+    **Content:** `{ errors: 
+    [
+      "product id cannot be empty",
+      "cart id cannot be empty"
+    ] 
+    }`
+
+    OR
+
+  * **Code:** 401 <br />
+    **Content:** `{ error: "Unauthorized" }`
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+**UPDATE**
+
+* **URL**
+
+    _/cartitems/:id_
+
+* **Method :**
+
+    `PUT`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Data Params**
+
+  `{ 
+      "quantity": 110,
+      "ProductId": 6
+    }
+   `
+
+* **Success Response :**
+
+  * **Code:** 200 <br />
+    **Content :** `{
+    "id": 62,
+    "quantity": 110,
+    "ProductId": 6,
+    "CartId": 6,
+    "createdAt": "2020-03-27T02:09:18.927Z",
+    "updatedAt": "2020-03-27T02:19:13.314Z",
+    "Product": {
+      "id": 6,
+      "name": "Ambarawa Outer Ocean",
+      "img_url": "https://i.imgur.com/bs7L9Qr.jpg",
+      "price": 315000,
+      "stock": 10,
+      "CategoryId": 5,
+      "createdAt": "2020-03-22T03:45:53.055Z",
+      "updatedAt": "2020-03-22T05:48:02.841Z"
+    }
+  }`
+
+* **Error Response :**
+
+  * **Code:** 400 <br />
+    **Content:** `{ errors: 
+    [
+      "product id cannot be empty"
+    ] 
+    }`
+
+    OR
+
+  * **Code:** 401 <br />
+    **Content:** `{ error: "Unauthorized" }`
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`
+
+**DELETE**
+
+* **URL**
+
+    _/cartitems/:id_
+
+* **Method :**
+
+    `DELETE`
+
+* **Headers**
+
+  **Required :**
+
+    `access_token`
+
+* **Success Response :**
+
+  * **Code:** 200 <br />
+    **Content :** `
+      {}
+    `
+
+* **Error Response :**
+
+  * **Code:** 401 <br />
+    **Content:** `{ error: "Unauthorized" }`
+
+    OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ error : "Internal Server Error" }`

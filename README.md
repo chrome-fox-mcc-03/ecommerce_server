@@ -115,6 +115,121 @@
     ```
 
 
+**Login User**
+----
+  Returns json data about User.
+
+* **URL**
+
+  /loginUser
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `NONE`
+
+* **Data Params**
+    ```
+    {
+        email: 'admin@mail.com,
+        password: 123456
+    }
+    ```
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    { 
+        "token" : String
+    }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 404 DATA NOT FOUND <br />
+    **Content:**
+    ```
+    { 
+        error : "email / password invalid"
+    }
+    ```
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    { 
+        error : "Internal Server Error" 
+    }
+    ```
+
+
+**Register User**
+----
+  Returns json data about User.
+
+* **URL**
+
+  /registerUser
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `NONE`
+
+* **Data Params**
+    ```
+    {
+        email: 'admin@mail.com,
+        password: 123456
+    }
+    ```
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** 
+    ```
+    { 
+          id : newUser.id,
+          email : newUser.email,
+          RoleId : newUser.RoleId
+    }
+    ```
+ 
+* **Error Response:**
+
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:**
+    ```
+    { 
+        errors : ["Please Insert Email Correctly", "Please insert email", "Please insert password", "Please insert password minimum 6"] 
+    }
+    ```
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    { 
+        error : "Internal Server Error" 
+    }
+    ```
+
 **Create Product**
 ----
   Returns json data about product.
@@ -303,7 +418,9 @@
     ```
 
 
+
 **Delete Products**
+
 ----
   Returns json data about products.
 
@@ -346,5 +463,411 @@
     }
     ```
 
+**Delete Cart**
+----
+  Returns json data about Cart.
+* **Headers**
+  ```
+  {
+    token : 'string'
+  }
+  ```
+* **URL**
+
+  /cart/:id
+
+* **Method:**
+
+  `DELETE`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   ```
+   {
+      id : 1
+   }
+   ```
+
+* **Data Params**
+    `NONE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    { 
+      message: "delete success"
+    }    
+    ```
+ 
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    { 
+        error : "Internal Server Error" 
+    }
+    ```
+
+**Add cart**
+----
+  Returns json data about cart.
+
+* **URL**
+
+  /cart
+
+* **Method:**
+
+  `post`
+
+* **Headers**
+  ```
+  {
+    token : 'string'
+  }
+  ```
+*  **URL Params**
+
+   **Required:**
+ 
+   ```
+   {
+       id : 1
+   }
+   ```
+* **Data Params**
+    `NONE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    { 
+      message: "success"
+    }    
+    ```
+ 
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    { 
+        error : "Internal Server Error" 
+    }
+    ```
 
 
+
+
+
+**Add qty**
+----
+  Returns json data about cart.
+
+* **URL**
+
+  /cart/asc/:id
+
+* **Headers**
+  ```
+  {
+    token : 'string'
+  }
+  ```
+
+* **Method:**
+
+  `patch`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   ```
+   {
+       id : 1
+   }
+   ```
+
+* **Data Params**
+    `NONE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    { 
+      message: "success"
+    }    
+    ```
+ 
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    { 
+        error : "Internal Server Error" 
+    }
+    ```
+
+**desc qty**
+----
+  Returns json data about cart.
+
+* **URL**
+
+  /cart/asc/:id
+
+
+* **Headers**
+  ```
+  {
+    token : 'string'
+  }
+  ```
+
+
+* **Method:**
+
+  `patch`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   ```
+   {
+       id : 1
+   }
+   ```
+
+* **Data Params**
+    `NONE`
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** 
+    ```
+    { 
+      message: "success"
+    }    
+    ```
+ 
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** 
+    ```
+    { 
+        error : "Internal Server Error" 
+    }
+    ```
+
+**Find All cart**
+  ----
+    Returns array of json data about cart.
+
+  * **URL**
+
+    /cart
+
+  * **Method:**
+
+    `GET`
+    
+  *  **URL Params**
+
+    **Required:**
+  
+    Header: {
+      token: 'string'
+    }
+
+  * **Data Params**
+      `NONE`
+
+  * **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+      ```
+      [
+          { 
+              UserId: 1
+              ProductionId : "meja",
+              Status : "image.jpg",
+              Stock: 12000,
+                Production : {
+                  "data Product"
+                }
+          }
+      ]
+      
+      ```
+  
+  * **Error Response:**
+
+    * **Code:** 500 INTERNAL SERVER ERROR <br />
+      **Content:** 
+      ```
+      { 
+          error : "Internal Server Error" 
+      }
+      ```
+
+  **Find All Category**
+
+  ----
+    Returns array of json data about Category.
+
+  * **URL**
+
+    /cart/category
+
+  * **Method:**
+
+    `GET`
+    
+  *  **URL Params**
+
+    **Required:**
+
+    `NONE`
+
+  * **Data Params**
+      `NONE`
+
+  * **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+      ```
+      [
+          { 
+            Id: 1,
+            name: "costume"
+          }
+      ]
+      
+      ```
+  
+  * **Error Response:**
+
+    * **Code:** 500 INTERNAL SERVER ERROR <br />
+      **Content:** 
+      ```
+      { 
+          error : "Internal Server Error" 
+      }
+      ```
+
+**Checkout cart**
+
+----
+  * **URL**
+
+    /cart/checkout
+
+  * **Method:**
+
+    `GET`
+    
+  * **Headers**
+  ```
+  {
+    token : 'string'
+  }
+  ```
+  *  **URL Params**
+
+    **Required:**
+
+    ```
+    {
+      UserId: req.CurrentId
+    }
+    ```
+
+  * **Data Params**
+      `NONE`
+
+  * **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+      ```
+      [
+          { 
+            message: 'success'
+          }
+      ]
+      
+      ```
+  
+  * **Error Response:**
+
+    * **Code:** 500 INTERNAL SERVER ERROR <br />
+      **Content:** 
+      ```
+      { 
+          error : "Internal Server Error" 
+      }
+      ```
+
+**Add Product rate**
+----
+  * **URL**
+
+    /Product/rate
+
+  * **Method:**
+
+    `GET`
+    
+  * **Headers**
+  ```
+  {
+    token : 'string'
+  }
+  ```
+  *  **URL Params**
+
+    **Required:**
+
+    ```
+    {
+      ProductionId: 1
+    }
+    ```
+
+  * **Data Params**
+      ```
+      {
+        rate: 4
+      }
+      ```
+
+  * **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:** 
+      ```
+      [
+          { 
+            data: object
+          }
+      ]
+      
+      ```
+  
+  * **Error Response:**
+
+    * **Code:** 500 INTERNAL SERVER ERROR <br />
+      **Content:** 
+      ```
+      { 
+          error : "Internal Server Error" 
+      }
+      ```

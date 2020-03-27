@@ -180,7 +180,7 @@ class ControllerCart {
         })
         .then(data => {
           res.status(200).json({
-            message: "aowkdoawkdow"
+            message: "success"
           })
         })
     } catch (error) {

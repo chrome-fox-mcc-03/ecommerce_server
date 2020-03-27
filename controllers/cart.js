@@ -145,51 +145,111 @@ class CartController {
 
 		let items = []
 		let cartItems = []
+
+		let inStock = true
+		let stockLeft = 0;
+
 		Cart.findAll({
 			where: { isPaid: false },
 			include: [ Product ]
 		})
 			.then(result => {
 				cartItems = result
-				items = result.map(el => el.id)
 
-				return Cart.update({
-					isPaid: true
-				}, {
-					where: { id: items }
+				return Product.findOne({
+					where: { id: cartItems[0].ProductId }
 				})
 			})
 			.then(result => {
-				Promise.all(cartItems.map(el => {
+				if (cartItems[0].quantity > result.stock) {
+					inStock = false
+					stockLeft = result.stock
+				} else {
 					return Product.decrement('stock', {
-						by: el.quantity,
-						where: { id: el.Product.id }
+						by: cartItems[0].quantity,
+						where: { id: cartItems[0].ProductId }
 					})
-				}))
+				}
 			})
 			.then(result => {
-				const body = {
-					form: '"hacktiv8 shop" <hacktiv8shop@gmail.com>',
-					to: req.decoded.email,
-					subject: 'Thank you for your H8-Ecommerce purchase',
-					html: `
-					<h4>Hello ${req.decoded.email}</h4>
-					<br>
-					<h5>Thank you for your recent transaction on H8-Ecommerce.<br>The items you purchase will head to your place soon.</h5>
-					`
+				if (inStock) {
+					const body = {
+						form: '"hacktiv8 shop" <hacktiv8shop@gmail.com>',
+						to: req.decoded.email,
+						subject: 'Thank you for your H8-Ecommerce purchase',
+						html: `
+						<h4>Hello ${req.decoded.email}</h4>
+						<br>
+						<h5>Thank you for your recent transaction on H8-Ecommerce.<br>The items you purchase will head to your place soon.</h5>
+						`
+					}
+					mailer.sendMail(body, (error, info) => {
+						if (error) console.log(error);
+						else console.log(info);
+					})
+	
+					res.status(200).json({
+						message: 'Thank you for the purchase. Your cart has successfully paid.'
+					})
+				} else {
+					throw {
+						name: 'Invalid Input!',
+						message: `This product only have ${stockLeft} left. Please change your quantity`
+					}
 				}
-				mailer.sendMail(body, (error, info) => {
-					if (error) console.log(error);
-					else console.log(info);
-				})
-
-				res.status(200).json({
-					message: 'Thank you for the purchase. Your cart has successfully paid.'
-				})
 			})
 			.catch(err => {
 				next(err)
 			})
+
+
+
+
+		// Cart.findAll({
+		// 	where: { isPaid: false },
+		// 	include: [ Product ]
+		// })
+		// 	.then(result => {
+		// 		cartItems = result
+		// 		items = result.map(el => el.id)
+
+		// 		return Cart.update({
+		// 			isPaid: true
+		// 		}, {
+		// 			where: { id: items }
+		// 		})
+		// 	})
+			// .then(result => {
+			// 	Promise.all(cartItems.map(el => {
+			// 		return Product.decrement('stock', {
+			// 			by: el.quantity,
+			// 			where: { id: el.Product.id }
+			// 		})
+			// 	}))
+			// })
+			// .then(result => {
+			// 	const body = {
+			// 		form: '"hacktiv8 shop" <hacktiv8shop@gmail.com>',
+			// 		to: req.decoded.email,
+			// 		subject: 'Thank you for your H8-Ecommerce purchase',
+			// 		html: `
+			// 		<h4>Hello ${req.decoded.email}</h4>
+			// 		<br>
+			// 		<h5>Thank you for your recent transaction on H8-Ecommerce.<br>The items you purchase will head to your place soon.</h5>
+			// 		`
+			// 	}
+			// 	mailer.sendMail(body, (error, info) => {
+			// 		if (error) console.log(error);
+			// 		else console.log(info);
+			// 	})
+
+			// 	res.status(200).json({
+			// 		message: 'Thank you for the purchase. Your cart has successfully paid.'
+			// 	})
+			// })
+		// 	.catch(err => {
+		// 		next(err)
+		// 	})
 	}
 
 	static getHistory (req, res, next) {

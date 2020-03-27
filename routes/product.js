@@ -12,7 +12,7 @@ router.get('/:id', ProductController.findById) ;
 router.use (authorization) ;
 
 router.post('/', upload.single('image_url'), ProductController.create) ;
-router.put('/:id', ProductController.update) ;
+router.put('/:id', upload.single('image_url'), ProductController.update) ;
 router.delete('/:id', ProductController.destroy) ;
 
 

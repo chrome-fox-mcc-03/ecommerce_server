@@ -66,9 +66,17 @@ class ProductController {
         })
             .then ((found)=>{
                 if (found) {
+                    
+                    let image_url;
+
+                    if (req.body.image_url == 'null') {
+                        image_url = found.image_url
+                    } else {
+                        image_url = req.body.image_url
+                    }
                     let updatedProduct = {
                         name : req.body.name,
-                        image_url : req.body.image_url,
+                        image_url : image_url,
                         price : req.body.price,
                         stock : req.body.stock
                     }

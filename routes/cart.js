@@ -13,6 +13,6 @@ cartRoute.patch("/add/:cartId", CartController.addQty)
 cartRoute.patch("/remove/:cartId", CartController.reduceQty)
 cartRoute.delete("/:cartId", CartController.deleteCart)
 cartRoute.patch("/checkout/:cartId", CartController.checkout)
-// cartRoute.patch("/bulkcheckout", CartController.massCheckout)
+cartRoute.patch("/bulkcheckout", CartController.massCheckout)
 
 module.exports = cartRoute

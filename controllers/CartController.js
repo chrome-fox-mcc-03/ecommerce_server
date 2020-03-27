@@ -327,7 +327,7 @@ class CartController {
     }
 
 
-    /* static massCheckout(req, res, next) {
+     static massCheckout(req, res, next) {
         console.log("CHECKING OUT CART EN MASSE \n");
         let qtyToCheckOut
         let thing
@@ -335,10 +335,10 @@ class CartController {
         let newQty
         let carts
         let products
-        let cart
+        let updated_product
         let product
-        let promiseCarts = []
-        let promiseProducts = []
+        let promises = []
+        let promises1 = []
 
         Cart.findAll({
             where: {
@@ -348,67 +348,138 @@ class CartController {
             include: ['Product', 'User']
         })
         .then(response => {
-            console.log("RETRIEVED ALL CARTS");
-            carts = response
-
-            carts.forEach(cart => {
-                Cart.update({
-                    checked_out: true
+            console.log("FIRST OFF: WHAT IS RESPONSE?");
+            console.log(response);
+            if(response.length > 0) {
+                console.log("RETRIEVED ALL CARTS");
+                carts = response
+    
+                carts.forEach(cart => {
+                   
+                    console.log(`FOR CART ${cart.id}, WE ARE WORKING ON PRODUCT ID ${cart.ProductId}`)
+                    
+                    // PROMISE FOR PRODUCT FIND
+                    const promise = new Promise((resolve, reject) => {
+                        console.log("VERIFYING PRODUCT STOCK FIRST");
+                        Product.findOne({
+                            where: {
+                                id: cart.ProductId
+                            }
+                        })
+                        .then(product => {
+                            console.log("WHAT'S PRODUCT ?")
+                            if(product) {
+                                console.log("FOUND'EM")
+                                if(product.stock >= cart.total_qty) {
+                                    console.log("STOCKS ARE STILL PLENTIFUL")
+                                    product.stock = Number(product.stock) - Number(cart.total_qty)
+                                    resolve(product)
+                                } else {
+                                    console.log("INSUFFICIENT STOCK")
+                                    disthrow = new customError(400, 'INSUFFICIENT STOCK')
+                                    reject(disthrow)
+                                }
+                            } else {
+                                console.log("PRODUCT NOT FOUND")
+                                disthrow = new customError(404, 'ENTRY NOT FOUND')
+                                reject(disthrow)
+                            }
+                        })
+                        .catch(err => {
+                            reject(err)
+                        })
+    
+                    }) //ENND PROMISE CONST
+                    promises.push(promise)
                 })
-            })
+    
+                return Promise.all(promises)
 
+            } else {
+                throw new customError(404, 'ENTRY NOT FOUND')
+            }
 
         }) 
-        
-        */
+        .then(response1 => {
 
+            console.log("NOW BEGIN UPDATING STOCK");
+            updated_product = response1
 
+            let updatepromises = []
 
+            response1.forEach(el => {
 
+                console.log("ENTERING PROMISE OF PRODUCT?");
+                const updprom = new Promise((resolve, reject) => {
+                    console.log("NOW REALLY UPDATING PRODUCTS");
+                    Product.update({
+                        name: el.name,
+                        category: el.category,
+                        image_url: el.image_url,
+                        price: el.price,
+                        stock: el.stock
+                    }, {
+                        where: {
+                            id: el.id
+                        },
+                        // attributes: { exclude: ['CartId'] },
+                        returning: true
+                    })
+                    .then(updd => {
+                        console.log("PRODUCT UPDATED");
+                        console.log(updd[1]);
+                        resolve(updd)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+                })
+                updatepromises.push(updprom)
+            })
+            return Promise.all(updatepromises)
 
+        })
+        .then(response2 => {
 
+            console.log("WE ARE ABOUT TO UPDATE STATUS AT CART");
 
+            let checkoutproms = []
 
+            carts.forEach(el => {
+                const checkoutprom = new Promise((resolve, reject) => {
+                    Cart.update({
+                        checked_out: true
+                    }, {
+                        where: {
+                            id: el.id
+                        },
+                        include: ['Product', 'User'],
+                        returning: true
+                    })
+                    .then(couted => {
+                        console.log("CHECKED OUT");
+                        resolve(couted[1][0].dataValues)
+                    })
+                    .catch(err => {
+                        console.log("ERROR UPDATING");
+                        reject(err)
+                    })
+                })
 
-    //     Cart.update({
-    //         checked_out: true
-    //     }, {
-    //         where: {
-    //             id: req.params.cartId
-    //         },
-    //         include: ['Product', 'User'],
-    //         returning: true
-    //     })
-    //     .then(response => {
-    //         console.log("CART CHECKEDOUT. NOW UPDATING STOCK");
-    //         // console.log(response[1][0].dataValues)
-    //         cart = response[1][0].dataValues
-    //         qtyToCheckOut = Number(cart.total_qty)
-    //         itemId = cart.ProductId
-    //         return Product.increment({
-    //             stock: -qtyToCheckOut
-    //         }, {
-    //             where: {
-    //                 id: itemId
-    //             },
-    //             returning: true
-    //         })
-    //     })
-    //     .then(response1 => {
-    //         console.log("PRODUCT STOCK UPDATED");
-    //         console.log(response1[0]);
-    //         thing = response1[0]
-    //         let payload = [
-    //             {product: response1[0]},
-    //             {cart: cart},
-    //             {message: "CHECKOUT & UPDATE SUCCESS"}
-    //         ]
-    //         res.status(201).json({data: payload})
-    //     })
-    //     .catch(err => {
-    //         next(err)
-    //     })
-    // }
+                checkoutproms.push(checkoutprom)
+            })
+
+            return Promise.all(checkoutproms)
+        })
+        .then(response3 => {
+            console.log("CARTS CHECKDOUT. PRODUCTS' STOCKS UPDATED");
+            res.status(201).json(response3)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
 
 }
 

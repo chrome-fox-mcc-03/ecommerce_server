@@ -221,12 +221,6 @@ E-commerce is an app to help you fulfill your daily needs
         
 ### Get All Products [GET]
 
-+ Request 
-    
-    + Headers
-            
-            Token: string
-
 + Response 200
     
     + Body
@@ -337,8 +331,6 @@ E-commerce is an app to help you fulfill your daily needs
                 ]
             }
 
-
-
 ## Product [/products/{id}]
 
 + Parameters
@@ -346,12 +338,6 @@ E-commerce is an app to help you fulfill your daily needs
     + id (number) - ID of the User in the form of an integer
 
 ### Find Product By Id [GET]
-
-+ Request
-    
-    + Headers
-        
-            Token: string
 
 + Response 200
 
@@ -399,7 +385,6 @@ E-commerce is an app to help you fulfill your daily needs
                     "Database Error"
                 ]
             }
-
 
 ### Update Product [PUT]
 
@@ -500,6 +485,911 @@ E-commerce is an app to help you fulfill your daily needs
                 "message": "product not found",
                 "errors": [
                     "product not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+## Register Customers [/customers/register]
+        
+### Register Customers [POST]
+
++ Request 
+    
+    + Body
+    
+            {
+                "id": 9,
+                "email": "budi@gmail.com",
+                "money": 50000
+            }
+
++ Response 201
+    
+    + Body
+        
+            {
+                "id": 9,
+                "email": "budi@gmail.com",
+                "money": 50000
+            }
+
++ Response 400
+        
+    + Body
+    
+            {
+                "message": "password must be filled",
+                "errors": [
+                    "password must be filled",
+                    "password length must be at least five character"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+ 
+## Login Customers [/customers/login]
+        
+### Login Customers [POST]
+
++ Request 
+    
+    + Body
+    
+            {
+                "email": "budi@gmail.com",
+                "password": "12345"
+            }
+
++ Response 200
+    
+    + Body
+        
+            {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoibWVnYXdhdGlAZ21haWwuY29tIiwibW9uZXkiOjEwMDAwMDAsImlhdCI6MTU4NTE1MTQyMH0.PcIrV9P8sNbbHWewZ6qGuBMARz463yyHsnji_3z1zjA"
+            }
+
++ Response 400
+        
+    + Body
+    
+            {
+                "message": "Invalid email/password",
+                "errors": [
+                    "Invalid email/password"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+## Customer [/customers/{id}]
+
++ Parameters
+
+    + id (number) - ID of the User in the form of an integer
+
+### Find Customer By Id [GET]
+
++ Request
+    
+    + Headers
+            
+            Token: string
+
++ Response 200
+
+    + Body
+            
+            {
+                "id": 1,
+                "email": "naufalyunan45@gmail.com",
+                "password": "$2a$10$gujXipDGrAr3S42JM8CQF.Q1Qpaqzfc8YroARtazFoeEknHt01/cK",
+                "money": 770000,
+                "createdAt": "2020-03-24T03:44:52.635Z",
+                "updatedAt": "2020-03-24T04:14:25.007Z"
+            }
+            
++ Response 400
+
+    + Body
+            
+            {
+                "message": "customer not found",
+                "errors": [
+                    "customer not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+    
+            {
+                "message": "Database Error",
+                "errors": [
+                    "Database Error"
+                ]
+            }
+
+
+### Update Customer [PATCH]
+
++ Request (application/json)
+
+    + Headers
+        
+            Token: string
+    
+    + Body
+            
+            {
+                "password": "spaghetti",
+                "money": "40000
+            }
+    
++ Response 200 
+    
+    + Body
+
+            {
+                "id": 1,
+                "email": "naufalyunan45@gmail.com",
+                "money": 770000
+            }
+
++ Response 400 
+    
+    + Body
+    
+            {
+                "message": "password must be filled",
+                "errors": [
+                    "password must be filled",
+                    "password length must be at least five character"
+                ]
+            }
+
++ Response 400
+    
+    + Body
+        
+            {
+                "message": "customer not found",
+                "errors": [
+                    "customer not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+### Delete Customer [DELETE]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 200 
+
+    + Body
+
+            {
+                "id": 1,
+                "email": "naufalyunan45@gmail.com",
+                "money": 770000
+            }
+
++ Response 400
+        
+    + Body
+        
+            {
+                "message": "customer not found",
+                "errors": [
+                    "customer not found"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+## Carts [/carts]
+        
+### Get All Carts [GET]
+
++ Request 
+
+    + Headers
+            
+            Token: string
+
++ Response 200
+    
+    + Body
+        
+            [
+                {
+                    "id": 3,
+                    "CustomerId": 9,
+                    "isPaid": false,
+                    "createdAt": "2020-03-24T09:07:32.093Z",
+                    "updatedAt": "2020-03-24T09:07:32.093Z",
+                    "Customer": {
+                        "id": 9,
+                        "email": "budi@gmail.com",
+                        "password": "$2a$10$hQ8d2VPay9raDapAyKk6ZuON3qgVpiEPSwQJbeG2mj/sPixmCOkIe",
+                        "money": 50000,
+                        "createdAt": "2020-03-24T09:07:16.682Z",
+                        "updatedAt": "2020-03-24T09:07:16.682Z"
+                    }
+                }
+            ]
+
++ Response 404
+        
+    + Body
+    
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+### Create Cart [POST]
+
++ Request (application/json)
+    
+    + Headers
+            
+            Token: string
+            
++ Response 201
+    
+    + Body
+            
+            {
+                "id": 3,
+                "email": "budi@gmail.com",
+                "CustomerId": 9,
+                "isPaid": false
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
+## Cart [/carts/{id}]
+
++ Parameters
+
+    + id (number) - ID of the User in the form of an integer
+
+### Find Cart By Id [GET]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 200
+
+    + Body
+            
+            {
+                "id": 6,
+                "CustomerId": 10,
+                "isPaid": true,
+                "createdAt": "2020-03-25T10:58:21.661Z",
+                "updatedAt": "2020-03-26T03:32:40.400Z"
+            }
+            
++ Response 400
+
+    + Body
+            
+            {
+                "message": "cart not found",
+                "errors": [
+                    "cart not found"
+                ]
+            }
+
++ Response 400
+
+    + Body
+    
+            {
+                "message": "you are not authorized",
+                "errors": [
+                    "you are not authorized"
+                ]
+            }
+
++ Response 404
+
+    + Body
+
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+    
+            {
+                "message": "Database Error",
+                "errors": [
+                    "Database Error"
+                ]
+            }
+
+### Update Cart [PATCH]
+
++ Request (application/json)
+
+    + Headers
+        
+            Token: string
+    
++ Response 201 
+    
+    + Body
+
+            {
+                "id": 6,
+                "CustomerId": 10,
+                "isPaid": true,
+                "createdAt": "2020-03-25T10:58:21.661Z",
+                "updatedAt": "2020-03-26T03:32:40.400Z"
+            }
+
++ Response 400
+    
+    + Body
+        
+            {
+                "message": "cart not found",
+                "errors": [
+                    "cart not found"
+                ]
+            }
+
++ Response 400
+
+    + Body
+            
+            {
+                "message": "you are not authorized",
+                "errors": [
+                    "you are not authorized"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+### Delete Cart [DELETE]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 200 
+
+    + Body
+
+            {
+                "id": 10,
+                "CustomerId": 11,
+                "isPaid": false,
+                "createdAt": "2020-03-26T07:21:24.232Z",
+                "updatedAt": "2020-03-26T07:21:24.232Z",
+                "email": "hera@yahoo.com"
+            }
+
++ Response 400
+        
+    + Body
+        
+            {
+                "message": "cart not found",
+                "errors": [
+                    "cart not found"
+                ]
+            }
+
++ Response 400
+
+    + Body 
+                
+            {
+                "message": "you are not authorized",
+                "errors": [
+                    "you are not authorized"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+## CartProducts [/cartproducts]
+        
+### Get All CartProducts [GET]
+
++ Request 
+
+    + Headers
+            
+            Token: string
+
++ Response 200
+    
+    + Body
+        
+            [
+                {
+                    "id": 14,
+                    "quantity": 5,
+                    "CartId": 6,
+                    "ProductId": 8,
+                    "createdAt": "2020-03-25T17:28:08.463Z",
+                    "updatedAt": "2020-03-25T17:28:08.463Z",
+                    "Product": {
+                        "id": 8,
+                        "name": "Nugget",
+                        "image_url": "https://caramembuat.id/wp-content/uploads/2019/07/cara-membuat-nugget-ayam.jpg",
+                        "price": 40000,
+                        "stock": 10,
+                        "createdAt": "2020-03-21T05:36:16.303Z",
+                        "updatedAt": "2020-03-21T05:36:16.303Z"
+                    },
+                    "Cart": {
+                        "id": 6,
+                        "CustomerId": 10,
+                        "isPaid": false,
+                        "createdAt": "2020-03-25T10:58:21.661Z",
+                        "updatedAt": "2020-03-25T10:58:21.661Z"
+                    }
+                },
+                {
+                    "id": 15,
+                    "quantity": 16,
+                    "CartId": 6,
+                    "ProductId": 6,
+                    "createdAt": "2020-03-25T17:34:03.968Z",
+                    "updatedAt": "2020-03-25T18:19:24.980Z",
+                    "Product": {
+                        "id": 6,
+                        "name": "Es Krim",
+                        "image_url": "https://i2.wp.com/klfoodie.com/wp-content/uploads/2019/12/35483179_2136247133283982_6921987981083410432_n.jpg?zoom=2.625&resize=382%2C253&ssl=1",
+                        "price": 100000,
+                        "stock": 10,
+                        "createdAt": "2020-03-21T05:36:16.303Z",
+                        "updatedAt": "2020-03-21T05:36:16.303Z"
+                    },
+                    "Cart": {
+                        "id": 6,
+                        "CustomerId": 10,
+                        "isPaid": false,
+                        "createdAt": "2020-03-25T10:58:21.661Z",
+                        "updatedAt": "2020-03-25T10:58:21.661Z"
+                    }
+                }
+            ]
+
++ Response 404
+        
+    + Body
+    
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+### Create CartProduct [POST]
+
++ Request (application/json)
+    
+    + Headers
+            
+            Token: string
+            
+    + Body
+    
+            {
+                "CartId": 3,
+                "quantity": 10,
+                "ProductId": 9,
+            }
+            
++ Response 201
+    
+    + Body
+            
+            {
+                "id": 12,
+                "quantity": 10,
+                "CartId": 3,
+                "ProductId": 9,
+                "createdAt": "2020-03-25T16:04:39.295Z",
+                "updatedAt": "2020-03-25T16:05:27.861Z"
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+    
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+            
+## CartProduct [/cartproducts/{id}]
+
++ Parameters
+
+    + id (number) - ID of the User in the form of an integer
+
+### Find CartProduct By Id [GET]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 200
+
+    + Body
+            
+            {
+                "id": 14,
+                "quantity": 5,
+                "CartId": 6,
+                "ProductId": 8,
+                "createdAt": "2020-03-25T17:28:08.463Z",
+                "updatedAt": "2020-03-25T17:28:08.463Z"
+            }
+            
++ Response 400
+
+    + Body
+            
+            {
+                "message": "cart-product not found",
+                "errors": [
+                    "cart-product not found"
+                ]
+            }
+
++ Response 400
+
+    + Body
+    
+            {
+                "message": "you are not authorized",
+                "errors": [
+                    "you are not authorized"
+                ]
+            }
+
++ Response 404
+
+    + Body
+
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+    
+            {
+                "message": "Database Error",
+                "errors": [
+                    "Database Error"
+                ]
+            }
+
+### Update CartProduct [PATCH]
+
++ Request (application/json)
+
+    + Headers
+        
+            Token: string
+    
+    + Body 
+            
+            {
+                "quantity": 2
+            }
+    
++ Response 201 
+    
+    + Body
+
+            {
+                "id": 18,
+                "quantity": 2,
+                "CartId": 6,
+                "ProductId": 4,
+                "createdAt": "2020-03-25T18:19:21.572Z",
+                "updatedAt": "2020-03-26T02:57:16.090Z"
+            }
+
++ Response 400
+    
+    + Body
+        
+            {
+                "message": "cart-product not found",
+                "errors": [
+                    "cart-product not found"
+                ]
+            }
+
++ Response 400
+
+    + Body 
+            
+            {
+                "message": "quantity must be in integer format",
+                "errors": [
+                    "quantity must be in integer format"
+                ]
+            }
+
++ Response 400
+
+    + Body
+            
+            {
+                "message": "you are not authorized",
+                "errors": [
+                    "you are not authorized"
+                ]
+            }
+
++ Response 404
+
+    + Body
+            
+            {
+                "message": "You are not authenticated",
+                "errors": [
+                    "You are not authenticated"
+                ]
+            }
+
++ Response 500
+
+    + Body
+
+            {
+                "message": "Database Error",
+                "errors": ["Database Error"]
+            }
+
+### Delete CartProduct [DELETE]
+
++ Request
+
+    + Headers
+            
+            Token: string
+
++ Response 200 
+
+    + Body
+
+            {
+                "id": 4,
+                "quantity": 5,
+                "CartId": 1,
+                "ProductId": 1,
+                "createdAt": "2020-03-24T12:19:53.681Z",
+                "updatedAt": "2020-03-24T12:19:53.681Z",
+                "Cart": {
+                    "id": 1,
+                    "CustomerId": 1,
+                    "isPaid": true,
+                    "createdAt": "2020-03-24T08:11:50.957Z",
+                    "updatedAt": "2020-03-24T09:08:51.729Z"
+                },
+                "Product": {
+                    "id": 1,
+                    "name": "Pisang Bakar",
+                    "image_url": "https://hellosehat.com/wp-content/uploads/2017/04/shutterstock_733072618.jpg",
+                    "price": 15000,
+                    "stock": 17,
+                    "createdAt": "2020-03-21T05:36:16.303Z",
+                    "updatedAt": "2020-03-21T05:36:16.303Z"
+                }
+            }
+
++ Response 400
+        
+    + Body
+        
+            {
+                "message": "cart-product not found",
+                "errors": [
+                    "cart-product not found"
+                ]
+            }
+
++ Response 400
+
+    + Body 
+                
+            {
+                "message": "you are not authorized",
+                "errors": [
+                    "you are not authorized"
                 ]
             }
 

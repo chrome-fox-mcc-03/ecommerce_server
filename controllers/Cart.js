@@ -29,21 +29,14 @@ class Controller {
       }
     })
       .then(cart => {
-        if (cart) {
-          Cart.update({ purchase: false }, {
+        if (cart.purchase === false) {
+          return Cart.increment('quantity', {
+            by: quantity,
             where: {
               id: cart.id
-            }
+            },
+            returning: true
           })
-            .then(_ => {
-              return Cart.increment('quantity', {
-                by: quantity,
-                where: {
-                  id: cart.id
-                },
-                returning: true
-              })
-            })
         } else {
           return Cart.create({ quantity, UserId, ProductId }, {
             include: ['Product', 'User']

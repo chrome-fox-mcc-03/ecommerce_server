@@ -112,13 +112,12 @@ Add a new product
   * **Content:**
     ```javascript
     {
-      data:
-          { name:
-              'Fantastic Beasts and Where to Find Them : The Original Screenplay',
-            image_url:
-              'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4087/9781408708989.jpg',
-            price: 25000,
-            stock: 1 },
+      data: { 
+        name: 'Fantastic Beasts and Where to Find Them : The Original Screenplay',
+        image_url: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4087/9781408708989.jpg',
+        price: 25000,
+        stock: 1
+      },
       message: 'success insert new product'
     }
     ````
@@ -158,7 +157,8 @@ Delete a product
   * **Content:**
     ```javascript
     {
-      status: 1, message: 'success delete product' 
+      status: 1, 
+      message: 'success delete product' 
     }
     ````
     OR
@@ -205,12 +205,12 @@ Edit a product
     ```javascript
     { 
       status: [ 1 ],
-      data:
-        { name: 'How to Win Friends and Influence People',
-          image_url:
-          'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
-          price: 23000,
-          stock: 1 },
+      data: { 
+        name: 'How to Win Friends and Influence People',
+        image_url: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
+        price: 23000,
+        stock: 1 
+      },
       message: 'success update product'
     }
     ````
@@ -251,12 +251,12 @@ Find a product
   * **Content:**
     ```javascript
     { 
-      product:
-      { name: 'Thinking, Fast and Slow',
-        image_url:
-        'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1410/9780141033570.jpg',
-        price: 25000,
-        stock: 1 }
+      product: { 
+            name: 'Thinking, Fast and Slow',
+            image_url: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1410/9780141033570.jpg',
+            price: 25000,
+            stock: 1 
+          }
     }
     ````
     OR
@@ -294,7 +294,8 @@ Show all products
   * **Code:** 200
   * **Content:**
     ```javascript
-    { products:
+    { 
+      products:
       [ 
         { id: 1,
           name: 'Fantastic Beasts and Where to Find Them : The Original Screenplay',
@@ -306,7 +307,7 @@ Show all products
           image_url: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
           price: 23000,
           stock: 1 }
-        ]
+      ]
     }
     ````
     OR
@@ -321,7 +322,7 @@ Show all products
     ```  
 
 ## **Create**
-Add a cart
+Add to cart
 
 * **URL**
 
@@ -348,14 +349,14 @@ Add a cart
   * **Content:**
     ```javascript
     {
-    "status": false,
-    "id": 10,
-    "quantity": 1,
-    "totalPrice": 158000,
-    "UserId": 6,
-    "ProductId": 9,
-    "updatedAt": "2020-03-27T04:46:49.688Z",
-    "createdAt": "2020-03-27T04:46:49.688Z"
+      "status": false,
+      "id": 10,
+      "quantity": 1,
+      "totalPrice": 158000,
+      "UserId": 6,
+      "ProductId": 9,
+      "updatedAt": "2020-03-27T04:46:49.688Z",
+      "createdAt": "2020-03-27T04:46:49.688Z"
     }
     ````
     OR
@@ -394,8 +395,8 @@ Delete a cart
   * **Content:**
     ```javascript
     {
-    "status": 1,
-    "msg": "success deleted cart"
+      "status": 1,
+      "msg": "success deleted cart"
     }
     ````
     OR
@@ -431,15 +432,16 @@ Edit a cart
 
 * **Data Body**
 
-  `quantity=[integer]`
+  `quantity=[integer]`<br>
+  `totalPrice=[integer]`
 
 * **Success Response**
   * **Code:** 201
   * **Content:**
     ```javascript
     {
-    "status": [1],
-    "msg": "success updated cart"
+      "status": [1],
+      "msg": "success updated cart"
     }
     ````
     OR
@@ -483,8 +485,8 @@ Proceed to payment
   * **Content:**
     ```javascript
     {
-    "result": [1],
-    "msg": "transaction success"
+      "result": [1],
+      "msg": "transaction success"
     }
     ````
     OR
@@ -524,28 +526,28 @@ Show all carts
     ```javascript
     [
       {
-          "id": 5,
-          "name": "Rich Dad Poor Dad : What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not!",
-          "ProductId": 4,
-          "quantity": 2,
-          "totalPrice": 308000,
-          "image_url": "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/6126/9781612680194.jpg",
-          "status": false,
-          "price": 154000,
-          "stock": 33,
-          "updatedAt": "2020-03-27T02:09:29.167Z"
+        "id": 5,
+        "name": "Rich Dad Poor Dad : What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not!",
+        "ProductId": 4,
+        "quantity": 2,
+        "totalPrice": 308000,
+        "image_url": "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/6126/9781612680194.jpg",
+        "status": false,
+        "price": 154000,
+        "stock": 33,
+        "updatedAt": "2020-03-27T02:09:29.167Z"
       },
       {
-          "id": 4,
-          "name": "Thinking, Fast and Slow",
-          "ProductId": 3,
-          "quantity": 2,
-          "totalPrice": 414000,
-          "image_url": "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1410/9780141033570.jpg",
-          "status": false,
-          "price": 207000,
-          "stock": 69,
-          "updatedAt": "2020-03-27T02:09:35.449Z"
+        "id": 4,
+        "name": "Thinking, Fast and Slow",
+        "ProductId": 3,
+        "quantity": 2,
+        "totalPrice": 414000,
+        "image_url": "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9780/1410/9780141033570.jpg",
+        "status": false,
+        "price": 207000,
+        "stock": 69,
+        "updatedAt": "2020-03-27T02:09:35.449Z"
       }
     ]
     ````

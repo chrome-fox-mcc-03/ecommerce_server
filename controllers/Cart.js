@@ -25,18 +25,26 @@ class Controller {
     Cart.findOne({
       where: {
         UserId,
-        ProductId
+        ProductId,
+        purchase: false
       }
     })
       .then(cart => {
-        if (cart.purchase === false) {
-          return Cart.increment('quantity', {
-            by: quantity,
-            where: {
-              id: cart.id
-            },
-            returning: true
-          })
+        console.log(cart)
+        if (cart) {
+          if (cart.purchase === false) {
+            return Cart.increment('quantity', {
+              by: quantity,
+              where: {
+                id: cart.id
+              },
+              returning: true
+            })
+          } else {
+            return Cart.create({ quantity, UserId, ProductId }, {
+              include: ['Product', 'User']
+            })
+          }
         } else {
           return Cart.create({ quantity, UserId, ProductId }, {
             include: ['Product', 'User']

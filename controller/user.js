@@ -25,8 +25,6 @@ class ControllerUser {
     static async loginAdmin (req,res,next) {
       try {
         const { email, password } = req.body
-        console.log(email, 'OWPDKPOAKDPOAKWPDKOWPOK')
-        console.log(password, 'OWPDKPOAKDPOAKWPDKOWPOK')
         const checkLogin = await User.findOne({
           where : {
             email

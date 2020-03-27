@@ -16,7 +16,7 @@ module.exports = async (req,res,next) => {
       next()
     }else{
       throw{
-        message : "Please login first as admin"
+        message : "Please login first"
       }
     }
   } catch (error) {

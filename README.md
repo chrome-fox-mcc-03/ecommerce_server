@@ -294,18 +294,16 @@ Show all products
   * **Code:** 200
   * **Content:**
     ```javascript
-  { products:
-      [ { id: 1,
-          name:
-          'Fantastic Beasts and Where to Find Them : The Original Screenplay',
-          image_url:
-          'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4087/9781408708989.jpg',
+    { products:
+      [ 
+        { id: 1,
+          name: 'Fantastic Beasts and Where to Find Them : The Original Screenplay',
+          image_url: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4087/9781408708989.jpg',
           price: 25000,
           stock: 1 },
         { id: 2,
           name: 'How to Win Friends and Influence People',
-          image_url:
-          'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
+          image_url: 'https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/lrg/9781/4391/9781439199190.jpg',
           price: 23000,
           stock: 1 }
         ]
@@ -477,7 +475,7 @@ Proceed to payment
   `id=[integer]`<br>
   `ProductId=[integer]`<br>
   `quantity=[integer]`<br>
-  `status=[string]`<br>
+  `status=[boolean]`<br>
   `stock=[integer]`
 
 * **Success Response**

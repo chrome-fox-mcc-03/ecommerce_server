@@ -1,6 +1,6 @@
 const { Cart } = require('../models')
 
-function authorization(req, res, next) {
+function userAuthorization(req, res, next) {
   Cart.findOne({
     where: {
       id: req.params.cartId,
@@ -19,4 +19,25 @@ function authorization(req, res, next) {
   })
 }
 
-module.exports = authorization
+function adminAuthorization(req, res, next) {
+  Cart.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then((cart) => {
+    if(cart) {
+      next()
+    } else {
+      res.status(401).json({ message: `Not authorized`})
+    }
+  })
+  .catch((err) => {
+    res.status(401).json({ message: `Not authorized`})
+  })
+}
+
+module.exports = {
+  userAuthorization,
+  adminAuthorization
+}

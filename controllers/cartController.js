@@ -10,7 +10,7 @@ class CartController {
     })
       .then((result) => {
         if (result) {
-          Cart.update({
+          return Cart.update({
             quantity: sequelize.literal('quantity + 1')
           }, {
             where: {
@@ -22,19 +22,15 @@ class CartController {
             .then((updatedCart) => {
               res.status(200).json(updatedCart[1][0])
             })
-            .catch(next)
         }
         else {
-          Cart.create({
+          return Cart.create({
             quantity: 1,
             UserId: req.currentUserid,
             ProductId: req.body.ProductId
           })
             .then((cart) => {
               res.status(201).json(cart)
-            })
-            .catch(err => {
-              next(err)
             })
         }
       })

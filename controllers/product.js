@@ -21,9 +21,8 @@ module.exports = {
       order: [['id', 'ASC']]
     })
       .then(data => {
-        data.forEach(el => el.stock > 0 ? result.push(el) : '')
         res.status(200).json({
-          data: result
+          data
         })
       })
       .catch(next)

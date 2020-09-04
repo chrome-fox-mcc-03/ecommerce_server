@@ -9,9 +9,10 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    return queryInterface.addConstraint('CartProducts', ['ProductId'], {
+    return queryInterface.addConstraint('CartProducts',  {
       type: 'foreign key',
       name: 'ProductId_FK',
+      fields: ['ProductId'],
       references: { //Required field
         table: 'Products',
         field: 'id'

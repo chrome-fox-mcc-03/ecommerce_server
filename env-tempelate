@@ -1,0 +1,5 @@
+PORT=3000
+SALT=10
+SECRET=MenujuPuncak
+adminEmail=admin@admin.com
+passwordAdmin=qwertyuiop

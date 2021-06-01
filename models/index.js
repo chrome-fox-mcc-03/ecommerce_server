@@ -13,11 +13,6 @@ if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env[config.use_env_variable], {
     dialect: "postgres",
     protocol: "postgres",
-    dialectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
   });
 } else {
   sequelize = new Sequelize(
@@ -35,7 +30,10 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach((file) => {
-    const model = sequelize["import"](path.join(__dirname, file));
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes
+    );
     db[model.name] = model;
   });
 

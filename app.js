@@ -2,9 +2,6 @@ if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
   require("dotenv").config();
 }
 
-const pg = require("pg");
-pg.defaults.ssl = true;
-
 const express = require("express");
 const app = express();
 const cors = require("cors");

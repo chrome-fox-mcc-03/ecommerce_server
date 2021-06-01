@@ -13,6 +13,11 @@ if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env[config.use_env_variable], {
     dialect: "postgres",
     protocol: "postgres",
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    },
   });
 } else {
   sequelize = new Sequelize(
